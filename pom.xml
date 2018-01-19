@@ -18,6 +18,9 @@
         <compiler.target>1.8</compiler.target>
         <war.version>2.1.1</war.version>
         <tomcat.version>2.2</tomcat.version>
+
+        <!--configuration-->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -68,9 +71,10 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>${tomcat.version}</version>
                 <configuration>
-                    <url>http://localhost:8080/manager/text</url>
-                    <server>TomcatServer</server>
+                    <!--<url>http://localhost:8080/manager/text</url>-->
+                    <!--<server>TomcatServer</server>-->
                     <path>/bm</path>
+                    <port>9090</port>
                 </configuration>
             </plugin>
         </plugins>

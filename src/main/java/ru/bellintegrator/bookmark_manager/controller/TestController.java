@@ -35,7 +35,7 @@ public class TestController {
                 if (conn!=null) { conn.close(); }
             }
         }catch (Exception e){
-
+            LOGGER.debug("=================Exception: ", e);
         }
         model.addAttribute("msg", "Hello Spring!");
         return "test";
