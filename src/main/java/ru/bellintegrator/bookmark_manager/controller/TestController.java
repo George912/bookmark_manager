@@ -19,22 +19,24 @@ public class TestController {
     private static final Logger LOGGER = Logger.getLogger(TestController.class);
 
     @RequestMapping(method = RequestMethod.GET)
-    public String test(Model model){
-        try{
+    public String test(Model model) {
+        try {
             Context ctx = new InitialContext();
             DataSource ds = (DataSource) ctx.lookup("java:/comp/env/jdbc/empDS");
             Connection conn = null;
             try {
                 conn = ds.getConnection();
                 Statement statement = conn.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT * from categories");
-                while (resultSet.next()){
-                    LOGGER.trace(resultSet.getInt("ID"));
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM bookmark_manager_schema.categories");
+                while (resultSet.next()) {
+                    LOGGER.debug("================Data from DB: " + resultSet.getInt("ID"));
                 }
             } finally {
-                if (conn!=null) { conn.close(); }
+                if (conn != null) {
+                    conn.close();
+                }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             LOGGER.debug("=================Exception: ", e);
         }
         model.addAttribute("msg", "Hello Spring!");

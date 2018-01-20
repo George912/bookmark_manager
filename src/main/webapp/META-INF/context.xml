@@ -32,7 +32,16 @@
     <Valve className="org.apache.catalina.valves.CometConnectionManagerValve" />
     -->
 
-    <ResourceLink name="jdbc/empDS"
-                  global="jdbc_empDS"
-                  type="javax.sql.DataSource"/>
+    <Resource
+            name="jdbc/empDS"
+            auth="Container"
+            type="javax.sql.DataSource"
+            maxActive="100"
+            maxIdle="30"
+            maxWait="10000"
+            driverClassName="org.h2.Driver"
+            url="jdbc:h2:file:C:\Users\neste_000.MYMACHINE\.m2\repository\com\h2database\h2\1.4.196\h2-1.4.196.jar"
+            username="YANESTEROV"
+            password="online"
+    />
 </Context>
