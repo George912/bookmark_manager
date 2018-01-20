@@ -12,15 +12,14 @@
         <h2.version>1.4.196</h2.version>
         <spring.version>4.0.2.RELEASE</spring.version>
         <log4j.version>1.2.17</log4j.version>
+        <hibernate.version>4.2.3.Final</hibernate.version>
+        <jpa.version>1.0.0.Final</jpa.version>
 
         <!--plugins-->
         <compiler.source>1.8</compiler.source>
         <compiler.target>1.8</compiler.target>
         <war.version>2.1.1</war.version>
         <tomcat.version>2.2</tomcat.version>
-
-        <!--configuration-->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -38,12 +37,31 @@
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
 
         <!-- logging  -->
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>${log4j.version}</version>
+        </dependency>
+
+        <!--hibernate-->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
+        <!--jpa-->
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>${jpa.version}</version>
         </dependency>
     </dependencies>
 
@@ -71,10 +89,7 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>${tomcat.version}</version>
                 <configuration>
-                    <!--<url>http://localhost:8080/manager/text</url>-->
-                    <!--<server>TomcatServer</server>-->
                     <path>/bm</path>
-                    <!--<port>9090</port>-->
                 </configuration>
             </plugin>
         </plugins>
