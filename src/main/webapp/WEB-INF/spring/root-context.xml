@@ -11,29 +11,10 @@
             http://www.springframework.org/schema/jee
             http://www.springframework.org/schema/jee/spring-jee.xsd">
 
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <tx:annotation-driven transaction-manager="txManager" proxy-target-class="true"/>
 
-    <bean id="transactionManager"
-          class="org.springframework.orm.jpa.JpaTransactionManager"
-          p:entityManagerFactory-ref="entityManagerFactory"/>
-    <!--<context:component-scan base-package="ru.bellintegrator.bookmark_manager.model"/>-->
+    <bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+          p:dataSource-ref="dataSource"/>
 
-    <bean id="entityManagerFactory"
-          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-          p:dataSource-ref="dataSource"
-          p:jpaVendorAdapter-ref="jpaVendorAdapter">
-        <property name="packagesToScan" value="ru.bellintegrator.bookmark_manager.model"/>
-        <property name="jpaProperties">
-            <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
-                <prop key="hibernate.max_fetch_depth">З</prop>
-                <prop key="hibernate.jdЬc.fetch_size">5O</prop>
-                <prop key="hibernate.jdbc.batch_size">1O</prop>
-                <prop key="hibernate.show_sql">true</prop>
-            </props>
-        </property>
-    </bean>
-
-    <bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
     <jee:jndi-lookup id="dataSource" expected-type="javax.sql.DataSource" jndi-name="java:comp/env/jdbc/empDS"/>
 </beans>
