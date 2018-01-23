@@ -10,17 +10,15 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "CATEGORIES")
 public class Category {
-    //TODO: long
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(name = "NAME", length = 50)
     private String name;
 
     @Column(name = "DESCRIPTION", length = 300)
     private String description;
-
     //TODO:image field, modify constructor, relations
 
     @Column(name = "CREATE_DATE")
@@ -44,11 +42,11 @@ public class Category {
         this.parent = parent;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
