@@ -14,9 +14,7 @@ import java.util.List;
  * <li>update(T t)</li>
  * <li>getAll()</li>
  * <li>getById(int id)</li>
- * <li>getByName(String name)</li>
  * <ol/>
- * Created by neste_000 on 21.07.2017.
  */
 public interface GenericDAO<T> {
 
@@ -66,15 +64,4 @@ public interface GenericDAO<T> {
      *                      проблемную ситуацию в процессе взаимодействия с хранилищем данных.
      */
     T getById(int id) throws DAOException;
-
-    /**
-     * Получает персистентный объект владельца с ownerId из хранилища по имени.
-     *
-     * @param name имя персистентного объекта.
-     * @return список персистентных объектов типа <T>
-     * @throws DAOException исключение, описывающее возникшую
-     *                      проблемную ситуацию в процессе взаимодействия с хранилищем данных.
-     */
-    List<T> getByName(String name) throws DAOException;
-
 }
