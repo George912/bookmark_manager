@@ -6,6 +6,7 @@
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:jee="http://www.springframework.org/schema/jee"
        xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/tx
@@ -15,9 +16,17 @@
             http://www.springframework.org/schema/util
             http://www.springframework.org/schema/util/spring-util.xsd
             http://www.springframework.org/schema/context
-            http://www.springframework.org/schema/context/spring-context.xsd">
+            http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <tx:annotation-driven/>
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="find*" read-only="true"/>
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
 
     <bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager"
           p:sessionFactory-ref="sessionFactory"/>
@@ -38,6 +47,13 @@
 
     <jee:jndi-lookup id="dataSource" expected-type="javax.sql.DataSource" jndi-name="java:comp/env/jdbc/empDS"/>
 
+    <aop:config>
+        <aop:pointcut id="categoryServicePointCut"
+                      expression="execution(* ru.bellintegrator.bookmark_manager.service.*Service.*(..))" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="categoryServicePointCut" />
+    </aop:config>
+
     <context:component-scan base-package="ru.bellintegrator.bookmark_manager.model;
-                                            ru.bellintegrator.bookmark_manager.dao"/>
+                                            ru.bellintegrator.bookmark_manager.dao;
+                                            ru.bellintegrator.bookmark_manager.service"/>
 </beans>

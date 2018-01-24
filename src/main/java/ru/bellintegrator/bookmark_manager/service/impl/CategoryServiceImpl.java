@@ -1,6 +1,8 @@
 package ru.bellintegrator.bookmark_manager.service.impl;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.bellintegrator.bookmark_manager.dao.GenericDAO;
 import ru.bellintegrator.bookmark_manager.exception.DAOException;
@@ -19,9 +21,14 @@ public class CategoryServiceImpl implements CategoryService {
     private static final Logger LOGGER = Logger.getLogger(CategoryServiceImpl.class);
     private GenericDAO<Category> dao;
 
-    public CategoryServiceImpl(GenericDAO<Category> dao) {
-        this.dao = dao;
+    public CategoryServiceImpl() {
         LOGGER.info("CategoryService instance created");
+    }
+
+    @Autowired
+    @Qualifier("categoryDao")
+    public void setDao(GenericDAO<Category> dao) {
+        this.dao = dao;
     }
 
     @Override

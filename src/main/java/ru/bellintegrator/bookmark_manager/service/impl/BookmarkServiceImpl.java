@@ -17,7 +17,11 @@ public class BookmarkServiceImpl implements BookmarkService {
     private static final Logger LOGGER = Logger.getLogger(BookmarkServiceImpl.class);
     private GenericDAO<Bookmark> dao;
 
+    public BookmarkServiceImpl() {
+    }
+
     public BookmarkServiceImpl(GenericDAO<Bookmark> dao) {
+        this();
         this.dao = dao;
         LOGGER.info("BookmarkService instance created");
     }

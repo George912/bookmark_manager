@@ -81,4 +81,40 @@ public class Category {
     public void setParent(Category parent) {
         this.parent = parent;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Category category = (Category) o;
+
+        if (!id.equals(category.id)) return false;
+        if (name != null ? !name.equals(category.name) : category.name != null) return false;
+        if (description != null ? !description.equals(category.description) : category.description != null)
+            return false;
+        if (!createDate.equals(category.createDate)) return false;
+        return parent != null ? parent.equals(category.parent) : category.parent == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + createDate.hashCode();
+        result = 31 * result + (parent != null ? parent.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", createDate=" + createDate +
+                ", parent=" + parent +
+                '}';
+    }
 }

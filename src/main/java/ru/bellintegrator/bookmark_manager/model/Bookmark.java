@@ -94,4 +94,43 @@ public class Bookmark {
     public void setCategory(Category category) {
         this.category = category;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Bookmark bookmark = (Bookmark) o;
+
+        if (!id.equals(bookmark.id)) return false;
+        if (name != null ? !name.equals(bookmark.name) : bookmark.name != null) return false;
+        if (url != null ? !url.equals(bookmark.url) : bookmark.url != null) return false;
+        if (description != null ? !description.equals(bookmark.description) : bookmark.description != null)
+            return false;
+        if (!createDate.equals(bookmark.createDate)) return false;
+        return category != null ? category.equals(bookmark.category) : bookmark.category == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (url != null ? url.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + createDate.hashCode();
+        result = 31 * result + (category != null ? category.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Bookmark{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                ", description='" + description + '\'' +
+                ", createDate=" + createDate +
+                ", category=" + category +
+                '}';
+    }
 }
