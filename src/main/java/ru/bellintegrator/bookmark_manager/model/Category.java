@@ -3,7 +3,9 @@ package ru.bellintegrator.bookmark_manager.model;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Категория закладки.
@@ -26,18 +28,18 @@ public class Category {
     private Timestamp createDate;
 
     @OneToMany(targetEntity = Category.class, cascade = CascadeType.ALL)
-    private List<Category> categories;
+    private Set<Category> categories;
 
     @Version
     @Column(name = "VERSION")
     private int version;
 
     @OneToMany(targetEntity = Bookmark.class)
-    private List<Bookmark> bookmarkList;
+    private Set<Bookmark> bookmarks;
 
     public Category() {
         this.createDate = new Timestamp(System.currentTimeMillis());
-        this.bookmarkList = new ArrayList<>();
+        this.bookmarks = new HashSet<>();
     }
 
     public Category(String name) {
@@ -45,11 +47,11 @@ public class Category {
         this.name = name;
     }
 
-    public Category(String name, String description, List<Category> categories, List<Bookmark> bookmarkList) {
+    public Category(String name, String description, Set<Category> categories, Set<Bookmark> bookmarks) {
         this(name);
         this.description = description;
         this.categories = categories;
-        this.bookmarkList = bookmarkList;
+        this.bookmarks = bookmarks;
     }
 
     public Long getId() {
@@ -92,19 +94,19 @@ public class Category {
         this.version = version;
     }
 
-    public List<Bookmark> getBookmarkList() {
-        return bookmarkList;
+    public Set<Bookmark> getBookmarks() {
+        return bookmarks;
     }
 
-    public void setBookmarkList(List<Bookmark> bookmarkList) {
-        this.bookmarkList = bookmarkList;
+    public void setBookmarks(Set<Bookmark> bookmarks) {
+        this.bookmarks = bookmarks;
     }
 
-    public List<Category> getCategories() {
+    public Set<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<Category> categories) {
+    public void setCategories(Set<Category> categories) {
         this.categories = categories;
     }
 
@@ -117,7 +119,7 @@ public class Category {
                 ", createDate=" + createDate +
                 ", categories=" + categories +
                 ", version=" + version +
-                ", bookmarkList=" + bookmarkList +
+                ", bookmarkList=" + bookmarks +
                 '}';
     }
 }
