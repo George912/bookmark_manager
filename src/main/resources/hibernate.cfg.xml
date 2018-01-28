@@ -9,6 +9,10 @@
         <property name="hibernate.connection.datasource">java:comp/env/jdbc/empDS</property>
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="hibernate.enable_lazy_load_no_trans">true</property>
+        <property name="hibernate.max_fetch_depth">3</property>
+        <property name="hibernate.jdbc.fetch_size">50</property>
+        <property name="hibernate.jdbc.batch_size">10</property>
+        <property name="hibernate.show_sql">true</property>
 
         <!-- Mapping with model class containing annotations -->
         <mapping class="ru.bellintegrator.bookmark_manager.model.Bookmark"/>

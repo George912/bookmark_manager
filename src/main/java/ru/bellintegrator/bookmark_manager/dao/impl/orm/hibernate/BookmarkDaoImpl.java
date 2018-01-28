@@ -68,7 +68,7 @@ public class BookmarkDaoImpl implements GenericDAO<Bookmark> {
             persistBookmark.setCreateDate(bookmark.getCreateDate());
             persistBookmark.setDescription(bookmark.getDescription());
             persistBookmark.setName(bookmark.getName());
-            persistBookmark.setCategory(bookmark.getCategory());
+//            persistBookmark.setCategory(bookmark.getCategory());
             persistBookmark.setUrl(bookmark.getUrl());
 
             session.update(persistBookmark);

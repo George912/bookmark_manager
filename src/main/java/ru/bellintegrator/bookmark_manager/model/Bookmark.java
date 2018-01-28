@@ -2,6 +2,7 @@ package ru.bellintegrator.bookmark_manager.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Arrays;
 
 /**
  * Закладка.
@@ -23,13 +24,20 @@ public class Bookmark {
     @Column(name = "DESCRIPTION", length = 300)
     private String description;
 
-    //TODO:image field, modify constructor, relations
+    @Basic(fetch = FetchType.LAZY)
+    @Lob
+    @Column(name = "ICON")
+    private byte[] icon;
 
     @Column(name = "CREATE_DATE")
     private Timestamp createDate;
 
-    @Column(name = "CATEGORY_ID")
-    private Category category;
+//    @Column(name = "CATEGORY_ID")
+//    private Category category;
+
+    @Version
+    @Column(name = "VERSION")
+    private int version;
 
     public Bookmark() {
         this.createDate = new Timestamp(System.currentTimeMillis());
@@ -41,10 +49,9 @@ public class Bookmark {
         this.url = url;
     }
 
-    public Bookmark(String name, String url, String description, Category category) {
+    public Bookmark(String name, String url, String description) {
         this(name, url);
         this.description = description;
-        this.category = category;
     }
 
     public Long getId() {
@@ -79,6 +86,14 @@ public class Bookmark {
         this.description = description;
     }
 
+    public byte[] getIcon() {
+        return icon;
+    }
+
+    public void setIcon(byte[] icon) {
+        this.icon = icon;
+    }
+
     public Timestamp getCreateDate() {
         return createDate;
     }
@@ -87,12 +102,20 @@ public class Bookmark {
         this.createDate = createDate;
     }
 
-    public Category getCategory() {
-        return category;
+//    public Category getCategory() {
+//        return category;
+//    }
+//
+//    public void setCategory(Category category) {
+//        this.category = category;
+//    }
+
+    public int getVersion() {
+        return version;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     @Override
@@ -102,23 +125,25 @@ public class Bookmark {
 
         Bookmark bookmark = (Bookmark) o;
 
+        if (version != bookmark.version) return false;
         if (!id.equals(bookmark.id)) return false;
-        if (name != null ? !name.equals(bookmark.name) : bookmark.name != null) return false;
-        if (url != null ? !url.equals(bookmark.url) : bookmark.url != null) return false;
+        if (!name.equals(bookmark.name)) return false;
+        if (!url.equals(bookmark.url)) return false;
         if (description != null ? !description.equals(bookmark.description) : bookmark.description != null)
             return false;
-        if (!createDate.equals(bookmark.createDate)) return false;
-        return category != null ? category.equals(bookmark.category) : bookmark.category == null;
+        if (!Arrays.equals(icon, bookmark.icon)) return false;
+        return createDate.equals(bookmark.createDate);
     }
 
     @Override
     public int hashCode() {
         int result = id.hashCode();
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (url != null ? url.hashCode() : 0);
+        result = 31 * result + name.hashCode();
+        result = 31 * result + url.hashCode();
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + Arrays.hashCode(icon);
         result = 31 * result + createDate.hashCode();
-        result = 31 * result + (category != null ? category.hashCode() : 0);
+        result = 31 * result + version;
         return result;
     }
 
@@ -129,8 +154,9 @@ public class Bookmark {
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
                 ", description='" + description + '\'' +
+                ", icon=" + Arrays.toString(icon) +
                 ", createDate=" + createDate +
-                ", category=" + category +
+                ", version=" + version +
                 '}';
     }
 }

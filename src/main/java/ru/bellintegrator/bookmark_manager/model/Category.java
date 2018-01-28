@@ -2,13 +2,15 @@ package ru.bellintegrator.bookmark_manager.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Категория закладки.
  * Таблица: categories
  */
 @Entity
-@Table(name = "CATEGORIES")
+@Table(schema = "bookmark_manager_schema", name = "CATEGORIES")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,16 +21,23 @@ public class Category {
 
     @Column(name = "DESCRIPTION", length = 300)
     private String description;
-    //TODO:image field, modify constructor, relations
 
     @Column(name = "CREATE_DATE")
     private Timestamp createDate;
 
-    @Column(name = "PARENT_ID")
-    private Category parent;
+    @OneToMany(targetEntity = Category.class, cascade = CascadeType.ALL)
+    private List<Category> categories;
+
+    @Version
+    @Column(name = "VERSION")
+    private int version;
+
+    @OneToMany(targetEntity = Bookmark.class)
+    private List<Bookmark> bookmarkList;
 
     public Category() {
         this.createDate = new Timestamp(System.currentTimeMillis());
+        this.bookmarkList = new ArrayList<>();
     }
 
     public Category(String name) {
@@ -36,10 +45,11 @@ public class Category {
         this.name = name;
     }
 
-    public Category(String name, String description, Category parent) {
+    public Category(String name, String description, List<Category> categories, List<Bookmark> bookmarkList) {
         this(name);
         this.description = description;
-        this.parent = parent;
+        this.categories = categories;
+        this.bookmarkList = bookmarkList;
     }
 
     public Long getId() {
@@ -74,37 +84,28 @@ public class Category {
         this.createDate = createDate;
     }
 
-    public Category getParent() {
-        return parent;
+    public int getVersion() {
+        return version;
     }
 
-    public void setParent(Category parent) {
-        this.parent = parent;
+    public void setVersion(int version) {
+        this.version = version;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Category category = (Category) o;
-
-        if (!id.equals(category.id)) return false;
-        if (name != null ? !name.equals(category.name) : category.name != null) return false;
-        if (description != null ? !description.equals(category.description) : category.description != null)
-            return false;
-        if (!createDate.equals(category.createDate)) return false;
-        return parent != null ? parent.equals(category.parent) : category.parent == null;
+    public List<Bookmark> getBookmarkList() {
+        return bookmarkList;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + createDate.hashCode();
-        result = 31 * result + (parent != null ? parent.hashCode() : 0);
-        return result;
+    public void setBookmarkList(List<Bookmark> bookmarkList) {
+        this.bookmarkList = bookmarkList;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
     @Override
@@ -114,7 +115,9 @@ public class Category {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", createDate=" + createDate +
-                ", parent=" + parent +
+                ", categories=" + categories +
+                ", version=" + version +
+                ", bookmarkList=" + bookmarkList +
                 '}';
     }
 }

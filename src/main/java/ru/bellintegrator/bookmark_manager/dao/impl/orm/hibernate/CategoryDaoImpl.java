@@ -3,6 +3,7 @@ package ru.bellintegrator.bookmark_manager.dao.impl.orm.hibernate;
 import org.apache.log4j.Logger;
 import org.hibernate.*;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.bookmark_manager.dao.GenericDAO;
 import ru.bellintegrator.bookmark_manager.exception.DAOException;
 import ru.bellintegrator.bookmark_manager.model.Category;
@@ -13,6 +14,7 @@ import java.util.List;
 /**
  * Hibernate реализация GenericDAO для модели Category.
  */
+@Transactional
 @Repository("categoryDao")
 public class CategoryDaoImpl implements GenericDAO<Category> {
     private static final Logger LOGGER = Logger.getLogger(CategoryDaoImpl.class);
@@ -62,7 +64,8 @@ public class CategoryDaoImpl implements GenericDAO<Category> {
             persistCategory.setCreateDate(category.getCreateDate());
             persistCategory.setDescription(category.getDescription());
             persistCategory.setName(category.getName());
-            persistCategory.setParent(category.getParent());
+//            persistCategory.setParent(category.getParent());
+            persistCategory.setCategories(category.getCategories());
             session.update(persistCategory);
 
         } catch (HibernateException e) {
@@ -76,12 +79,18 @@ public class CategoryDaoImpl implements GenericDAO<Category> {
         LOGGER.debug("Call getAll method");
         List<Category> categories;
         Session session;
+        Transaction transaction = null;
 
         try {
             session = sessionFactory.getCurrentSession();
-            categories = session.createQuery("FROM Category").list();
+            transaction = session.beginTransaction();
+            categories = session.createQuery("from Category").list();
+            transaction.commit();
 
         } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             LOGGER.error("Exception while receiving category list: ", e);
             throw new DAOException("Exception while receiving category list: ", e);
         }

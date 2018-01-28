@@ -10,7 +10,7 @@
     <properties>
         <!--dependecies-->
         <h2.version>1.4.196</h2.version>
-        <spring.version>4.0.2.RELEASE</spring.version>
+        <spring.version>4.3.10.RELEASE</spring.version>
         <log4j.version>1.2.17</log4j.version>
         <hibernate.version>4.2.3.Final</hibernate.version>
         <jpa.version>1.0.0.Final</jpa.version>
@@ -20,6 +20,13 @@
         <compiler.target>1.8</compiler.target>
         <war.version>2.1.1</war.version>
         <tomcat.version>2.2</tomcat.version>
+        <sql.version>3.0.0-SNAPSHOT</sql.version>
+
+        <!--jdbc-->
+        <jdbc.driver>org.h2.Driver</jdbc.driver>
+        <jdbc.url>jdbc:h2:file:C:\Users\neste_000.MYMACHINE\.m2\repository\com\h2database\h2\1.4.196\h2-1.4.196.jar</jdbc.url>
+        <jdbc.username>YANESTEROV</jdbc.username>
+        <jdbc.password>online</jdbc.password>
     </properties>
 
     <dependencies>
@@ -83,6 +90,76 @@
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>sql-maven-plugin</artifactId>
+                <version>${sql.version}</version>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>${h2.version}</version>
+                    </dependency>
+                </dependencies>
+
+                <configuration>
+                    <driver>${jdbc.driver}</driver>
+                    <url>${jdbc.url}</url>
+                    <username>${jdbc.username}</username>
+                    <password>${jdbc.password}</password>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>clear-schema</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <url>${jdbc.url}</url>
+                            <autocommit>true</autocommit>
+                            <srcFiles>
+                                <srcFile>src/main/resources/sql/ddl/_constraints.sql</srcFile>
+                                <srcFile>src/main/resources/sql/ddl/_tables.sql</srcFile>
+                                <srcFile>src/main/resources/sql/ddl/_sequences.sql</srcFile>
+                            </srcFiles>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>init-schema</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <url>${jdbc.url}</url>
+                            <autocommit>true</autocommit>
+                            <srcFiles>
+                                <srcFile>src/main/resources/sql/ddl/tables.sql</srcFile>
+                                <srcFile>src/main/resources/sql/ddl/constraints.sql</srcFile>
+                                <srcFile>src/main/resources/sql/ddl/sequences.sql</srcFile>
+                            </srcFiles>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>init-data</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <url>${jdbc.url}</url>
+                            <autocommit>true</autocommit>
+                            <srcFiles>
+                                <srcFile>src/main/resources/sql/dml/categories.sql</srcFile>
+                                <srcFile>src/main/resources/sql/dml/bookmarks.sql</srcFile>
+                            </srcFiles>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
