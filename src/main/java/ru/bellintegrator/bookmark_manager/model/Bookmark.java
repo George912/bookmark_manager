@@ -9,7 +9,7 @@ import java.util.Arrays;
  * Таблица: bookmarks
  */
 @Entity
-@Table(name = "BOOKMARKS")
+@Table(schema = "bookmark_manager_schema", name = "BOOKMARKS")
 public class Bookmark {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

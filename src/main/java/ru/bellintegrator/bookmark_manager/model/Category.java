@@ -34,7 +34,8 @@ public class Category {
     @Column(name = "VERSION")
     private int version;
 
-    @OneToMany(targetEntity = Bookmark.class)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Bookmark.class)
+    @JoinTable(name = "CATEGORY_BOOKMARK", joinColumns = { @JoinColumn(name = "CATEGORY_ID") }, inverseJoinColumns = { @JoinColumn(name = "BOOKMARK_ID") })
     private Set<Bookmark> bookmarks;
 
     public Category() {
