@@ -112,15 +112,44 @@ public class Category {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Category category = (Category) o;
+
+        if (version != category.version) return false;
+        if (!id.equals(category.id)) return false;
+        if (!name.equals(category.name)) return false;
+        if (description != null ? !description.equals(category.description) : category.description != null)
+            return false;
+        if (!createDate.equals(category.createDate)) return false;
+        if (categories != null ? !categories.equals(category.categories) : category.categories != null) return false;
+        return bookmarks != null ? bookmarks.equals(category.bookmarks) : category.bookmarks == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + createDate.hashCode();
+        result = 31 * result + (categories != null ? categories.hashCode() : 0);
+        result = 31 * result + version;
+        result = 31 * result + (bookmarks != null ? bookmarks.size() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Category{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", createDate=" + createDate +
-                ", categories=" + categories +
+                ", categoriesCount=" + categories.size() +
                 ", version=" + version +
-                ", bookmarkList=" + bookmarks +
+                ", bookmarksCount=" + bookmarks.size() +
                 '}';
     }
 }

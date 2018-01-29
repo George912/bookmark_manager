@@ -133,7 +133,8 @@ public class Bookmark {
         if (description != null ? !description.equals(bookmark.description) : bookmark.description != null)
             return false;
         if (!Arrays.equals(icon, bookmark.icon)) return false;
-        return createDate.equals(bookmark.createDate);
+        if (!createDate.equals(bookmark.createDate)) return false;
+        return category.equals(bookmark.category);
     }
 
     @Override
@@ -144,6 +145,7 @@ public class Bookmark {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + Arrays.hashCode(icon);
         result = 31 * result + createDate.hashCode();
+        result = (int) (31 * result + category.getId());
         result = 31 * result + version;
         return result;
     }
@@ -157,6 +159,7 @@ public class Bookmark {
                 ", description='" + description + '\'' +
                 ", icon=" + Arrays.toString(icon) +
                 ", createDate=" + createDate +
+                ", categoryId=" + category.getId() +
                 ", version=" + version +
                 '}';
     }
