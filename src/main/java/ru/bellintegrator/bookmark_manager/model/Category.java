@@ -27,7 +27,8 @@ public class Category {
     @Column(name = "CREATE_DATE")
     private Timestamp createDate;
 
-    @OneToMany(targetEntity = Category.class, cascade = CascadeType.ALL)
+    @OneToMany
+    @JoinColumn(name = "PARENT_ID")
     private Set<Category> categories;
 
     @Version
