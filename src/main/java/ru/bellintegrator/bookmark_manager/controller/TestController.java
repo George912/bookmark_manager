@@ -58,8 +58,9 @@ public class TestController {
         try {
             if (categoryService != null) {
                 List<Category> categories = categoryService.list();
+                LOGGER.debug("=============================categories size: " + categories.size());
                 for (Category category : categories) {
-                    LOGGER.trace("===========Data: " + category);
+                    LOGGER.debug("===========Data: " + category);
                 }
             } else {
                 LOGGER.debug("==========================categoryService is null");

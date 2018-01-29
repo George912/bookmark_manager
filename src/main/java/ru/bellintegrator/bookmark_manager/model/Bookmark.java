@@ -32,8 +32,9 @@ public class Bookmark {
     @Column(name = "CREATE_DATE")
     private Timestamp createDate;
 
-//    @Column(name = "CATEGORY_ID")
-//    private Category category;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CATEGORY_ID")
+    private Category category;
 
     @Version
     @Column(name = "VERSION")
@@ -102,13 +103,13 @@ public class Bookmark {
         this.createDate = createDate;
     }
 
-//    public Category getCategory() {
-//        return category;
-//    }
-//
-//    public void setCategory(Category category) {
-//        this.category = category;
-//    }
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     public int getVersion() {
         return version;
