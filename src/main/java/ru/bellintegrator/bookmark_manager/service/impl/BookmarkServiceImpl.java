@@ -1,6 +1,8 @@
 package ru.bellintegrator.bookmark_manager.service.impl;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import ru.bellintegrator.bookmark_manager.dao.GenericDAO;
 import ru.bellintegrator.bookmark_manager.exception.DAOException;
 import ru.bellintegrator.bookmark_manager.exception.ServiceException;
@@ -18,12 +20,13 @@ public class BookmarkServiceImpl implements BookmarkService {
     private GenericDAO<Bookmark> dao;
 
     public BookmarkServiceImpl() {
+        LOGGER.info("BookmarkService instance created");
     }
 
-    public BookmarkServiceImpl(GenericDAO<Bookmark> dao) {
-        this();
+    @Autowired
+    @Qualifier("bookmarkDao")
+    public void setDao(GenericDAO<Bookmark> dao) {
         this.dao = dao;
-        LOGGER.info("BookmarkService instance created");
     }
 
     @Override
