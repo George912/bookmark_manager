@@ -1,6 +1,7 @@
 package ru.bellintegrator.bookmark_manager.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Arrays;
 
@@ -10,7 +11,9 @@ import java.util.Arrays;
  */
 @Entity
 @Table(schema = "bookmark_manager_schema", name = "BOOKMARKS")
-public class Bookmark {
+public class Bookmark implements Serializable {
+    private static final long serialVersionUID = 6293892023058834767L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

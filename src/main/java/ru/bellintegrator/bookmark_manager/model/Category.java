@@ -1,6 +1,7 @@
 package ru.bellintegrator.bookmark_manager.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,7 +12,9 @@ import java.util.Set;
  */
 @Entity
 @Table(schema = "bookmark_manager_schema", name = "CATEGORIES")
-public class Category {
+public class Category implements Serializable {
+    private static final long serialVersionUID = -4759397049790260072L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
