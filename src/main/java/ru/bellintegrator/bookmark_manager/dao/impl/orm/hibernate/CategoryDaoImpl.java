@@ -1,7 +1,10 @@
 package ru.bellintegrator.bookmark_manager.dao.impl.orm.hibernate;
 
 import org.apache.log4j.Logger;
-import org.hibernate.*;
+import org.hibernate.HibernateException;
+import org.hibernate.IdentifierLoadAccess;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.bookmark_manager.dao.GenericDAO;
@@ -18,6 +21,7 @@ import java.util.List;
 @Repository("categoryDao")
 public class CategoryDaoImpl implements GenericDAO<Category> {
     private static final Logger LOGGER = Logger.getLogger(CategoryDaoImpl.class);
+    @Resource(name = "sessionFactory")
     private SessionFactory sessionFactory;
 
     @Override
@@ -76,22 +80,17 @@ public class CategoryDaoImpl implements GenericDAO<Category> {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Category> getAll() throws DAOException {
         LOGGER.debug("Call getAll method");
         List<Category> categories;
         Session session;
-        Transaction transaction = null;
 
         try {
             session = sessionFactory.getCurrentSession();
-            transaction = session.beginTransaction();
             categories = session.createQuery("from Category").list();
-            transaction.commit();
 
         } catch (HibernateException e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
             LOGGER.error("Exception while receiving category list: ", e);
             throw new DAOException("Exception while receiving category list: ", e);
         }
@@ -99,6 +98,7 @@ public class CategoryDaoImpl implements GenericDAO<Category> {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Category getById(int id) throws DAOException {
         LOGGER.debug("Call getById method: id = " + id);
         Session session;
@@ -111,14 +111,5 @@ public class CategoryDaoImpl implements GenericDAO<Category> {
             LOGGER.error("Exception while receiving category by id: ", e);
             throw new DAOException("Exception while receiving category by id: ", e);
         }
-    }
-
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
-    @Resource(name = "sessionFactory")
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
     }
 }
