@@ -1,10 +1,9 @@
 package ru.bellintegrator.bookmark_manager.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -13,7 +12,9 @@ import java.util.Set;
  */
 @Entity
 @Table(schema = "bookmark_manager_schema", name = "CATEGORIES")
-public class Category {
+public class Category implements Serializable {
+    private static final long serialVersionUID = -4759397049790260072L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,15 +28,15 @@ public class Category {
     @Column(name = "CREATE_DATE")
     private Timestamp createDate;
 
-    @OneToMany(targetEntity = Category.class, cascade = CascadeType.ALL)
+    @OneToMany
+    @JoinColumn(name = "PARENT_ID")
     private Set<Category> categories;
 
     @Version
     @Column(name = "VERSION")
     private int version;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Bookmark.class)
-    @JoinTable(name = "CATEGORY_BOOKMARK", joinColumns = { @JoinColumn(name = "CATEGORY_ID") }, inverseJoinColumns = { @JoinColumn(name = "BOOKMARK_ID") })
+    @OneToMany(mappedBy = "category")
     private Set<Bookmark> bookmarks;
 
     public Category() {
@@ -112,15 +113,44 @@ public class Category {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Category category = (Category) o;
+
+        if (version != category.version) return false;
+        if (!id.equals(category.id)) return false;
+        if (!name.equals(category.name)) return false;
+        if (description != null ? !description.equals(category.description) : category.description != null)
+            return false;
+        if (!createDate.equals(category.createDate)) return false;
+        if (categories != null ? !categories.equals(category.categories) : category.categories != null) return false;
+        return bookmarks != null ? bookmarks.equals(category.bookmarks) : category.bookmarks == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + createDate.hashCode();
+        result = 31 * result + (categories != null ? categories.hashCode() : 0);
+        result = 31 * result + version;
+        result = 31 * result + (bookmarks != null ? bookmarks.size() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Category{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", createDate=" + createDate +
-                ", categories=" + categories +
+                ", categoriesCount=" + categories.size() +
                 ", version=" + version +
-                ", bookmarkList=" + bookmarks +
+                ", bookmarksCount=" + bookmarks.size() +
                 '}';
     }
 }

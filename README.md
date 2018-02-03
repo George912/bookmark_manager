@@ -15,6 +15,3 @@
         <h2>Troubleshootings</h2>
     </li>
 </ol>
-
-
-

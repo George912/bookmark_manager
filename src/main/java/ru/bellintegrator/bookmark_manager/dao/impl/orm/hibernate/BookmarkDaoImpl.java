@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.bookmark_manager.dao.GenericDAO;
 import ru.bellintegrator.bookmark_manager.exception.DAOException;
 import ru.bellintegrator.bookmark_manager.model.Bookmark;
-import ru.bellintegrator.bookmark_manager.model.Category;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -22,6 +21,7 @@ import java.util.List;
 @Repository("bookmarkDao")
 public class BookmarkDaoImpl implements GenericDAO<Bookmark> {
     private static final Logger LOGGER = Logger.getLogger(BookmarkDaoImpl.class);
+    @Resource(name = "sessionFactory")
     private SessionFactory sessionFactory;
 
     @Override
@@ -80,6 +80,7 @@ public class BookmarkDaoImpl implements GenericDAO<Bookmark> {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Bookmark> getAll() throws DAOException {
         LOGGER.debug("Call getAll method");
         List<Bookmark> bookmarks;
@@ -98,10 +99,11 @@ public class BookmarkDaoImpl implements GenericDAO<Bookmark> {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Bookmark getById(int id) throws DAOException {
         LOGGER.debug("Call getById method: id = " + id);
         Session session;
-        try{
+        try {
             session = sessionFactory.getCurrentSession();
             IdentifierLoadAccess categoryIdentifierLoadAccess = session.byId(Bookmark.class);
             return (Bookmark) categoryIdentifierLoadAccess.load(id);
@@ -110,14 +112,5 @@ public class BookmarkDaoImpl implements GenericDAO<Bookmark> {
             LOGGER.error("Exception while receiving bookmark by id: ", e);
             throw new DAOException("Exception while receiving bookmark by id: ", e);
         }
-    }
-
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
-    @Resource(name = "sessionFactory")
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
     }
 }
