@@ -12,6 +12,6 @@
         </ol>
     </li>
     <li>
-        <h2>Troubleshootings</h2>
+        <h2>Troubleshooting</h2>
     </li>
 </ol>
