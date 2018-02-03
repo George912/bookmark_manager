@@ -3,14 +3,21 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.bellintegrator</groupId>
     <artifactId>bookmark_manager</artifactId>
-    <packaging>war</packaging>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>bookmark_manager Maven Webapp</name>
+    <name>bookmark_manager</name>
+
+    <modules>
+        <module>db</module>
+        <module>recovery</module>
+        <module>presentation_web_app</module>
+    </modules>
 
     <properties>
         <!--dependecies-->
         <h2.version>1.4.196</h2.version>
         <spring.version>4.3.10.RELEASE</spring.version>
+        <spring.security.version>3.2.7.RELEASE</spring.security.version>
         <log4j.version>1.2.17</log4j.version>
         <hibernate.version>4.2.3.Final</hibernate.version>
         <jpa.version>1.0.0.Final</jpa.version>
@@ -18,48 +25,23 @@
         <!--plugins-->
         <compiler.source>1.8</compiler.source>
         <compiler.target>1.8</compiler.target>
+        <compiler.version>3.3</compiler.version>
         <war.version>2.1.1</war.version>
         <tomcat.version>2.2</tomcat.version>
         <sql.version>3.0.0-SNAPSHOT</sql.version>
 
         <!--jdbc-->
         <jdbc.driver>org.h2.Driver</jdbc.driver>
-        <!--home url-->
         <jdbc.url>jdbc:h2:file:C:\Users\neste_000.MYMACHINE\.m2\repository\com\h2database\h2\1.4.196\h2-1.4.196.jar</jdbc.url>
-        <!--job url-->
-        <!--<jdbc.url>jdbc:h2:file:C:\Users\YANesterov\.m2\repository\com\h2database\h2\1.4.196\h2-1.4.196.jar</jdbc.url>-->
         <jdbc.username>YANESTEROV</jdbc.username>
         <jdbc.password>online</jdbc.password>
     </properties>
 
     <dependencies>
-        <!--database-->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>${h2.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-
         <!--spring-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
             <version>${spring.version}</version>
         </dependency>
 
@@ -69,119 +51,34 @@
             <artifactId>log4j</artifactId>
             <version>${log4j.version}</version>
         </dependency>
-
-        <!--hibernate-->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-
-        <!--jpa-->
-        <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.1-api</artifactId>
-            <version>${jpa.version}</version>
-        </dependency>
     </dependencies>
 
     <build>
-        <finalName>bookmark_manager</finalName>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>${compiler.source}</source>
-                    <target>${compiler.target}</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>${war.version}</version>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>sql-maven-plugin</artifactId>
-                <version>${sql.version}</version>
-
-                <dependencies>
-                    <dependency>
-                        <groupId>com.h2database</groupId>
-                        <artifactId>h2</artifactId>
-                        <version>${h2.version}</version>
-                    </dependency>
-                </dependencies>
-
-                <configuration>
-                    <driver>${jdbc.driver}</driver>
-                    <url>${jdbc.url}</url>
-                    <username>${jdbc.username}</username>
-                    <password>${jdbc.password}</password>
-                </configuration>
-
-                <executions>
-                    <execution>
-                        <id>clear-schema</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>execute</goal>
-                        </goals>
-                        <configuration>
-                            <url>${jdbc.url}</url>
-                            <autocommit>true</autocommit>
-                            <srcFiles>
-                                <srcFile>src/main/resources/sql/ddl/_constraints.sql</srcFile>
-                                <srcFile>src/main/resources/sql/ddl/_tables.sql</srcFile>
-                                <srcFile>src/main/resources/sql/ddl/_sequences.sql</srcFile>
-                            </srcFiles>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>init-schema</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>execute</goal>
-                        </goals>
-                        <configuration>
-                            <url>${jdbc.url}</url>
-                            <autocommit>true</autocommit>
-                            <srcFiles>
-                                <srcFile>src/main/resources/sql/ddl/tables.sql</srcFile>
-                                <srcFile>src/main/resources/sql/ddl/constraints.sql</srcFile>
-                                <srcFile>src/main/resources/sql/ddl/sequences.sql</srcFile>
-                            </srcFiles>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>init-data</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>execute</goal>
-                        </goals>
-                        <configuration>
-                            <url>${jdbc.url}</url>
-                            <autocommit>true</autocommit>
-                            <srcFiles>
-                                <srcFile>src/main/resources/sql/dml/categories.sql</srcFile>
-                                <srcFile>src/main/resources/sql/dml/bookmarks.sql</srcFile>
-                            </srcFiles>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>${tomcat.version}</version>
-                <configuration>
-                    <path>/bm</path>
-                </configuration>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-compiler-plugin</artifactId>-->
+                <!--<configuration>-->
+                    <!--<source>${compiler.source}</source>-->
+                    <!--<target>${compiler.target}</target>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-war-plugin</artifactId>-->
+                <!--<version>${war.version}</version>-->
+                <!--<configuration>-->
+                    <!--<failOnMissingWebXml>false</failOnMissingWebXml>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.tomcat.maven</groupId>-->
+                <!--<artifactId>tomcat7-maven-plugin</artifactId>-->
+                <!--<version>${tomcat.version}</version>-->
+                <!--<configuration>-->
+                    <!--<path>/bm</path>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 </project>

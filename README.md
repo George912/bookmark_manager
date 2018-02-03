@@ -13,5 +13,11 @@
     </li>
     <li>
         <h2>Troubleshooting</h2>
+        <ol>
+            <li>
+                <h4>maven: "duplicate declaration of version" while install</h4>
+                <p>delete duplicate dependencies in root pom.xml</p>
+            </li>
+        </ol>
     </li>
 </ol>
