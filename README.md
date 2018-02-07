@@ -16,7 +16,23 @@
         <ol>
             <li>
                 <h4>maven: "duplicate declaration of version" while install</h4>
-                <p>delete duplicate dependencies in root pom.xml</p>
+                delete duplicate dependencies in root pom.xml
+            </li>
+            <li>
+                <h4>Plugin *** or one of its dependencies could not be resolved: Cannot access central (http://repo.maven.apache.org/maven2) in offline mode and the ***:jar:1.1 has not been downloaded from it before.</h4>
+                <ul>
+                    <li>
+                        http://www.doublecloud.org/2015/06/how-to-change-maven-offline-mode/
+                    </li>
+                    <li>
+                        отключить опцию "work offline" в настройках maven в idea
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h4>все зависимости все подчеркнуты красным цветом</h4>
+                http://qaru.site/questions/20701/import-maven-dependencies-in-intellij-idea
+                + перезагрузить idea
             </li>
         </ol>
     </li>
