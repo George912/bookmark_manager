@@ -19,5 +19,5 @@
         <property name="suffix" value=".jspx"/>
     </bean>
 
-    <context:component-scan base-package="ru.bellintegrator.bookmark_manager.controller"/>
+    <context:component-scan base-package="ru.bellintegrator.controller"/>
 </beans>
