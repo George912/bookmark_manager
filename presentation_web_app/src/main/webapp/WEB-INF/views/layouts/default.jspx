@@ -28,6 +28,7 @@
     </div>
     <div id="wrapper">
         <div id="main">
+            <tiles:insertAttribute name="navigation"/>
             <tiles:insertAttribute name="body"/>
             <tiles:insertAttribute name="footer" ignore="true"/>
         </div>

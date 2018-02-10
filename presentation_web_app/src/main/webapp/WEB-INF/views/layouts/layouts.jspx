@@ -5,6 +5,7 @@
 <tiles-definitions>
     <definition name="default" template="/WEB-INF/layouts/default.jspx">
         <put-attribute name="header" value="/WEB-INF/views/structure/header.jspx" />
+        <put-attribute name="navigation" value="/WEB-INF/views/structure/navigation.jspx" />
         <put-attribute name="footer" value="/WEB-INF/views/structure/footer.jspx" />
     </definition>
 </tiles-definitions>
