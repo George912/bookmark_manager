@@ -52,5 +52,5 @@ public interface BaseService<T> {
      * @return
      * @throws ServiceException
      */
-    T findById(int id) throws ServiceException;
+    T findById(Long id) throws ServiceException;
 }

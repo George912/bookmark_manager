@@ -78,7 +78,7 @@ public class BookmarkServiceImpl implements BookmarkService {
     }
 
     @Override
-    public Bookmark findById(int id) throws ServiceException {
+    public Bookmark findById(Long id) throws ServiceException {
         LOGGER.debug("Call findById method: id = " + id);
 
         try {

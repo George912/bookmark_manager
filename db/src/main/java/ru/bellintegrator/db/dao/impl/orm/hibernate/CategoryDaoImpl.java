@@ -99,7 +99,7 @@ public class CategoryDaoImpl implements GenericDAO<Category> {
 
     @Override
     @Transactional(readOnly = true)
-    public Category getById(int id) throws DAOException {
+    public Category getById(Long id) throws DAOException {
         LOGGER.debug("Call getById method: id = " + id);
         Session session;
         try {

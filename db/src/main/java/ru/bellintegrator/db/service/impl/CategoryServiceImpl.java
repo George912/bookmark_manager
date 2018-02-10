@@ -80,7 +80,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category findById(int id) throws ServiceException {
+    public Category findById(Long id) throws ServiceException {
         LOGGER.debug("Call findById method: id = " + id);
 
         try {

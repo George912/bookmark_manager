@@ -13,7 +13,7 @@ import java.util.List;
  * <li>delete(T t)</li>
  * <li>update(T t)</li>
  * <li>getAll()</li>
- * <li>getById(int id)</li>
+ * <li>getById(Long id)</li>
  * <ol/>
  */
 public interface GenericDAO<T> {
@@ -63,5 +63,5 @@ public interface GenericDAO<T> {
      * @throws DAOException исключение, описывающее возникшую
      *                      проблемную ситуацию в процессе взаимодействия с хранилищем данных.
      */
-    T getById(int id) throws DAOException;
+    T getById(Long id) throws DAOException;
 }

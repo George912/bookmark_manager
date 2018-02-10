@@ -100,7 +100,7 @@ public class BookmarkDaoImpl implements GenericDAO<Bookmark> {
 
     @Override
     @Transactional(readOnly = true)
-    public Bookmark getById(int id) throws DAOException {
+    public Bookmark getById(Long id) throws DAOException {
         LOGGER.debug("Call getById method: id = " + id);
         Session session;
         try {
