@@ -22,7 +22,8 @@ public class CategoryController {
     public CategoryController() {
     }
 
-    public CategoryController(CategoryService categoryService) {
+    @Autowired
+    public void setCategoryService(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
@@ -40,6 +41,7 @@ public class CategoryController {
         try {
             if (categoryService != null) {
                 categories = categoryService.list();
+                LOGGER.debug("category list for presentation: "+categories);
                 model.addAttribute("categories", categories);
             }
         } catch (ServiceException e) {

@@ -34,6 +34,10 @@
                 http://qaru.site/questions/20701/import-maven-dependencies-in-intellij-idea
                 + перезагрузить idea
             </li>
+            <li>
+                <h4>не отображаются атрибуты модели в jspx</h4>
+                https://stackoverflow.com/questions/2168832/expression-language-in-jsp-not-working
+            </li>
         </ol>
     </li>
 </ol>
