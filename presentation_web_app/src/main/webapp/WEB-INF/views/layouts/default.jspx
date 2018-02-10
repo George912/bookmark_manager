@@ -13,12 +13,13 @@
 
     <c:set var="userLocale">
         <c:set var="plocale">${pageContext.response.locale}</c:set>
-        <с:out value=" $ { fn: replace (plocale, ' ', ' - ') } " default="en" />
+        <c:out value=" $ { fn: replace (plocale, ' ', ' - ') } " default="en" />
     </c:set>
 
-    <spring:message code="application_name" var="app_name" htmlEscape="false"/>
+    <!--<spring:message code="application_name" var="app_name" htmlEscape="false"/>-->
     <title>
-        <spring:message code="welcome hЗ" arguments="${app_name}" />
+        <!--<spring:message code="welcome hЗ" arguments="${app_name}" />-->
+        test
     </title>
 </head>
 

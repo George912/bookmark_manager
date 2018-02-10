@@ -35,27 +35,6 @@ public class TestController {
     @RequestMapping(method = RequestMethod.GET)
     public String test(Model model) {
         try {
-            Context ctx = new InitialContext();
-            DataSource ds = (DataSource) ctx.lookup("java:/comp/env/jdbc/empDS");
-            Connection conn = null;
-            try {
-                conn = ds.getConnection();
-                Statement statement = conn.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT * FROM bookmark_manager_schema.categories");
-                while (resultSet.next()) {
-                    LOGGER.debug("================Data from DB: " + resultSet.getInt("ID"));
-                }
-            } finally {
-                if (conn != null) {
-                    conn.close();
-                }
-            }
-        } catch (Exception e) {
-            LOGGER.debug("=================Exception: ", e);
-        }
-        model.addAttribute("msg", "Hello Spring!");
-
-        try {
             if (categoryService != null) {
                 List<Category> categories = categoryService.list();
                 for (Category category : categories) {
@@ -68,6 +47,6 @@ public class TestController {
         } catch (ServiceException e) {
             LOGGER.debug("Exception while receiving category list: ", e);
         }
-        return "test";
+        return "categories/list";
     }
 }

@@ -1,9 +1,9 @@
-<?xml version="l.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE tiles-definitions PUBLIC
         "-//Apache Software Foundation//DTD Tiles Configuration 2 .1//EN"
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
-    <definition name="default" template="/WEB-INF/layouts/default.jspx">
+    <definition name="default" template="/WEB-INF/views/layouts/default.jspx">
         <put-attribute name="header" value="/WEB-INF/views/structure/header.jspx" />
         <put-attribute name="navigation" value="/WEB-INF/views/structure/navigation.jspx" />
         <put-attribute name="footer" value="/WEB-INF/views/structure/footer.jspx" />
