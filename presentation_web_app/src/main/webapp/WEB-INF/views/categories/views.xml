@@ -8,4 +8,7 @@
     <definition extends="default" name="categories/editor">
         <put-attribute name="body" value="/WEB-INF/views/categories/editor.jspx"/>
     </definition>
+    <definition extends="default" name="categories/viewer">
+        <put-attribute name="body" value="/WEB-INF/views/categories/viewer.jspx"/>
+    </definition>
 </tiles-definitions>

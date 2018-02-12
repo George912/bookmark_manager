@@ -62,7 +62,7 @@ public class CategoryController {
      * @param model
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET, path = "/{id}")
+    @RequestMapping(method = RequestMethod.GET, path = "category/{id}")
     public String info(@PathVariable("id") Long id, Model model){
         Category category;
         LOGGER.debug("call info method");
@@ -75,6 +75,6 @@ public class CategoryController {
         } catch (ServiceException e) {
             LOGGER.debug("Exception while receiving category: ", e);
         }
-        return "categories/editor";
+        return "categories/viewer";
     }
 }
