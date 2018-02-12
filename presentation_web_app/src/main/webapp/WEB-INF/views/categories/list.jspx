@@ -3,14 +3,16 @@
      xmlns:c="http://java.sun.com/jsp/jstl/core"
      version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:directive.page isELIgnored="false"/>
+    ${pageContext.setAttribute('categoryEditorUrl', 'categories/category/')}
     <jsp:output omit-xml-declaration="yes"/>
     <!--<spring:message code="label contact list" var="labelContactList"/>-->
 
-    <c:out value="${categories}"/>
+    <!--<c:out value="${categories}"/>-->
 
     <hl>${labelCategoryList}</hl>
     <c:if test="${not empty categories}">
-        <tаble>
+        <tаble border="1">
             <thead>
             <tr>
                 <th>${labelCategoryName}</th>
@@ -19,10 +21,16 @@
             <tbody>
             <c:forEach items="${categories}" var="category">
                 <tr>
-                    <td>${category.name}</td>
+                    <td>
+                        ${category.name}
+                        <a href="${pageContext.getAttribute('categoryEditorUrl', 1).concat(category.id)}">${categoryMsg}</a>
+                        ${pageContext.getAttribute('categoryEditorUrl', 1).concat(category.id)}
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>
         </tаble>
     </c:if>
+    <hl>${categoriesNotFoundMsg}</hl>
+    <a href="${pageContext.getAttribute('categoryEditorUrl', 1).concat('-1')}">${categoryMsg}</a>
 </div>
