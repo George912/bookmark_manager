@@ -3,6 +3,7 @@ package ru.bellintegrator.db.service.impl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 import ru.bellintegrator.db.dao.GenericDAO;
 import ru.bellintegrator.db.exception.DAOException;
 import ru.bellintegrator.db.exception.ServiceException;
@@ -15,6 +16,7 @@ import java.util.List;
  * Created by YANesterov on 24.01.2018.
  * Реализация BookmarkService.
  */
+@Service("bookmarkService")
 public class BookmarkServiceImpl implements BookmarkService {
     private static final Logger LOGGER = Logger.getLogger(BookmarkServiceImpl.class);
     private GenericDAO<Bookmark> dao;

@@ -73,7 +73,7 @@ public class CategoryController {
                 model.addAttribute("category", category);
             }
         } catch (ServiceException e) {
-            LOGGER.debug("Exception while receiving category: ", e);
+            LOGGER.debug("Exception while receiving category: ", e.getCause());
         }
         return "categories/viewer";
     }

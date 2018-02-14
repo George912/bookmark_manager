@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page"
+     xmlns:spring="http://www.springframework.org/tags"
+     version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:directive.page isELIgnored="false"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <!--<spring:message code="label_contact_info" var="labelContactinfo"/>-->
+    <spring:url value="/bookmarks/bookmark/editor" var="editorBookmarkUrl"/>
+
+    <div id="bookmarkInfo">
+        <table border="1" width="90%">
+            <tr>
+                <td></td>
+                <td colspan="2">
+                    <h3>${bookmark.name}</h3>
+                </td>
+                <td ></td>
+                <td></td>
+                <td>
+                    <!--todo:image-->
+                    <a href="${editorBookmarkUrl}/${bookmark.id}">${editorBookmarkUrl}/${bookmark.id}</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="http://bipbap.ru/wp-content/uploads/2017/10/0_8eb56_842bba74_XL-220x220.jpg" alt="фото"/>
+                </td>
+                <td></td>
+                <td>
+                    <textarea id="description" cols="30" rows="5" readonly="true" wrap="soft" colspan="3">
+                        ${bookmark.description}
+                    </textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <textarea id="url" cols="30" rows="1" readonly="true" colspan="5">
+                        ${bookmark.url}
+                    </textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

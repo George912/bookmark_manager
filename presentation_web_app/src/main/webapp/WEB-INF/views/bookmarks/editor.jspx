@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page"
+     xmlns:c="http://java.sun.com/jsp/jstl/core"
+     xmlns:spring="http://www.springframework.org/tags" xmlns:form="http://www.springframework.org/tags/form"
+     version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:directive.page isELIgnored="false"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <!--<spring:message code="label_contact_info" var="labelContactinfo"/>-->
+    <spring:url value="/bookmarks/bookmark/" var="showBookmarkUrl"/>
+    <spring:url value="/bookmarks/create/" var="createBookmarkUrl"/>
+    <spring:url value="/bookmarks/delete/" var="deleteBookmarkUrl"/>
+    <spring:url value="/bookmarks/deleteAll" var="deleteAllBookmarksUrl"/>
+    <spring:url value="/bookmarks/edit/" var="editBookmarkUrl"/>
+
+    <div id="categoryInfo">
+        <table border="1" width="90%">
+            <tr>
+                <td>
+                    <h1>${category.name}</h1>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <!--todo:checkeditor-->
+                    ${description}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <textarea id="description" cols="30" rows="10"/>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <!--todo: fill from category-->
+                    ${parent}
+                    <select id="parent">
+                        <option value="${category.id}">${category.id}</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <c:if test="${not empty category.bookmarks}">
+                        <tаble border="1" width="90%">
+                            <thead>
+                                <tr>
+                                    <th>${labelIcon}</th>
+                                    <th>${labelName}</th>
+                                    <th>${labelUrl}</th>
+                                    <th>${labelShow}</th>
+                                    <th>${labelEdit}</th>
+                                    <th>${labelDelete}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${category.bookmarks}" var="bookmark">
+                                    <tr>
+                                        <td>
+                                            <!--todo:output icon-->
+                                            ${bookmark.icon}
+                                        </td>
+                                        <td>
+                                            ${bookmark.name}
+                                        </td>
+                                        <td>
+                                            ${bookmark.url}
+                                        </td>
+                                        <td>
+                                            <!--todo:image-->
+                                            <a href="${showBookmarkUrl}/${bookmark.id}">${showBookmarkUrl}/${bookmark.id}</a>
+                                        </td>
+                                        <td>
+                                            <!--todo:image-->
+                                            <a href="${editBookmarkUrl}/${bookmark.id}">{editBookmarkUrl}/${bookmark.id}</a>
+                                        </td>
+                                        <td>
+                                            <!--todo:image-->
+                                            <a href="${deleteBookmarkUrl}/${bookmark.id}">${deleteBookmarkUrl}/${bookmark.id}</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </tаble>
+                    </c:if>
+                </td>
+                <td>
+                    <!--todo:image-->
+                    <a href="${createBookmarkUrl}/${bookmark.id}">${deleteBookmarkUrl}/${bookmark.id}</a>
+                    <!--todo:image-->
+                    <a href="${deleteAllBookmarksUrl}">${deleteAllBookmarksUrl}</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
