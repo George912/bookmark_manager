@@ -5,10 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.bellintegrator.db.exception.ServiceException;
+import ru.bellintegrator.db.model.Bookmark;
 import ru.bellintegrator.db.service.BookmarkService;
 
 @Controller
@@ -25,6 +26,14 @@ public class BookmarkController {
         this.bookmarkService = bookmarkService;
     }
 
+    /**
+     * Получает закладку по id из источника данных
+     * и передаёт в представление для просмотра детальной информации
+     *
+     * @param id
+     * @param model
+     * @return
+     */
     @GetMapping("bookmark/viewer")
     public String info(@RequestParam(value = "bookmarkId") Long id, Model model) {
         LOGGER.debug("Call info(id=" + id + ")");
@@ -38,4 +47,31 @@ public class BookmarkController {
         }
         return "bookmarks/viewer";
     }
+
+    @GetMapping("bookmark/editor")
+    public String edit(@RequestParam(value = "bookmarkId") Long id, Model model) {
+        LOGGER.debug("Call edit(id=" + id + ")");
+        Bookmark bookmark;
+
+        //todo: ?spring exception resolver
+        try {
+            if (id != -1) {
+                bookmark = bookmarkService.findById(id);
+            } else {
+                bookmark = new Bookmark("for test", "for test");
+            }
+            model.addAttribute("bookmark", bookmark);
+
+        } catch (ServiceException e) {
+            LOGGER.error("Exception while retrieving bookmark: ", e.getCause());
+        }
+
+        return "bookmarks/editor";
+    }
+
+    @PostMapping("bookmark/editor/process")
+    public String process() {
+        return "categories/list";
+    }
+
 }

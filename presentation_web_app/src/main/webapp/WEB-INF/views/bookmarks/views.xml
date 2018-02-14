@@ -5,4 +5,7 @@
     <definition extends="default" name="bookmarks/viewer">
         <put-attribute name="body" value="/WEB-INF/views/bookmarks/viewer.jspx"/>
     </definition>
+    <definition extends="default" name="bookmarks/editor">
+        <put-attribute name="body" value="/WEB-INF/views/bookmarks/editor.jspx"/>
+    </definition>
 </tiles-definitions>
