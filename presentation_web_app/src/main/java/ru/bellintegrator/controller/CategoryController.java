@@ -4,9 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import ru.bellintegrator.db.exception.ServiceException;
 import ru.bellintegrator.db.model.Category;
 import ru.bellintegrator.db.service.CategoryService;
@@ -57,8 +55,8 @@ public class CategoryController {
      * @param model
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET, path = "category/{id}")
-    public String info(@PathVariable("id") Long id, Model model){
+    @GetMapping("category/viewer")
+    public String info(@RequestParam(value = "categoryId") Long id, Model model){
         Category category;
         LOGGER.debug("call info method");
 

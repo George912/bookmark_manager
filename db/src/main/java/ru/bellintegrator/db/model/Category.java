@@ -39,6 +39,9 @@ public class Category implements Serializable {
     @OneToMany(mappedBy = "category")
     private Set<Bookmark> bookmarks;
 
+    @Transient
+    private Category parent;
+
     public Category() {
         this.createDate = new Timestamp(System.currentTimeMillis());
         this.bookmarks = new HashSet<>();
@@ -112,32 +115,44 @@ public class Category implements Serializable {
         this.categories = categories;
     }
 
+    public Category getParent() {
+        return parent;
+    }
+
+    public void setParent(Category parent) {
+        this.parent = parent;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Category)) return false;
 
         Category category = (Category) o;
 
-        if (version != category.version) return false;
-        if (!id.equals(category.id)) return false;
-        if (!name.equals(category.name)) return false;
-        if (description != null ? !description.equals(category.description) : category.description != null)
+        if (getVersion() != category.getVersion()) return false;
+        if (!getId().equals(category.getId())) return false;
+        if (!getName().equals(category.getName())) return false;
+        if (getDescription() != null ? !getDescription().equals(category.getDescription()) : category.getDescription() != null)
             return false;
-        if (!createDate.equals(category.createDate)) return false;
-        if (categories != null ? !categories.equals(category.categories) : category.categories != null) return false;
-        return bookmarks != null ? bookmarks.equals(category.bookmarks) : category.bookmarks == null;
+        if (!getCreateDate().equals(category.getCreateDate())) return false;
+        if (getCategories() != null ? !getCategories().equals(category.getCategories()) : category.getCategories() != null)
+            return false;
+        if (getBookmarks() != null ? !getBookmarks().equals(category.getBookmarks()) : category.getBookmarks() != null)
+            return false;
+        return getParent() != null ? getParent().equals(category.getParent()) : category.getParent() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + name.hashCode();
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + createDate.hashCode();
-        result = 31 * result + (categories != null ? categories.hashCode() : 0);
-        result = 31 * result + version;
-        result = 31 * result + (bookmarks != null ? bookmarks.size() : 0);
+        int result = getId().hashCode();
+        result = 31 * result + getName().hashCode();
+        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
+        result = 31 * result + getCreateDate().hashCode();
+        result = 31 * result + (getCategories() != null ? getCategories().hashCode() : 0);
+        result = 31 * result + getVersion();
+        result = 31 * result + (getBookmarks() != null ? getBookmarks().hashCode() : 0);
+        result = 31 * result + (getParent() != null ? getParent().hashCode() : 0);
         return result;
     }
 
@@ -148,9 +163,10 @@ public class Category implements Serializable {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", createDate=" + createDate +
-                ", categoriesCount=" + categories.size() +
+                ", categoriesSize=" + categories.size() +
                 ", version=" + version +
-                ", bookmarksCount=" + bookmarks.size() +
+                ", bookmarksSize=" + bookmarks.size() +
+                ", parent=" + parent +
                 '}';
     }
 }
