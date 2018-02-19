@@ -162,7 +162,7 @@ public class Bookmark implements Serializable {
                 ", description='" + description + '\'' +
                 ", icon=" + Arrays.toString(icon) +
                 ", createDate=" + createDate +
-                ", categoryId=" + category.getId() +
+//                ", categoryId=" + category != null && category.getId() != null ? category.getId().toString() : "empty" +
                 ", version=" + version +
                 '}';
     }

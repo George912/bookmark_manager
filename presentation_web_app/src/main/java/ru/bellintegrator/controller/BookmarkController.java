@@ -4,13 +4,19 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.bellintegrator.db.exception.ServiceException;
 import ru.bellintegrator.db.model.Bookmark;
 import ru.bellintegrator.db.service.BookmarkService;
+import ru.bellintegrator.utils.UrlUtil;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 @Controller
 @RequestMapping("/bookmarks")
@@ -49,7 +55,7 @@ public class BookmarkController {
     }
 
     @GetMapping("bookmark/editor")
-    public String edit(@RequestParam(value = "bookmarkId") Long id, Model model) {
+    public String showEditor(@RequestParam(value = "bookmarkId") Long id, Model model) {
         LOGGER.debug("Call edit(id=" + id + ")");
         Bookmark bookmark;
 
@@ -69,9 +75,18 @@ public class BookmarkController {
         return "bookmarks/editor";
     }
 
-    @PostMapping("bookmark/editor/process")
-    public String process() {
-        return "categories/list";
-    }
+    @PostMapping(value = "bookmark/editor")
+    public String update(Bookmark bookmark, BindingResult bindingResult, Model model,
+                         HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
+        LOGGER.debug("Call update(bookmark=" + bookmark + ")");
 
+        //todo: check bindingResult, id(add or update)
+        try {
+            bookmarkService.update(bookmark);
+
+        } catch (ServiceException e) {
+            LOGGER.error("Exception while updating bookmark: ", e);
+        }
+        return "redirect:viewer?bookmarkId=" + UrlUtil.encodeUrlPathSegment(bookmark.getId().toString(), httpServletRequest);
+    }
 }
