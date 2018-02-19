@@ -9,22 +9,30 @@
     <!--<spring:message code="label_contact_info" var="labelContactinfo"/>-->
     <spring:url value="/bookmarks/bookmark/editor" var="editorBookmarkUrl"/>
 
-    <div id="bookmarkInfo">
-        <form:form method="post" action="editor/process">
+    <div id="bookmarkEditor">
+        <form:form modelAttribute="bookmark" id="bookmarkUpdateForm" method="post">
             <table border="1" width="90%">
                 <tr>
-                    <td>${nameLabel}</td>
-                    <td colspan="2">
-                        <h3>${bookmark.name}</h3>
+                    <td>
+                        <form:label path="name">
+                            ${nameLabel}
+                        </form:label>
                     </td>
-                    <td ></td>
+                    <td colspan="2">
+                        <form:input path="name"/>
+                    </td>
+                    <td></td>
                     <td></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
-                    <td>${descriptionLabel}</td>
+                    <td>
+                        <form:label path="description">
+                            ${descriptionLabel}
+                        </form:label>
+                    </td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -32,19 +40,19 @@
                     <td></td>
                     <td></td>
                     <td colspan="3">
-                        <textarea id="description" cols="30" rows="5" readonly="false" wrap="soft">
-                            ${bookmark.description}
-                        </textarea>
+                        <form:textarea path="description" cols="30" rows="5" id="bookmarkDescription"/>
                     </td>
                     <td></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td>${urlLabel}</td>
+                    <td>
+                        <form:label path="url">
+                            ${urlLabel}
+                        </form:label>
+                    </td>
                     <td colspan="5">
-                        <textarea id="url" cols="30" rows="1" readonly="false" >
-                            ${bookmark.url}
-                        </textarea>
+                        <form:input path="url"/>
                     </td>
                     <td></td>
                     <td></td>
@@ -54,11 +62,19 @@
                     <td></td>
                     <td></td>
                     <td>
-                        <input type="submit" value="${submit}" />
+                        <form:button type="submit">
+                            ${submitLable}
+                            ok
+                        </form:button>
+                        <form:button type="reset">
+                            ${resetLable}
+                            cancel
+                        </form:button>
                     </td>
                     <td></td>
                     <td>
-                        <input type="hidden" name="id" value="${bookmark.id}" />
+                        <form:hidden path="id"/>
+                        <form:hidden path="version"/>
                     </td>
                 </tr>
             </table>

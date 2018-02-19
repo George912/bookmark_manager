@@ -40,4 +40,10 @@
             </li>
         </ol>
     </li>
+    <li>
+        <h2>TODOs</h2>
+        <ol>
+            <li>Настроить git атрибуты для файлов context.xml и pom.xml</li>
+        </ol>
+    </li>
 </ol>
