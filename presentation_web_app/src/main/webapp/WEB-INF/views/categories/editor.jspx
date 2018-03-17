@@ -8,12 +8,10 @@
     <jsp:directive.page isELIgnored="false"/>
     <jsp:output omit-xml-declaration="yes"/>
     <!--<spring:message code="label_contact_info" var="labelContactinfo"/>-->
-    <spring:url value="/bookmarks/bookmark/" var="showBookmarkUrl"/>
-    <spring:url value="/bookmarks/create/" var="createBookmarkUrl"/>
-    <spring:url value="/bookmarks/delete/" var="deleteBookmarkUrl"/>
+    <spring:url value="bookmarks/viewer?bookmarkId=" var="showBookmarkUrl"/>
+    <spring:url value="/bookmarks/editor?bookmarkId=-1" var="createBookmarkUrl"/>
+    <spring:url value="/bookmarks/bookmark/delete" var="deleteBookmarkUrl"/>
     <spring:url value="/bookmarks/deleteAll" var="deleteAllBookmarksUrl"/>
-    <spring:url value="/bookmarks/edit/" var="editBookmarkUrl"/>
-    <spring:url value="/categories/category/editor?categoryId=" var="categoryEditorUrl"/>
 
     <div id="categoryInfo">
         <form:form modelAttribute="category" id="categoryInfoForm" method="get">
@@ -21,13 +19,12 @@
                 <tr>
                     <td>
                         <form:label path="name">
-                            <h2>${category.name}</h2>
+                            name
                         </form:label>
-                        <td></td>
                         <td>
-                            <!--todo:image-->
-                            <a href="${categoryEditorUrl}${category.id}">${categoryEditorUrl}${category.id}</a>
+                            <form:input path="name" />
                         </td>
+                        <td></td>
                     </td>
                 </tr>
                 <tr>
@@ -53,10 +50,16 @@
                         </form:label>
                     </td>
                     <td>
-                        <form:label path="parent">
-                            <!--todo: calculate with EL-->
-                            ${category.parent}
-                        </form:label>
+                        <form:select path="parent">
+                            <form:option value="null" label="none"/>
+                            <c:if test="${not empty categoryList}">
+                                <!--todo:select parent-->
+                                <!--<form:options items="${categoryList}" itemValue="${id}" itemLabel="${name}"/>-->
+                                <c:forEach items="${categoryList}" var="cgy">
+                                    <form:option value="${cgy.id}" label="${cgy.name}"/>
+                                </c:forEach>
+                            </c:if>
+                        </form:select>
                     </td>
                     <td></td>
                 </tr>
@@ -98,11 +101,7 @@
                                         </td>
                                         <td>
                                             <!--todo:image-->
-                                            <a href="${showBookmarkUrl}/${bookmark.id}">${showBookmarkUrl}/${bookmark.id}</a>
-                                        </td>
-                                        <td>
-                                            <!--todo:image-->
-                                            <a href="${editBookmarkUrl}/${bookmark.id}">{editBookmarkUrl}/${bookmark.id}</a>
+                                            <a href="${showBookmarkUrl}${bookmark.id}">${showBookmarkUrl}${bookmark.id}</a>
                                         </td>
                                         <td>
                                             <!--todo:image-->
@@ -115,32 +114,21 @@
                         </c:if>
                     </td>
                     <td></td>
+                    <td>
+                        <!--todo:image-->
+                        <a href="${createBookmarkUrl}">${createBookmarkUrl}</a>
+                        <br />
+                        <!--todo:image-->
+                        <a href="${deleteAllBookmarksUrl}">${deleteAllBookmarksUrl}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="Save Changes" />
+                    </td>
                     <td></td>
                 </tr>
-                <!--move to editor-->
-                <!--<tr>-->
-                <!--<td>-->
-                <!--&lt;!&ndash;todo: fill from category&ndash;&gt;-->
-                <!--${parent}-->
-                <!--<select id="parent">-->
-                <!--<option value="${category.id}">${category.id}</option>-->
-                <!--</select>-->
-                <!--</td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                <!--<td></td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                <!--<td>-->
-
-                <!--</td>-->
-                <!--<td>-->
-                <!--&lt;!&ndash;todo:image&ndash;&gt;-->
-                <!--<a href="${createBookmarkUrl}/${bookmark.id}">${deleteBookmarkUrl}/${bookmark.id}</a>-->
-                <!--&lt;!&ndash;todo:image&ndash;&gt;-->
-                <!--<a href="${deleteAllBookmarksUrl}">${deleteAllBookmarksUrl}</a>-->
-                <!--</td>-->
-                <!--</tr>-->
             </table>
         </form:form>
     </div>
