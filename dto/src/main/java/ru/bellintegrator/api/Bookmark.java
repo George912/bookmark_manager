@@ -1,11 +1,12 @@
 package java.ru.bellintegrator.api;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
  * API DTO сущности "Закладка"
  */
-public interface Bookmark {
+public interface Bookmark extends Serializable {
     Long getId();
     String getName();
     String getUrl();
