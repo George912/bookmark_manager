@@ -1,6 +1,14 @@
 # bookmark_manager
 <ol>
     <li>
+        <h2>Application start</h2>
+        <ul>
+            <li>build project: mvn install</li>
+            <li>start embedded tomcat and deploy application: tomcat plugin:run</li>
+            <li>go to http://localhost:8080/categories</li>
+        </ul>
+    </li>
+    <li>
         <h2>Database credentials:</h2>
         login: YANESTEROV <br>
         password: online <br>
