@@ -45,6 +45,7 @@ public class Category implements Serializable {
     public Category() {
         this.createDate = new Timestamp(System.currentTimeMillis());
         this.bookmarks = new HashSet<>();
+        this.categories = new HashSet<>();
     }
 
     public Category(String name) {

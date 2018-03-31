@@ -4,16 +4,18 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.bellintegrator.db.exception.ServiceException;
 import ru.bellintegrator.db.model.Category;
 import ru.bellintegrator.db.service.CategoryService;
+import ru.bellintegrator.utils.UrlUtil;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 @RequestMapping("/categories")
@@ -100,5 +102,20 @@ public class CategoryController {
         }
 
         return "categories/editor";
+    }
+
+    @PostMapping(value = "category/editor")
+    public String update(Category category, BindingResult bindingResult, Model model,
+                         HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
+        LOGGER.debug("Call update(category=" + category + ")");
+
+        //todo: check bindingResult, id(add or update)
+        try {
+            categoryService.update(category);
+
+        } catch (ServiceException e) {
+            LOGGER.error("Exception while updating category: ", e);
+        }
+        return "redirect:viewer?categoryId=" + UrlUtil.encodeUrlPathSegment(category.getId().toString(), httpServletRequest);
     }
 }

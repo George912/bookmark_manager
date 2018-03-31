@@ -14,7 +14,7 @@
     <spring:url value="/bookmarks/deleteAll" var="deleteAllBookmarksUrl"/>
 
     <div id="categoryInfo">
-        <form:form modelAttribute="category" id="categoryInfoForm" method="get">
+        <form:form modelAttribute="category" id="categoryInfoForm" method="post">
             <table border="1" width="90%">
                 <tr>
                     <td>
@@ -125,9 +125,19 @@
                 <tr>
                     <td></td>
                     <td>
-                        <input type="submit" value="Save Changes" />
+                        <form:button type="submit">
+                            ${submitLable}
+                            ok
+                        </form:button>
+                        <form:button type="reset">
+                            ${resetLable}
+                            cancel
+                        </form:button>
                     </td>
-                    <td></td>
+                    <td>
+                        <form:hidden path="id"/>
+                        <form:hidden path="version"/>
+                    </td>
                 </tr>
             </table>
         </form:form>
