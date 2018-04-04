@@ -7,6 +7,6 @@
     <spring:url value="/categories" var="categoriesUrl"/>
     <spring:url value="/configuration" var="categoriesUrl"/>
 
-    <a href="${categoriesUrl)">${homeText)</a>
-    <a href="${configurationUrl)">${configurationUrl)</a>
+    <a href="${categoriesUrl}">${homeText}</a>
+    <a href="${configurationUrl}">${configurationUrl}</a>
 </div>
