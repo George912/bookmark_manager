@@ -1,5 +1,7 @@
 package ru.bellintegrator.db.model;
 
+import ru.bellintegrator.db.listener.HierarchyListener;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -11,8 +13,9 @@ import java.util.Set;
  * Таблица: categories
  */
 @Entity
+@EntityListeners({HierarchyListener.class})
 @Table(schema = "bookmark_manager_schema", name = "CATEGORIES")
-public class Category implements Serializable {
+public class Category implements Serializable, IHierarchyElement {
     private static final long serialVersionUID = -4759397049790260072L;
 
     @Id
@@ -28,25 +31,27 @@ public class Category implements Serializable {
     @Column(name = "CREATE_DATE")
     private Timestamp createDate;
 
-    @OneToMany
-    @JoinColumn(name = "PARENT_ID")
-    private Set<Category> categories;
-
     @Version
     @Column(name = "VERSION")
     private int version;
 
+    @Column(name = "LEVEL", nullable = false)
+    private Short level;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TOP_ID")
+    private Category top;
+
     @OneToMany(mappedBy = "category")
     private Set<Bookmark> bookmarks;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "PARENT_ID")
     private Category parent;
 
     public Category() {
         this.createDate = new Timestamp(System.currentTimeMillis());
         this.bookmarks = new HashSet<>();
-        this.categories = new HashSet<>();
     }
 
     public Category(String name) {
@@ -54,10 +59,9 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-    public Category(String name, String description, Set<Category> categories, Set<Bookmark> bookmarks) {
+    public Category(String name, String description, Set<Bookmark> bookmarks) {
         this(name);
         this.description = description;
-        this.categories = categories;
         this.bookmarks = bookmarks;
     }
 
@@ -109,66 +113,32 @@ public class Category implements Serializable {
         this.bookmarks = bookmarks;
     }
 
-    public Set<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
-    }
-
+    @Override
     public Category getParent() {
         return parent;
     }
 
+    @Override
+    public Short getLevel() {
+        return level;
+    }
+
+    @Override
+    public void setLevel(Short level) {
+        this.level = level;
+    }
+
+    @Override
+    public Category getTop() {
+        return top;
+    }
+
+    @Override
+    public void setTop(IHierarchyElement top) {
+        this.top = (Category) top;
+    }
+
     public void setParent(Category parent) {
         this.parent = parent;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Category)) return false;
-
-        Category category = (Category) o;
-
-        if (getVersion() != category.getVersion()) return false;
-        if (!getId().equals(category.getId())) return false;
-        if (!getName().equals(category.getName())) return false;
-        if (getDescription() != null ? !getDescription().equals(category.getDescription()) : category.getDescription() != null)
-            return false;
-        if (!getCreateDate().equals(category.getCreateDate())) return false;
-        if (getCategories() != null ? !getCategories().equals(category.getCategories()) : category.getCategories() != null)
-            return false;
-        if (getBookmarks() != null ? !getBookmarks().equals(category.getBookmarks()) : category.getBookmarks() != null)
-            return false;
-        return getParent() != null ? getParent().equals(category.getParent()) : category.getParent() == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getId().hashCode();
-        result = 31 * result + getName().hashCode();
-        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
-        result = 31 * result + getCreateDate().hashCode();
-        result = 31 * result + (getCategories() != null ? getCategories().hashCode() : 0);
-        result = 31 * result + getVersion();
-        result = 31 * result + (getBookmarks() != null ? getBookmarks().hashCode() : 0);
-        result = 31 * result + (getParent() != null ? getParent().hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Category{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", createDate=" + createDate +
-                ", categoriesSize=" + categories.size() +
-                ", version=" + version +
-                ", bookmarksSize=" + bookmarks.size() +
-                ", parent=" + parent +
-                '}';
     }
 }

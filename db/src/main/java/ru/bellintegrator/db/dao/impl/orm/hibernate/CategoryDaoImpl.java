@@ -69,8 +69,10 @@ public class CategoryDaoImpl implements GenericDAO<Category> {
             persistCategory.setDescription(category.getDescription());
             persistCategory.setName(category.getName());
             persistCategory.setVersion(category.getVersion());
-            persistCategory.setCategories(category.getCategories());
             persistCategory.setBookmarks(category.getBookmarks());
+            persistCategory.setLevel(category.getLevel());
+            persistCategory.setParent(category.getParent());
+            persistCategory.setTop(category.getTop());
             session.update(persistCategory);
 
         } catch (HibernateException e) {
