@@ -10,8 +10,8 @@ import java.util.Set;
  * Категория закладки.
  * Таблица: categories
  */
-@Entity()
-@Table(name = "CATEGORIES", schema = "bookmark_manager_schema" )
+@Entity
+@Table(schema = "bookmark_manager_schema", name = "CATEGORIES")
 public class Category implements Serializable {
     private static final long serialVersionUID = -4759397049790260072L;
 
@@ -28,9 +28,8 @@ public class Category implements Serializable {
     @Column(name = "CREATE_DATE")
     private Timestamp createDate;
 
-    @Transient
-//    @OneToMany
-//    @JoinColumn(name = "PARENT_ID")
+    @OneToMany
+    @JoinColumn(name = "PARENT_ID")
     private Set<Category> categories;
 
     @Version
@@ -40,8 +39,8 @@ public class Category implements Serializable {
     @OneToMany(mappedBy = "category")
     private Set<Bookmark> bookmarks;
 
-//    @ManyToOne
-    @Transient
+    @OneToOne
+    @JoinColumn(name = "PARENT_ID")
     private Category parent;
 
     public Category() {
