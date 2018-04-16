@@ -17,7 +17,7 @@
         Modify META-INF/context.xml and pom.xml
         <ol>
             <li><b>Job:</b> C:\Users\YANesterov\.m2\repository\com\h2database\h2\1.4.196\h2-1.4.196.jar</li>
-            <li><b>Home:</b> jdbc:h2:file:C:\Users\neste_000.MYMACHINE\.m2\repository\com\h2database\h2\1.4.196\h2-1.4.196.jar</li>
+            <li><b>Home:</b> C:\Users\neste_000.MYMACHINE\.m2\repository\com\h2database\h2\1.4.196\h2-1.4.196.jar</li>
         </ol>
         <h3>sql-maven-plugin versions</h3>
         Modify bookmark_manager/pom.xml. Set sql.version property:
@@ -60,12 +60,15 @@
                 Причина:
                 Решение:
             </li>
+            <li>
+                <h4>org.hibernate.TransientObjectException: object references an unsaved transient instance</h4>
+            </li>
         </ol>
     </li>
     <li>
         <h2>TODOs</h2>
         <ol>
-            <li>remote debug configuration</li>
+            <li>debug configuration</li>
         </ol>
     </li>
 </ol>

@@ -2,5 +2,5 @@ bookmark_manager.iml
 /.idea/
 target/
 out/
-/db/db.iml
-/presentation_web_app/presentation_web_app.iml
+db/db.iml
+presentation_web_app/presentation_web_app.iml

@@ -51,12 +51,20 @@
                     </td>
                     <td>
                         <form:select path="parent">
+                            //fill component and set selected value
                             <form:option value="null" label="none"/>
                             <c:if test="${not empty categoryList}">
                                 <!--todo:select parent-->
                                 <!--<form:options items="${categoryList}" itemValue="${id}" itemLabel="${name}"/>-->
                                 <c:forEach items="${categoryList}" var="cgy">
-                                    <form:option value="${cgy.id}" label="${cgy.name}"/>
+                                    <c:choose>
+                                        <c:when test="${category.parent != null and category.parent.id eq cgy.id}">
+                                            <form:option value="${cgy.id}" label="${cgy.name}" selected="selected"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <form:option value="${cgy.id}" label="${cgy.name}" />
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:forEach>
                             </c:if>
                         </form:select>
