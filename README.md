@@ -69,6 +69,16 @@
         <h2>TODOs</h2>
         <ol>
             <li>debug configuration</li>
+            <li>spring config move in container project</li>
+        </ol>
+    </li>
+    <li>
+        <h2>How to</h2>
+        <ol>
+            <li>
+            <b>debug configuration:</b>
+            https://stackoverflow.com/questions/40703688/how-to-run-tomcat7-maven-plugin-in-debug-mode-with-intellij-idea
+            </li>
         </ol>
     </li>
 </ol>

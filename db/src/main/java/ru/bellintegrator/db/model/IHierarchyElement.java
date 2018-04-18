@@ -13,4 +13,8 @@ public interface IHierarchyElement {
     IHierarchyElement getTop();
 
     void setTop(IHierarchyElement top);
+
+    Long getParentId();
+
+    void setParentId(Long parentId);
 }

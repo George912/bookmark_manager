@@ -1,14 +1,17 @@
 package ru.bellintegrator.db.listener;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 import ru.bellintegrator.db.model.IHierarchyElement;
 
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+//todo: don't work
 
 /**
  * Листенер для поддержания данных модели списка смежности
  */
+@Service("hierarchyListener")
 public class HierarchyListener {
     private static final Logger LOGGER = Logger.getLogger(HierarchyListener.class);
 
@@ -27,9 +30,9 @@ public class HierarchyListener {
         }
 
         //set top
-        if (parent == null) {
+        if (entity.getParentId() == null) {
             entity.setTop(entity);
-        } else {
+        } else if (parent != null) {
             entity.setTop(parent.getTop());
         }
     }

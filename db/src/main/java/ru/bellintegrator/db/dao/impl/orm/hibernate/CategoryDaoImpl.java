@@ -61,7 +61,7 @@ public class CategoryDaoImpl implements GenericDAO<Category> {
     public void update(Category category) throws DAOException {
         LOGGER.debug("Call update method: category = " + category);
         Session session;
-
+//todo: valid setup fields: parent, top
         try {
             session = sessionFactory.getCurrentSession();
             Category persistCategory = (Category) session.get(Category.class, category.getId());
@@ -71,8 +71,16 @@ public class CategoryDaoImpl implements GenericDAO<Category> {
             persistCategory.setVersion(category.getVersion());
             persistCategory.setBookmarks(category.getBookmarks());
             persistCategory.setLevel(category.getLevel());
-            persistCategory.setParent(category.getParent());
-            persistCategory.setTop(category.getTop());
+            Category parent = null;
+            if(category.getParentId()!=null){
+                parent = (Category) session.get(Category.class, category.getParentId());
+            }
+            persistCategory.setParent(parent);
+            Category top = null;
+            if(category.getTop()!=null){
+                top = (Category) session.get(Category.class, category.getTop().getId());
+            }
+            persistCategory.setTop(top);
             session.update(persistCategory);
 
         } catch (HibernateException e) {

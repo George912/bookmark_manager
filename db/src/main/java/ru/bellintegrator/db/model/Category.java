@@ -45,9 +45,12 @@ public class Category implements Serializable, IHierarchyElement {
     @OneToMany(mappedBy = "category")
     private Set<Bookmark> bookmarks;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH})
     @JoinColumn(name = "PARENT_ID")
     private Category parent;
+
+    @Transient
+    private Long parentId;
 
     public Category() {
         this.createDate = new Timestamp(System.currentTimeMillis());
@@ -138,6 +141,16 @@ public class Category implements Serializable, IHierarchyElement {
     }
 
     @Override
+    public Long getParentId() {
+        return parentId;
+    }
+
+    @Override
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
+    @Override
     public void setTop(IHierarchyElement top) {
         this.top = (Category) top;
     }
@@ -156,7 +169,6 @@ public class Category implements Serializable, IHierarchyElement {
             return false;
         if (!createDate.equals(category.createDate)) return false;
         if (!level.equals(category.level)) return false;
-        if (top != null ? !top.equals(category.top) : category.top != null) return false;
         if (bookmarks != null ? !bookmarks.equals(category.bookmarks) : category.bookmarks != null) return false;
         return parent != null ? parent.equals(category.parent) : category.parent == null;
     }
@@ -187,6 +199,7 @@ public class Category implements Serializable, IHierarchyElement {
         sb.append(", top.id=").append(top != null ? top.id : null);
         sb.append(", bookmarks.size=").append(bookmarks.size());
         sb.append(", parent.id=").append(parent != null ? parent.id : null);
+        sb.append(", parentId=").append(parentId);
         sb.append('}');
         return sb.toString();
     }
