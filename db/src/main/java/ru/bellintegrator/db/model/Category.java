@@ -54,6 +54,7 @@ public class Category implements Serializable, IHierarchyElement {
     public Category() {
         this.createDate = new Timestamp(System.currentTimeMillis());
         this.bookmarks = new HashSet<>();
+        this.level = 0;
     }
 
     public Category(String name) {

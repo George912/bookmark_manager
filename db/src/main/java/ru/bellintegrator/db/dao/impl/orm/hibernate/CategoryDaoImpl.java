@@ -76,11 +76,13 @@ public class CategoryDaoImpl implements GenericDAO<Category> {
                 parent = (Category) session.get(Category.class, category.getParentId());
             }
             persistCategory.setParent(parent);
-            Category top = null;
-            if (category.getTop() != null) {
-                top = (Category) session.get(Category.class, category.getTop().getId());
+            if (parent == null) {
+                persistCategory.setTop(category);
+                persistCategory.setLevel((short) 0);
+            }else if(parent != null){
+                persistCategory.setTop(parent.getTop());
+                persistCategory.setLevel((short) (parent.getLevel() + 1));
             }
-            persistCategory.setTop(top);
             session.update(persistCategory);
 
         } catch (HibernateException e) {

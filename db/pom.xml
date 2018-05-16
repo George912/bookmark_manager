@@ -58,6 +58,13 @@
             <artifactId>hibernate-jpa-2.1-api</artifactId>
             <version>${jpa.version}</version>
         </dependency>
+
+        <!--core-->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import ru.bellintegrator.db.dao.GenericDAO;
 import ru.bellintegrator.db.exception.DAOException;
 import ru.bellintegrator.db.exception.ServiceException;
-import ru.bellintegrator.db.listener.HierarchyListener;
 import ru.bellintegrator.db.model.Category;
 import ru.bellintegrator.db.service.CategoryService;
 
@@ -21,7 +20,6 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService {
     private static final Logger LOGGER = Logger.getLogger(CategoryServiceImpl.class);
     private GenericDAO<Category> dao;
-    private HierarchyListener hierarchyListener;
 
     public CategoryServiceImpl() {
         LOGGER.info("CategoryService instance created");
@@ -33,17 +31,10 @@ public class CategoryServiceImpl implements CategoryService {
         this.dao = dao;
     }
 
-    @Autowired
-    @Qualifier("hierarchyListener")
-    public void setHierarchyListener(HierarchyListener hierarchyListener) {
-        this.hierarchyListener = hierarchyListener;
-    }
-
     @Override
     public void add(Category category) throws ServiceException {
         LOGGER.debug("Call add method: category = " + category);
         try {
-            hierarchyListener.setLevelAndTop(category);
             dao.create(category);
 
         } catch (DAOException e) {
@@ -56,7 +47,6 @@ public class CategoryServiceImpl implements CategoryService {
     public void update(Category category) throws ServiceException {
         LOGGER.debug("Call update method: category = " + category);
         try {
-            hierarchyListener.setLevelAndTop(category);
             dao.update(category);
 
         } catch (DAOException e) {
