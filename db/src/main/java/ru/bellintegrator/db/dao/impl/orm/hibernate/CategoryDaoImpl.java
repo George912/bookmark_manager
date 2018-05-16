@@ -72,12 +72,12 @@ public class CategoryDaoImpl implements GenericDAO<Category> {
             persistCategory.setBookmarks(category.getBookmarks());
             persistCategory.setLevel(category.getLevel());
             Category parent = null;
-            if(category.getParentId()!=null){
+            if (category.getParentId() != null) {
                 parent = (Category) session.get(Category.class, category.getParentId());
             }
             persistCategory.setParent(parent);
             Category top = null;
-            if(category.getTop()!=null){
+            if (category.getTop() != null) {
                 top = (Category) session.get(Category.class, category.getTop().getId());
             }
             persistCategory.setTop(top);

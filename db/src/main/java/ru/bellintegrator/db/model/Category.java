@@ -1,6 +1,6 @@
 package ru.bellintegrator.db.model;
 
-import ru.bellintegrator.db.listener.HierarchyListener;
+import ru.bellintegrator.hierarchy.IHierarchyElement;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,7 +13,6 @@ import java.util.Set;
  * Таблица: categories
  */
 @Entity
-@EntityListeners({HierarchyListener.class})
 @Table(schema = "bookmark_manager_schema", name = "CATEGORIES")
 public class Category implements Serializable, IHierarchyElement {
     private static final long serialVersionUID = -4759397049790260072L;

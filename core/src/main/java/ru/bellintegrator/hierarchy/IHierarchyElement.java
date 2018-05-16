@@ -1,4 +1,4 @@
-package ru.bellintegrator.db.model;
+package ru.bellintegrator.hierarchy;
 
 /**
  * Интерфейс для реализации и поддержки иерархических данных
