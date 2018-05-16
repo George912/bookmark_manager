@@ -12,6 +12,7 @@
         <module>recovery</module>
         <module>presentation_web_app</module>
         <module>dto</module>
+        <module>core</module>
     </modules>
 
     <properties>

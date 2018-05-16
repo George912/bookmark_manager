@@ -4,3 +4,5 @@ target/
 out/
 db/db.iml
 presentation_web_app/presentation_web_app.iml
+core/core.iml
+core/target
