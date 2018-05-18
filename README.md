@@ -70,6 +70,11 @@
         <ol>
             <li>debug configuration</li>
             <li>spring config move in container project</li>
+                <h5>today:</h5>
+                <ul>
+                    <li>implements setting model parent attributes through aop: algoritm, implmetation</li>
+                    <li>test category editor(parent)</li>
+                </ul>
         </ol>
     </li>
     <li>
@@ -78,17 +83,6 @@
             <li>
             <b>debug configuration:</b>
             https://stackoverflow.com/questions/40703688/how-to-run-tomcat7-maven-plugin-in-debug-mode-with-intellij-idea
-            </li>
-        </ol>
-    </li>
-     <li>
-        <h2>tasks</h2>
-        <ol>
-            <li>
-            </li>
-            <li>
-            </li>
-            <li>
             </li>
         </ol>
     </li>
