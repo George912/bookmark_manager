@@ -3,11 +3,11 @@
      xmlns:spring="http://www.springframework.org/tags" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <spring:message code="common.homeHeader" var="homeHeader"/>
-    <spring:message code="common.configurationHeader" var="configurationHeader"/>
+    <spring:message code="home" var="home"/>
+    <spring:message code="configuration" var="configuration"/>
     <spring:url value="/categories" var="categoriesUrl"/>
     <spring:url value="/configuration" var="categoriesUrl"/>
 
-    <a href="${categoriesUrl}">${homeHeader}</a>
-    <a href="${configurationHeader}">${configurationUrl}</a>
+    <a href="${categoriesUrl}">${home}</a>
+    <a href="${configurationHeader}">${configuration}</a>
 </div>

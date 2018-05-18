@@ -5,8 +5,8 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:directive.page isELIgnored="false"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <spring:message code="bookmark.descriptionHeader" var="descriptionHeader"/>
-    <spring:message code="bookmark.urlHeader" var="urlHeader"/>
+    <spring:message code="description" var="description"/>
+    <spring:message code="url" var="url"/>
     <spring:url value="/bookmarks/bookmark/editor" var="editorBookmarkUrl"/>
 
     <div id="bookmarkInfo">
@@ -16,7 +16,7 @@
                 <td colspan="2">
                     <h3>${bookmark.name}</h3>
                 </td>
-                <td>${descriptionHeader}</td>
+                <td>${description}</td>
                 <td></td>
                 <td>
                     <!--todo:image-->
@@ -35,7 +35,7 @@
                 </td>
             </tr>
             <tr>
-                <td>${urlHeader}</td>
+                <td>${url}</td>
             </tr>
             <tr>
                 <td>

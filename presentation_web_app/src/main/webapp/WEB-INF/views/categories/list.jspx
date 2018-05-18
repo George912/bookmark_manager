@@ -8,16 +8,16 @@
     <jsp:directive.page isELIgnored="false"/>
     <jsp:output omit-xml-declaration="yes"/>
     <spring:url value="/categories/category/" var="categoryEditorUrl"/>
-    <spring:message code="categories.header" var="categoriesHeader"/>
-    <spring:message code="categories.notFoundMsg" var="categoriesNotFoundMsg"/>
-    <spring:message code="category.nameHeader" var="categoryNameHeader"/>
+    <spring:message code="categories" var="categories"/>
+    <spring:message code="categoryNotFound" var="categoryNotFound"/>
+    <spring:message code="name" var="name"/>
 
-    <hl>${categoriesHeader}</hl>
+    <hl>${categories}</hl>
     <c:if test="${not empty categories}">
         <tаble border="1">
             <thead>
             <tr>
-                <th>${categoryNameHeader}</th>
+                <th>${name}</th>
             </tr>
             </thead>
             <tbody>
@@ -32,6 +32,6 @@
             </tbody>
         </tаble>
     </c:if>
-    <hl>${categoriesNotFoundMsg}</hl>
+    <hl>${categoryNotFound}</hl>
     <a href="${categoryEditorUrl.concat('-1')}">${categoryEditorUrl.concat('-1')}</a>
 </div>

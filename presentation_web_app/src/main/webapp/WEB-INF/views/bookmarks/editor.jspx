@@ -6,10 +6,11 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:directive.page isELIgnored="false"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <spring:message code="bookmark.descriptionHeader" var="descriptionHeader"/>
-    <spring:message code="bookmark.urlHeader" var="urlHeader"/>
-    <spring:message code="common.submitButtonHeader" var="submitButtonHeader"/>
-    <spring:message code="common.cancelButtonHeader" var="cancelButtonHeader"/>
+    <spring:message code="description" var="description"/>
+    <spring:message code="url" var="url"/>
+    <spring:message code="name" var="name"/>
+    <spring:message code="submit" var="submit"/>
+    <spring:message code="cancel" var="cancel"/>
     <spring:url value="/bookmarks/bookmark/editor" var="editorBookmarkUrl"/>
 
     <div id="bookmarkEditor">
@@ -18,7 +19,7 @@
                 <tr>
                     <td>
                         <form:label path="name">
-                            ${nameLabel}
+                            ${name}
                         </form:label>
                     </td>
                     <td colspan="2">
@@ -33,7 +34,7 @@
                     <td></td>
                     <td>
                         <form:label path="description">
-                            ${descriptionHeader}
+                            ${description}
                         </form:label>
                     </td>
                     <td></td>
@@ -51,7 +52,7 @@
                 <tr>
                     <td>
                         <form:label path="url">
-                            ${urlHeader}
+                            ${url}
                         </form:label>
                     </td>
                     <td colspan="5">
@@ -66,11 +67,11 @@
                     <td></td>
                     <td>
                         <form:button type="submit">
-                            ${submitButtonHeader}
+                            ${submit}
                             ok
                         </form:button>
                         <form:button type="reset">
-                            ${cancelButtonHeader}
+                            ${cancel}
                             cancel
                         </form:button>
                     </td>

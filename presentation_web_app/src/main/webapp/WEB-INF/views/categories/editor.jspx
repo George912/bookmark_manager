@@ -7,18 +7,18 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:directive.page isELIgnored="false"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <spring:message code="category.nameHeader" var="nameHeader"/>
-    <spring:message code="category.descriptionHeader" var="descriptionHeader"/>
-    <spring:message code="category.parentHeader" var="parentHeader"/>
-    <spring:message code="category.bookmarkListHeader" var="bookmarkListHeader"/>
-    <spring:message code="common.bookmarkIconTH" var="bookmarkIconTH"/>
-    <spring:message code="common.bookmarkNameTH" var="bookmarkNameTH"/>
-    <spring:message code="common.bookmarkUrlTH" var="bookmarkUrlTH"/>
-    <spring:message code="common.bookmarkShowTH" var="bookmarkShowTH"/>
-    <spring:message code="common.bookmarkEditTH" var="bookmarkEditTH"/>
-    <spring:message code="common.bookmarkDeleteTH" var="bookmarkDeleteTH"/>
-    <spring:message code="common.submitButtonHeader" var="submitButtonHeader"/>
-    <spring:message code="common.cancelButtonHeader" var="cancelButtonHeader"/>
+    <spring:message code="name" var="name"/>
+    <spring:message code="description" var="description"/>
+    <spring:message code="parent" var="parent"/>
+    <spring:message code="bookmarkList" var="bookmarkList"/>
+    <spring:message code="bookmarkIconTH" var="bookmarkIconTH"/>
+    <spring:message code="bookmarkNameTH" var="bookmarkNameTH"/>
+    <spring:message code="bookmarkUrlTH" var="bookmarkUrlTH"/>
+    <spring:message code="bookmarkShowTH" var="bookmarkShowTH"/>
+    <spring:message code="bookmarkEditTH" var="bookmarkEditTH"/>
+    <spring:message code="bookmarkDeleteTH" var="bookmarkDeleteTH"/>
+    <spring:message code="submit" var="submit"/>
+    <spring:message code="cancel" var="cancel"/>
     <spring:url value="bookmarks/viewer?bookmarkId=" var="showBookmarkUrl"/>
     <spring:url value="/bookmarks/editor?bookmarkId=-1" var="createBookmarkUrl"/>
     <spring:url value="/bookmarks/bookmark/delete" var="deleteBookmarkUrl"/>
@@ -30,7 +30,7 @@
                 <tr>
                     <td>
                         <form:label path="name">
-                            ${nameHeader}
+                            ${name}
                         </form:label>
                         <td>
                             <form:input path="name" />
@@ -42,7 +42,7 @@
                     <td></td>
                     <td>
                         <form:label path="description">
-                            ${descriptionHeader}
+                            ${description}
                         </form:label>
                     </td>
                     <td></td>
@@ -57,7 +57,7 @@
                 <tr>
                     <td>
                         <form:label path="parent">
-                            ${parentHeader}
+                            ${parent}
                         </form:label>
                     </td>
                     <td>
@@ -84,7 +84,7 @@
                     <td></td>
                     <td>
                         <form:label path="bookmarks">
-                            ${bookmarkListHeader}
+                            ${bookmarkList}
                         </form:label>
                     </td>
                     <td></td>
@@ -143,11 +143,11 @@
                     <td></td>
                     <td>
                         <form:button type="submit">
-                            ${submitButtonHeader}
+                            ${submit}
                             ok
                         </form:button>
                         <form:button type="reset">
-                            ${cancelButtonHeader}
+                            ${cancel}
                             cancel
                         </form:button>
                     </td>

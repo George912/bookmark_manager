@@ -7,13 +7,13 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:directive.page isELIgnored="false"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <spring:message code="category.descriptionHeader" var="descriptionHeader"/>
-    <spring:message code="category.parentHeader" var="parentHeader"/>
-    <spring:message code="category.bookmarkListHeader" var="bookmarkListHeader"/>
-    <spring:message code="common.bookmarkIconTH" var="bookmarkIconTH"/>
-    <spring:message code="common.bookmarkNameTH" var="bookmarkNameTH"/>
-    <spring:message code="common.bookmarkUrlTH" var="bookmarkUrlTH"/>
-    <spring:message code="common.bookmarkShowTH" var="bookmarkShowTH"/>
+    <spring:message code="description" var="description"/>
+    <spring:message code="parent" var="parent"/>
+    <spring:message code="bookmarkList" var="bookmarkList"/>
+    <spring:message code="bookmarkIconTH" var="bookmarkIconTH"/>
+    <spring:message code="bookmarkNameTH" var="bookmarkNameTH"/>
+    <spring:message code="bookmarkUrlTH" var="bookmarkUrlTH"/>
+    <spring:message code="bookmarkShowTH" var="bookmarkShowTH"/>
 
     <spring:url value="/bookmarks/bookmark/viewer?bookmarkId=" var="showBookmarkUrl"/>
     <spring:url value="/bookmarks/create/" var="createBookmarkUrl"/>
@@ -41,7 +41,7 @@
                     <td></td>
                     <td>
                         <form:label path="description">
-                            ${descriptionHeader}
+                            ${description}
                         </form:label>
                     </td>
                     <td></td>
@@ -56,7 +56,7 @@
                 <tr>
                     <td>
                         <form:label path="parent">
-                            ${parentHeader}
+                            ${parent}
                         </form:label>
                     </td>
                     <td>
