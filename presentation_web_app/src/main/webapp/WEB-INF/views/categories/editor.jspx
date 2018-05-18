@@ -7,7 +7,18 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:directive.page isELIgnored="false"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <!--<spring:message code="label_contact_info" var="labelContactinfo"/>-->
+    <spring:message code="category.nameHeader" var="nameHeader"/>
+    <spring:message code="category.descriptionHeader" var="descriptionHeader"/>
+    <spring:message code="category.parentHeader" var="parentHeader"/>
+    <spring:message code="category.bookmarkListHeader" var="bookmarkListHeader"/>
+    <spring:message code="common.bookmarkIconTH" var="bookmarkIconTH"/>
+    <spring:message code="common.bookmarkNameTH" var="bookmarkNameTH"/>
+    <spring:message code="common.bookmarkUrlTH" var="bookmarkUrlTH"/>
+    <spring:message code="common.bookmarkShowTH" var="bookmarkShowTH"/>
+    <spring:message code="common.bookmarkEditTH" var="bookmarkEditTH"/>
+    <spring:message code="common.bookmarkDeleteTH" var="bookmarkDeleteTH"/>
+    <spring:message code="common.submitButtonHeader" var="submitButtonHeader"/>
+    <spring:message code="common.cancelButtonHeader" var="cancelButtonHeader"/>
     <spring:url value="bookmarks/viewer?bookmarkId=" var="showBookmarkUrl"/>
     <spring:url value="/bookmarks/editor?bookmarkId=-1" var="createBookmarkUrl"/>
     <spring:url value="/bookmarks/bookmark/delete" var="deleteBookmarkUrl"/>
@@ -19,7 +30,7 @@
                 <tr>
                     <td>
                         <form:label path="name">
-                            name
+                            ${nameHeader}
                         </form:label>
                         <td>
                             <form:input path="name" />
@@ -31,7 +42,7 @@
                     <td></td>
                     <td>
                         <form:label path="description">
-                            ${descriptionLabel}
+                            ${descriptionHeader}
                         </form:label>
                     </td>
                     <td></td>
@@ -46,7 +57,7 @@
                 <tr>
                     <td>
                         <form:label path="parent">
-                            ${parentLabel}
+                            ${parentHeader}
                         </form:label>
                     </td>
                     <td>
@@ -73,7 +84,7 @@
                     <td></td>
                     <td>
                         <form:label path="bookmarks">
-                            ${bookmarksLabel}
+                            ${bookmarkListHeader}
                         </form:label>
                     </td>
                     <td></td>
@@ -84,12 +95,12 @@
                             <tаble border="1" width="90%">
                                 <thead>
                                 <tr>
-                                    <th>${labelIcon}</th>
-                                    <th>${labelName}</th>
-                                    <th>${labelUrl}</th>
-                                    <th>${labelShow}</th>
-                                    <th>${labelEdit}</th>
-                                    <th>${labelDelete}</th>
+                                    <th>${bookmarkIconTH}</th>
+                                    <th>${bookmarkNameTH}</th>
+                                    <th>${bookmarkUrlTH}</th>
+                                    <th>${bookmarkShowTH}</th>
+                                    <th>${bookmarkEditTH}</th>
+                                    <th>${bookmarkDeleteTH}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -132,11 +143,11 @@
                     <td></td>
                     <td>
                         <form:button type="submit">
-                            ${submitLable}
+                            ${submitButtonHeader}
                             ok
                         </form:button>
                         <form:button type="reset">
-                            ${resetLable}
+                            ${cancelButtonHeader}
                             cancel
                         </form:button>
                     </td>

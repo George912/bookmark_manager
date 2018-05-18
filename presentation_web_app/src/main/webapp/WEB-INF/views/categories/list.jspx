@@ -7,15 +7,17 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:directive.page isELIgnored="false"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <!--<spring:message code="label contact list" var="labelContactList"/>-->
     <spring:url value="/categories/category/" var="categoryEditorUrl"/>
+    <spring:message code="categories.header" var="categoriesHeader"/>
+    <spring:message code="categories.notFoundMsg" var="categoriesNotFoundMsg"/>
+    <spring:message code="category.nameHeader" var="categoryNameHeader"/>
 
-    <hl>${labelCategoryList}</hl>
+    <hl>${categoriesHeader}</hl>
     <c:if test="${not empty categories}">
         <tаble border="1">
             <thead>
             <tr>
-                <th>${labelCategoryName}</th>
+                <th>${categoryNameHeader}</th>
             </tr>
             </thead>
             <tbody>

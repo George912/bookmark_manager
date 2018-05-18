@@ -7,7 +7,14 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:directive.page isELIgnored="false"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <!--<spring:message code="label_contact_info" var="labelContactinfo"/>-->
+    <spring:message code="category.descriptionHeader" var="descriptionHeader"/>
+    <spring:message code="category.parentHeader" var="parentHeader"/>
+    <spring:message code="category.bookmarkListHeader" var="bookmarkListHeader"/>
+    <spring:message code="common.bookmarkIconTH" var="bookmarkIconTH"/>
+    <spring:message code="common.bookmarkNameTH" var="bookmarkNameTH"/>
+    <spring:message code="common.bookmarkUrlTH" var="bookmarkUrlTH"/>
+    <spring:message code="common.bookmarkShowTH" var="bookmarkShowTH"/>
+
     <spring:url value="/bookmarks/bookmark/viewer?bookmarkId=" var="showBookmarkUrl"/>
     <spring:url value="/bookmarks/create/" var="createBookmarkUrl"/>
     <spring:url value="/bookmarks/delete/" var="deleteBookmarkUrl"/>
@@ -34,7 +41,7 @@
                     <td></td>
                     <td>
                         <form:label path="description">
-                            ${descriptionLabel}
+                            ${descriptionHeader}
                         </form:label>
                     </td>
                     <td></td>
@@ -49,7 +56,7 @@
                 <tr>
                     <td>
                         <form:label path="parent">
-                            ${parentLabel}
+                            ${parentHeader}
                         </form:label>
                     </td>
                     <td>
@@ -64,7 +71,7 @@
                     <td></td>
                     <td>
                         <form:label path="bookmarks">
-                            ${bookmarksLabel}
+                            ${bookmarkListHeader}
                         </form:label>
                     </td>
                     <td></td>
@@ -75,10 +82,10 @@
                             <tаble border="1" width="90%">
                                 <thead>
                                 <tr>
-                                    <th>${labelIcon}</th>
-                                    <th>${labelName}</th>
-                                    <th>${labelUrl}</th>
-                                    <th>${labelShow}</th>
+                                    <th>${bookmarkIconTH}</th>
+                                    <th>${bookmarkNameTH}</th>
+                                    <th>${bookmarkUrlTH}</th>
+                                    <th>${bookmarkShowTH}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
