@@ -144,11 +144,9 @@
                     <td>
                         <form:button type="submit">
                             ${submit}
-                            ok
                         </form:button>
                         <form:button type="reset">
                             ${cancel}
-                            cancel
                         </form:button>
                     </td>
                     <td>
