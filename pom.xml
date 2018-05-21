@@ -35,13 +35,16 @@
         <compiler.version>3.3</compiler.version>
         <war.version>2.1.1</war.version>
         <tomcat.version>2.2</tomcat.version>
-        <sql.version>3.0.0-SNAPSHOT</sql.version>
+        <sql.version>3.0.0</sql.version>
 
         <!--db module-->
         <jdbc.driver>org.h2.Driver</jdbc.driver>
-        <jdbc.url>jdbc:h2:file:C:\Users\neste_000.MYMACHINE\.m2\repository\com\h2database\h2\1.4.196\h2-1.4.196.jar</jdbc.url>
+        <jdbc.url>jdbc:h2:file:C:\Users\YANesterov\.m2\repository\com\h2database\h2\1.4.196\h2-1.4.196.jar</jdbc.url>
         <jdbc.username>YANESTEROV</jdbc.username>
         <jdbc.password>online</jdbc.password>
+
+        <!-- AspectJ -->
+        <aspectj.version>1.7.4</aspectj.version>
     </properties>
 
     <dependencies>
@@ -69,6 +72,19 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>${hibernate.validation.version}</version>
+        </dependency>
+
+        <!-- AspectJ dependencies -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>${aspectj.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjtools</artifactId>
+            <version>${aspectj.version}</version>
         </dependency>
     </dependencies>
 

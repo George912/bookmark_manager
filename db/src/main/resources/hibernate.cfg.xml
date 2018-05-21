@@ -13,7 +13,7 @@
         <property name="hibernate.show_sql">true</property>
 
         <!-- Mapping with model class containing annotations -->
-        <mapping class="ru.bellintegrator.db.model.Bookmark"/>
-        <mapping class="ru.bellintegrator.db.model.Category"/>
+        <mapping class="ru.bellintegrator.model.Bookmark"/>
+        <mapping class="ru.bellintegrator.model.Category"/>
     </session-factory>
 </hibernate-configuration>

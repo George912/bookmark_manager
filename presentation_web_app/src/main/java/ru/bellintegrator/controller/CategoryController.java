@@ -8,7 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.bellintegrator.db.exception.ServiceException;
-import ru.bellintegrator.db.model.Category;
+import ru.bellintegrator.model.Category;
 import ru.bellintegrator.db.service.CategoryService;
 import ru.bellintegrator.utils.UrlUtil;
 

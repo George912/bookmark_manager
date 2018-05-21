@@ -1,6 +1,6 @@
 package ru.bellintegrator.db.service;
 
-import ru.bellintegrator.db.model.Category;
+import ru.bellintegrator.model.Category;
 
 /**
  * Created by YANesterov on 24.01.2018.

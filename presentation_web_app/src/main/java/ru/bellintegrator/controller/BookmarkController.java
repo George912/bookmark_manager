@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import ru.bellintegrator.db.dao.impl.orm.hibernate.BookmarkDaoImpl;
+import ru.bellintegrator.db.exception.DAOException;
 import ru.bellintegrator.db.exception.ServiceException;
-import ru.bellintegrator.db.model.Bookmark;
+import ru.bellintegrator.model.Bookmark;
 import ru.bellintegrator.db.service.BookmarkService;
 import ru.bellintegrator.utils.UrlUtil;
 
@@ -43,6 +45,20 @@ public class BookmarkController {
     @GetMapping("bookmark/viewer")
     public String info(@RequestParam(value = "bookmarkId") Long id, Model model) {
         LOGGER.debug("Call info(id=" + id + ")");
+
+        try {
+            if (bookmarkService != null) {
+                bookmarkService.add(new Bookmark("asd", "dsf"));
+                LOGGER.debug("bookmarkService == null");
+            }
+            BookmarkDaoImpl dao = new BookmarkDaoImpl();
+            dao.create(new Bookmark("asd", "dsf"));
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+
 
         //todo: ?spring exception resolver
         try {

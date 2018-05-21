@@ -1,6 +1,6 @@
 package ru.bellintegrator.db.service;
 
-import ru.bellintegrator.db.model.Bookmark;
+import ru.bellintegrator.model.Bookmark;
 
 /**
  * Created by YANesterov on 24.01.2018.

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.bellintegrator.db.dao.GenericDAO;
 import ru.bellintegrator.db.exception.DAOException;
 import ru.bellintegrator.db.exception.ServiceException;
-import ru.bellintegrator.db.model.Category;
+import ru.bellintegrator.model.Category;
 import ru.bellintegrator.db.service.CategoryService;
 
 import java.util.List;
