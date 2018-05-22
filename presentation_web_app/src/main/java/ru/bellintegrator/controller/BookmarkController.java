@@ -84,7 +84,11 @@ public class BookmarkController {
 
         //todo: check bindingResult, id(add or update)
         try {
-            bookmarkService.update(bookmark);
+            if(bookmark.getId()!=null){
+                bookmarkService.update(bookmark);
+            }else{
+                bookmarkService.add(bookmark);
+            }
 
         } catch (ServiceException e) {
             LOGGER.error("Exception while updating bookmark: ", e);
