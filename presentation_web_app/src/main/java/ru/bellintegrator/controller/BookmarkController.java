@@ -46,20 +46,6 @@ public class BookmarkController {
     public String info(@RequestParam(value = "bookmarkId") Long id, Model model) {
         LOGGER.debug("Call info(id=" + id + ")");
 
-        try {
-            if (bookmarkService != null) {
-                bookmarkService.add(new Bookmark("asd", "http://www.byteslounge.com/imgs/fbbllogo.png"));
-                LOGGER.debug("bookmarkService == null");
-            }
-            BookmarkDaoImpl dao = new BookmarkDaoImpl();
-            dao.create(new Bookmark("asd", "dsf"));
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        } catch (DAOException e) {
-            e.printStackTrace();
-        }
-
-
         //todo: ?spring exception resolver
         try {
             model.addAttribute("bookmark", bookmarkService.findById(id));

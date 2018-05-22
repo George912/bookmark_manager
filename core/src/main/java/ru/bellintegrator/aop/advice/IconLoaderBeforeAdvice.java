@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 
 /**
@@ -32,20 +33,20 @@ public class IconLoaderBeforeAdvice {
     @Before("@annotation(ru.bellintegrator.aop.AdviceRequired)")
     public void before(JoinPoint joinPoint) {
         LOGGER.debug("call before(method=" + joinPoint.getSignature().getName() + ", arg=" + joinPoint.getArgs()[0] + ")");
-        LOGGER.debug("aop in work");
         Bookmark bookmark = (Bookmark) joinPoint.getArgs()[0];
         byte[] iconBytes = null;
         try {
             URL faviconURL = new URL(bookmark.getUrl());
-            iconBytes = loadIcon(new File(faviconURL.toURI()));
+            iconBytes = loadIcon(faviconURL.openStream());
             LOGGER.debug("load icon from url");
         } catch (Exception e) {
+            LOGGER.debug("icon url: " + bookmark.getUrl());
             LOGGER.debug(ICON_LOAD_EXCEPTION, e);
         }
 
         if (iconBytes == null) {
             try {
-                iconBytes = loadIcon(resourceLoader.getResource("classpath:" + DEFAULT_ICON_PATH).getFile());
+                iconBytes = loadIcon(resourceLoader.getResource("classpath:" + DEFAULT_ICON_PATH).getInputStream());
                 LOGGER.debug("load default icon");
             } catch (IOException e) {
                 LOGGER.debug(ICON_LOAD_EXCEPTION, e);
@@ -60,13 +61,12 @@ public class IconLoaderBeforeAdvice {
      * @param file файл иконки
      * @return массив байт
      */
-    private byte[] loadIcon(Object file) {
-        LOGGER.debug("call loadIcon(" + file + ")");
+    private byte[] loadIcon(InputStream inputStream) {
+        LOGGER.debug("call loadIcon(" + inputStream + ")");
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
-            if(file.getClass())
-            ImageIO.write(ImageIO.read(file), "png", baos);
+            ImageIO.write(ImageIO.read(inputStream), "png", baos);
             baos.flush();
         } catch (IOException e) {
             LOGGER.debug(ICON_LOAD_EXCEPTION, e);
