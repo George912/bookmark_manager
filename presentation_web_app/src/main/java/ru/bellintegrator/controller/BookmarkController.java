@@ -48,7 +48,7 @@ public class BookmarkController {
 
         try {
             if (bookmarkService != null) {
-                bookmarkService.add(new Bookmark("asd", "dsf"));
+                bookmarkService.add(new Bookmark("asd", "http://www.byteslounge.com/imgs/fbbllogo.png"));
                 LOGGER.debug("bookmarkService == null");
             }
             BookmarkDaoImpl dao = new BookmarkDaoImpl();
