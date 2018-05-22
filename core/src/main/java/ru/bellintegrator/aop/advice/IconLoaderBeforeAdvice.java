@@ -10,7 +10,6 @@ import ru.bellintegrator.model.Bookmark;
 
 import javax.imageio.ImageIO;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -58,7 +57,7 @@ public class IconLoaderBeforeAdvice {
     /**
      * Загружает иконку в массив байт
      *
-     * @param file файл иконки
+     * @param inputStream входной поток, содержащий иконку
      * @return массив байт
      */
     private byte[] loadIcon(InputStream inputStream) {
