@@ -15,6 +15,7 @@ import ru.bellintegrator.db.exception.DAOException;
 import ru.bellintegrator.db.exception.ServiceException;
 import ru.bellintegrator.model.Bookmark;
 import ru.bellintegrator.db.service.BookmarkService;
+import ru.bellintegrator.model.Category;
 import ru.bellintegrator.utils.UrlUtil;
 
 import javax.servlet.http.HttpServletRequest;

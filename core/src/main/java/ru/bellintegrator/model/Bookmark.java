@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import javax.persistence.SequenceGenerator;
 
 /**
  * Закладка.
@@ -15,7 +16,15 @@ public class Bookmark implements Serializable {
     private static final long serialVersionUID = 6293892023058834767L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE
+            , generator = "BOOKMARKS_SEQ"
+    )
+    @SequenceGenerator(
+            name = "BOOKMARKS_SEQ"
+            , sequenceName = "BOOKMARKS_SEQ"
+            , allocationSize = 1
+            , schema = "BOOKMARK_MANAGER_SCHEMA"
+    )
     private Long id;
 
     @Column(name = "NAME", length = 50)

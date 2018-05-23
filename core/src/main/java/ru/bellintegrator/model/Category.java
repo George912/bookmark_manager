@@ -18,7 +18,15 @@ public class Category implements Serializable, IHierarchyElement {
     private static final long serialVersionUID = -4759397049790260072L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE
+            , generator = "CATEGORIES_SEQ"
+    )
+    @SequenceGenerator(
+            name = "CATEGORIES_SEQ"
+            , sequenceName = "CATEGORIES_SEQ"
+            , allocationSize = 1
+            , schema = "BOOKMARK_MANAGER_SCHEMA"
+    )
     private Long id;
 
     @Column(name = "NAME", length = 50)
@@ -141,6 +149,11 @@ public class Category implements Serializable, IHierarchyElement {
     }
 
     @Override
+    public void setTop(IHierarchyElement top) {
+        this.top = (Category) top;
+    }
+
+    @Override
     public Long getParentId() {
         return parentId;
     }
@@ -148,11 +161,6 @@ public class Category implements Serializable, IHierarchyElement {
     @Override
     public void setParentId(Long parentId) {
         this.parentId = parentId;
-    }
-
-    @Override
-    public void setTop(IHierarchyElement top) {
-        this.top = (Category) top;
     }
 
     @Override

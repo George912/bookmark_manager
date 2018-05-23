@@ -27,14 +27,14 @@ public class BookmarkDaoImpl implements GenericDAO<Bookmark> {
 
     @Override
     @AdviceRequired
-    public int create(Bookmark bookmark) throws DAOException {
+    public Long create(Bookmark bookmark) throws DAOException {
         LOGGER.debug("Call create method: bookmark = " + bookmark);
         Session session;
-        int bookmarkId;
+        Long bookmarkId;
 
         try {
             session = sessionFactory.getCurrentSession();
-            bookmarkId = (int) session.save(bookmark);
+            bookmarkId = (Long) session.save(bookmark);
 
         } catch (HibernateException e) {
             LOGGER.error("Exception while creating bookmark: ", e);

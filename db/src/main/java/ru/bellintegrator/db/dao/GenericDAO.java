@@ -26,7 +26,7 @@ public interface GenericDAO<T> {
      * @throws DAOException исключение, описывающее возникшую
      *                      проблемную ситуацию в процессе взаимодействия с хранилищем данных.
      */
-    int create(T t) throws DAOException;
+    Long create(T t) throws DAOException;
 
     /**
      * Удаляет данные из хранилища об объекте, переданном в метод.

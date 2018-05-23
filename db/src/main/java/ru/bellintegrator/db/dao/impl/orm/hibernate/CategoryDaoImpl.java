@@ -25,14 +25,14 @@ public class CategoryDaoImpl implements GenericDAO<Category> {
     private SessionFactory sessionFactory;
 
     @Override
-    public int create(Category category) throws DAOException {
+    public Long create(Category category) throws DAOException {
         LOGGER.debug("Call create method: category = " + category);
         Session session;
-        int categoryId;
+        Long categoryId;
 
         try {
             session = sessionFactory.getCurrentSession();
-            categoryId = (int) session.save(category);
+            categoryId = (Long) session.save(category);
 
         } catch (HibernateException e) {
             LOGGER.error("Exception while creating category: ", e);

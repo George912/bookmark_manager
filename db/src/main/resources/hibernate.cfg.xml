@@ -11,6 +11,7 @@
         <property name="hibernate.jdbc.fetch_size">50</property>
         <property name="hibernate.jdbc.batch_size">10</property>
         <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.default_schema">BOOKMARK_MANAGER_SCHEMA</property>
 
         <!-- Mapping with model class containing annotations -->
         <mapping class="ru.bellintegrator.model.Bookmark"/>
