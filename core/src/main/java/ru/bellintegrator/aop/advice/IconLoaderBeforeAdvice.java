@@ -5,7 +5,9 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.ResourceLoader;
+import ru.bellintegrator.content.html.parser.IconUrlParser;
 import ru.bellintegrator.model.Bookmark;
 
 import javax.imageio.ImageIO;
@@ -22,12 +24,12 @@ import java.net.URL;
 @Aspect
 public class IconLoaderBeforeAdvice {
     private static final Logger LOGGER = Logger.getLogger(IconLoaderBeforeAdvice.class);
-    private static final String FAVICON_PATH = "icon.png";
     private static final String ICON_LOAD_EXCEPTION = "exception while load icon: ";
     private static final String DEFAULT_ICON_PATH = "ru/bellintegrator/img/default.png";
 
     @Autowired
     private ResourceLoader resourceLoader;
+    private IconUrlParser iconUrlParser;
 
     @Before("@annotation(ru.bellintegrator.aop.AdviceRequired)")
     public void before(JoinPoint joinPoint) {
@@ -35,7 +37,7 @@ public class IconLoaderBeforeAdvice {
         Bookmark bookmark = (Bookmark) joinPoint.getArgs()[0];
         byte[] iconBytes = null;
         try {
-            URL faviconURL = new URL(bookmark.getUrl());
+            URL faviconURL = iconUrlParser.rettrieveIconUrl(bookmark.getUrl());
             iconBytes = loadIcon(faviconURL.openStream());
             LOGGER.debug("load icon from url");
         } catch (Exception e) {
@@ -71,5 +73,11 @@ public class IconLoaderBeforeAdvice {
             LOGGER.debug(ICON_LOAD_EXCEPTION, e);
         }
         return baos.toByteArray();
+    }
+
+    @Autowired
+    @Qualifier("iconUrlParser")
+    public void setIconUrlParser(IconUrlParser iconUrlParser) {
+        this.iconUrlParser = iconUrlParser;
     }
 }
