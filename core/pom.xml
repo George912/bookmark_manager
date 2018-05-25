@@ -56,6 +56,13 @@
             <artifactId>jsoup</artifactId>
             <version>${jsoup.version}</version>
         </dependency>
+
+        <!--images processing-->
+        <dependency>
+            <groupId>org.jclarion</groupId>
+            <artifactId>image4j</artifactId>
+            <version>${image4j.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -38,10 +38,11 @@ public class IconLoaderBeforeAdvice {
         byte[] iconBytes = null;
         try {
             URL faviconURL = iconUrlParser.rettrieveIconUrl(bookmark.getUrl());
-            iconBytes = loadIcon(faviconURL.openStream());
-            LOGGER.debug("load icon from url");
+            if (faviconURL != null) {
+                iconBytes = loadIcon(faviconURL.openStream());
+                LOGGER.debug("load icon from url");
+            }
         } catch (Exception e) {
-            LOGGER.debug("icon url: " + bookmark.getUrl());
             LOGGER.debug(ICON_LOAD_EXCEPTION, e);
         }
 

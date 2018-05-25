@@ -21,11 +21,14 @@ import java.util.regex.Pattern;
 @Service("iconUrlParser")
 public class IconUrlParser {
     private static final Logger LOGGER = Logger.getLogger(IconUrlParser.class);
-    private static final String ICON_PATTERN = "(\\.net|\\.png|\\.gif|\\.ico)";
-    private static final String FULL_URL_PATTERN = "\"^((https?:\\\\/\\\\/){1}[a-z0-9._-]*)\"";
+    private static final String ICON_PATTERN = "(\\.{1}png|\\.{1}gif|\\.{1}ico|\\.{1}jpg|\\.{1}bmp|\\.{1}jpeg)";
+    private static final String ICO_ICON_PATTERN = ".{1}ico";
+    private static final String FULL_URL_PATTERN = "((https?:{1}/{2}){1}([a-z0-9._-]*){1})";
     private static final String INVALID_HREF_EXCEPTION_MESSAGE = "Method arg \"href\" must not be null";
     private static final String INVALID_URL_EXCEPTION_MESSAGE = "Method arg \"url\" must not be null";
     private static final String LINK_HREF_SELECTOR = "link[href]";
+    private static final String LINK_HREF_ATTR = "href";
+    private boolean icoUrl;
 
     public IconUrlParser() {
         LOGGER.info("IconUrlParser instance created");
@@ -58,12 +61,14 @@ public class IconUrlParser {
 
             if (linkElements != null) {
                 for (Element link : linkElements) {
-                    if (isUrlMatchPattern(link.text(), ICON_PATTERN, INVALID_HREF_EXCEPTION_MESSAGE)) {
-                        if (isUrlMatchPattern(link.text(), FULL_URL_PATTERN, INVALID_HREF_EXCEPTION_MESSAGE)) {
-                            return new URL(url);
+                    if (isUrlMatchPattern(link.attr(LINK_HREF_ATTR), ICON_PATTERN, INVALID_HREF_EXCEPTION_MESSAGE)) {
+                        icoUrl = isUrlMatchPattern(link.attr(LINK_HREF_ATTR), ICO_ICON_PATTERN, INVALID_HREF_EXCEPTION_MESSAGE);
+
+                        if (isUrlMatchPattern(link.attr(LINK_HREF_ATTR), FULL_URL_PATTERN, INVALID_HREF_EXCEPTION_MESSAGE)) {
+                            return new URL(link.attr(LINK_HREF_ATTR));
                         } else {
                             String site = retrieveSiteUrl(url, FULL_URL_PATTERN);
-                            return new URL(site + link.text());
+                            return new URL(site + link.attr(LINK_HREF_ATTR));
                         }
                     }
                 }
@@ -78,7 +83,12 @@ public class IconUrlParser {
     private String retrieveSiteUrl(String url, String pattern) {
         Pattern pat = Pattern.compile(pattern);
         Matcher matcher = pat.matcher(url);
-        return matcher.group(0);
+        String domenUrl = "";
+
+        if (matcher.find()) {
+            domenUrl = matcher.group();
+        }
+        return domenUrl;
     }
 
     //todo:docs, logger
@@ -90,5 +100,9 @@ public class IconUrlParser {
             throw new IllegalArgumentException(exceptionMsg);
         else
             return matcher.find();
+    }
+
+    public boolean isIcoUrl() {
+        return icoUrl;
     }
 }
