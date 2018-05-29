@@ -35,7 +35,6 @@ public class BookmarkDaoImpl implements GenericDAO<Bookmark> {
         try {
             session = sessionFactory.getCurrentSession();
             bookmarkId = (Long) session.save(bookmark);
-
         } catch (HibernateException e) {
             LOGGER.error("Exception while creating bookmark: ", e);
             throw new DAOException("Exception while creating bookmark: ", e);
@@ -52,7 +51,6 @@ public class BookmarkDaoImpl implements GenericDAO<Bookmark> {
             session = sessionFactory.getCurrentSession();
             Bookmark persistBookmark = (Bookmark) session.get(Bookmark.class, bookmark.getId());
             session.delete(persistBookmark);
-
         } catch (HibernateException e) {
             LOGGER.error("Exception while removing bookmark: ", e);
             throw new DAOException("Exception while removing bookmark: ", e);
@@ -70,11 +68,10 @@ public class BookmarkDaoImpl implements GenericDAO<Bookmark> {
             persistBookmark.setCreateDate(bookmark.getCreateDate());
             persistBookmark.setDescription(bookmark.getDescription());
             persistBookmark.setName(bookmark.getName());
-//            persistBookmark.setCategory(bookmark.getCategory());
+            persistBookmark.setCategory(bookmark.getCategory());
             persistBookmark.setUrl(bookmark.getUrl());
 
             session.update(persistBookmark);
-
         } catch (HibernateException e) {
             LOGGER.error("Exception while updating bookmark: ", e);
             throw new DAOException("Exception while updating bookmark: ", e);

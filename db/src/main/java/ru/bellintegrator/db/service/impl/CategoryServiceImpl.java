@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import ru.bellintegrator.db.dao.GenericDAO;
 import ru.bellintegrator.db.exception.DAOException;
 import ru.bellintegrator.db.exception.ServiceException;
-import ru.bellintegrator.model.Category;
 import ru.bellintegrator.db.service.CategoryService;
+import ru.bellintegrator.model.Category;
 
 import java.util.List;
 
@@ -34,9 +34,9 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void add(Category category) throws ServiceException {
         LOGGER.debug("Call add method: category = " + category);
-        try {
-            dao.create(category);
 
+        try {
+            dao.create(resolveHierarchyData(category));
         } catch (DAOException e) {
             LOGGER.error("Exception while adding category: ", e);
             throw new ServiceException("Exception while adding category: ", e);
@@ -46,9 +46,9 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void update(Category category) throws ServiceException {
         LOGGER.debug("Call update method: category = " + category);
-        try {
-            dao.update(category);
 
+        try {
+            dao.update(resolveHierarchyData(category));
         } catch (DAOException e) {
             LOGGER.error("Exception while updating category: ", e);
             throw new ServiceException("Exception while updating category: ", e);
@@ -90,5 +90,39 @@ public class CategoryServiceImpl implements CategoryService {
             LOGGER.error("Exception while retrieving category by id: ", e);
             throw new ServiceException("Exception while retrieving category by id: ", e);
         }
+    }
+
+    /**
+     * Разрешает данные иерархии категории:
+     * parent, top, level
+     *
+     * @param category категория
+     * @return категория с разрешёнными данными иерархии
+     * @throws ServiceException
+     */
+    private Category resolveHierarchyData(Category category) throws ServiceException {
+        LOGGER.debug("call resolveHierarchyData(" + category + ")");
+
+        Category parent = null;
+        if (category.getParentId() != null) {
+            try {
+                parent = dao.getById(category.getParentId());
+            } catch (DAOException e) {
+                LOGGER.debug("exception while resolve hierarchy data(parentId, level, topId)");
+                throw new ServiceException("exception while resolve hierarchy data(parentId, level, topId)", e);
+            }
+        }
+        if (parent != null) {
+            category.setParent(parent);
+
+            if (category.getId() == parent.getId()) {
+                category.setTop(category);
+                category.setLevel((short) 0);
+            } else {
+                category.setTop(parent.getTop());
+                category.setLevel((short) (parent.getLevel() + 1));
+            }
+        }
+        return category;
     }
 }

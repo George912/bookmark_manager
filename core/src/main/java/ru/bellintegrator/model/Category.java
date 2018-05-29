@@ -173,7 +173,7 @@ public class Category implements Serializable, IHierarchyElement {
         sb.append(", createDate=").append(createDate);
         sb.append(", version=").append(version);
         sb.append(", level=").append(level);
-        sb.append(", top=").append(top.getId());
+//        sb.append(", top=").append(top.getId());
 //        sb.append(", bookmarks=").append(bookmarks.size());
 //        sb.append(", parent=").append(parent.id);
         sb.append(", parentId=").append(parentId);

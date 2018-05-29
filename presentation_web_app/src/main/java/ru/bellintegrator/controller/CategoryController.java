@@ -8,8 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.bellintegrator.db.exception.ServiceException;
-import ru.bellintegrator.model.Category;
 import ru.bellintegrator.db.service.CategoryService;
+import ru.bellintegrator.model.Category;
 import ru.bellintegrator.utils.UrlUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -109,10 +109,13 @@ public class CategoryController {
                          HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
         LOGGER.debug("Call update(category=" + category + ")");
 
-        //todo: check bindingResult, id(add or update)
+        //todo: check bindingResult
         try {
-            categoryService.update(category);
-
+            if (category.getId() != null) {
+                categoryService.update(category);
+            } else {
+                categoryService.add(category);
+            }
         } catch (ServiceException e) {
             LOGGER.error("Exception while updating category: ", e);
         }

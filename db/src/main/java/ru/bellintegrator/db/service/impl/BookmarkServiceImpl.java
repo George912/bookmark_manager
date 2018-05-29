@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 import ru.bellintegrator.db.dao.GenericDAO;
 import ru.bellintegrator.db.exception.DAOException;
 import ru.bellintegrator.db.exception.ServiceException;
-import ru.bellintegrator.model.Bookmark;
 import ru.bellintegrator.db.service.BookmarkService;
+import ru.bellintegrator.db.service.CategoryService;
+import ru.bellintegrator.model.Bookmark;
+import ru.bellintegrator.model.Category;
 
 import java.util.List;
 
@@ -20,6 +22,7 @@ import java.util.List;
 public class BookmarkServiceImpl implements BookmarkService {
     private static final Logger LOGGER = Logger.getLogger(BookmarkServiceImpl.class);
     private GenericDAO<Bookmark> dao;
+    private CategoryService categoryService;
 
     public BookmarkServiceImpl() {
         LOGGER.info("BookmarkService instance created");
@@ -31,11 +34,16 @@ public class BookmarkServiceImpl implements BookmarkService {
         this.dao = dao;
     }
 
+    @Autowired
+    public void setCategoryService(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
+
     @Override
     public void add(Bookmark bookmark) throws ServiceException {
         LOGGER.debug("Call add method: bookmark = " + bookmark);
         try {
-            dao.create(bookmark);
+            dao.create(resolveCategory(bookmark));
 
         } catch (DAOException e) {
             LOGGER.error("Exception while adding bookmark: ", e);
@@ -47,7 +55,7 @@ public class BookmarkServiceImpl implements BookmarkService {
     public void update(Bookmark bookmark) throws ServiceException {
         LOGGER.debug("Call update method: bookmark = " + bookmark);
         try {
-            dao.update(bookmark);
+            dao.update(resolveCategory(bookmark));
 
         } catch (DAOException e) {
             LOGGER.error("Exception while updating bookmark: ", e);
@@ -90,5 +98,30 @@ public class BookmarkServiceImpl implements BookmarkService {
             LOGGER.error("Exception while retrieving bookmark by id: ", e);
             throw new ServiceException("Exception while retrieving bookmark by id: ", e);
         }
+    }
+
+    /**
+     * Получает персистентную категорию, id которой выбран
+     * в combo box на странице редактора закладки
+     * и устанавливает её закладке
+     *
+     * @param bookmark закладка
+     * @return закладка с разрешённой категорией
+     * @throws ServiceException
+     */
+    private Bookmark resolveCategory(Bookmark bookmark) throws ServiceException {
+        LOGGER.debug("call resolveCategory(" + bookmark + ")");
+
+        Category category = null;
+        if (bookmark.getCategoryId() != null) {
+            try {
+                category = categoryService.findById(bookmark.getCategoryId());
+            } catch (ServiceException e) {
+                LOGGER.debug("exception while resolve bookmark category");
+                throw new ServiceException("exception while resolve bookmark category", e);
+            }
+        }
+        bookmark.setCategory(category);
+        return bookmark;
     }
 }

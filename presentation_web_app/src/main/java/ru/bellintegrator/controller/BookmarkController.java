@@ -10,12 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import ru.bellintegrator.db.dao.impl.orm.hibernate.BookmarkDaoImpl;
-import ru.bellintegrator.db.exception.DAOException;
 import ru.bellintegrator.db.exception.ServiceException;
+import ru.bellintegrator.db.service.BookmarkService;
 import ru.bellintegrator.db.service.CategoryService;
 import ru.bellintegrator.model.Bookmark;
-import ru.bellintegrator.db.service.BookmarkService;
 import ru.bellintegrator.model.Category;
 import ru.bellintegrator.utils.UrlUtil;
 
@@ -95,14 +93,13 @@ public class BookmarkController {
                          HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
         LOGGER.debug("Call update(bookmark=" + bookmark + ")");
 
-        //todo: check bindingResult, id(add or update)
+        //todo: check bindingResult
         try {
-            if(bookmark.getId()!=null){
+            if (bookmark.getId() != null) {
                 bookmarkService.update(bookmark);
-            }else{
+            } else {
                 bookmarkService.add(bookmark);
             }
-
         } catch (ServiceException e) {
             LOGGER.error("Exception while updating bookmark: ", e);
         }
