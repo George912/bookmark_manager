@@ -22,12 +22,13 @@ import java.util.regex.Pattern;
 public class IconUrlParser {
     private static final Logger LOGGER = Logger.getLogger(IconUrlParser.class);
     private static final String ICON_PATTERN = "(\\.{1}png|\\.{1}gif|\\.{1}ico|\\.{1}jpg|\\.{1}bmp|\\.{1}jpeg)";
-    private static final String ICO_ICON_PATTERN = ".{1}ico";
+    private static final String ICO_ICON_PATTERN = "(\\.ico){1}";
     private static final String FULL_URL_PATTERN = "((https?:{1}/{2}){1}([a-z0-9._-]*){1})";
     private static final String INVALID_HREF_EXCEPTION_MESSAGE = "Method arg \"href\" must not be null";
     private static final String INVALID_URL_EXCEPTION_MESSAGE = "Method arg \"url\" must not be null";
     private static final String LINK_HREF_SELECTOR = "link[href]";
     private static final String LINK_HREF_ATTR = "href";
+    private static final boolean IGNORE_CONTENT_TYPE = true;
     private boolean icoUrl;
 
     public IconUrlParser() {
@@ -43,7 +44,7 @@ public class IconUrlParser {
      * @return объектная модель страницы
      */
     private Document retrieveDocument(String url) throws IOException {
-        return Jsoup.connect(url).get();
+        return Jsoup.connect(url).ignoreContentType(IGNORE_CONTENT_TYPE).get();
     }
 
     //todo:docs, logger

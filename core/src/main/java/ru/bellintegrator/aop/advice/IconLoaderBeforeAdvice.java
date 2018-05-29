@@ -1,5 +1,6 @@
 package ru.bellintegrator.aop.advice;
 
+import net.sf.image4j.codec.ico.ICODecoder;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -11,10 +12,12 @@ import ru.bellintegrator.content.html.parser.IconUrlParser;
 import ru.bellintegrator.model.Bookmark;
 
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.List;
 
 /**
  * Совет для загрузки иконки сайта
@@ -36,15 +39,15 @@ public class IconLoaderBeforeAdvice {
         LOGGER.debug("call before(method=" + joinPoint.getSignature().getName() + ", arg=" + joinPoint.getArgs()[0] + ")");
         Bookmark bookmark = (Bookmark) joinPoint.getArgs()[0];
         byte[] iconBytes = null;
-        try {
-            URL faviconURL = iconUrlParser.rettrieveIconUrl(bookmark.getUrl());
-            if (faviconURL != null) {
-                iconBytes = loadIcon(faviconURL.openStream());
-                LOGGER.debug("load icon from url");
-            }
-        } catch (Exception e) {
-            LOGGER.debug(ICON_LOAD_EXCEPTION, e);
-        }
+//        try {
+//            URL faviconURL = iconUrlParser.rettrieveIconUrl(bookmark.getUrl());
+//            if (faviconURL != null) {
+//                iconBytes = loadIcon(faviconURL.openStream());
+//                LOGGER.debug("load icon from url");
+//            }
+//        } catch (Exception e) {
+//            LOGGER.debug(ICON_LOAD_EXCEPTION, e);
+//        }
 
         if (iconBytes == null) {
             try {
@@ -67,6 +70,18 @@ public class IconLoaderBeforeAdvice {
         LOGGER.debug("call loadIcon(" + inputStream + ")");
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        if (iconUrlParser.isIcoUrl()) {
+            try {
+                List<BufferedImage> images = ICODecoder.read(inputStream);
+                if(!images.isEmpty()){
+                    ImageIO.write(images.get(0), "png", baos);
+                }
+            } catch (IOException e) {
+                LOGGER.debug(ICON_LOAD_EXCEPTION, e);
+            }
+        }
+
         try {
             ImageIO.write(ImageIO.read(inputStream), "png", baos);
             baos.flush();
