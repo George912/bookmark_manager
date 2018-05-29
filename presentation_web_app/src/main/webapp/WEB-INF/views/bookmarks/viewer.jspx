@@ -7,16 +7,15 @@
     <jsp:output omit-xml-declaration="yes"/>
     <spring:message code="description" var="description"/>
     <spring:message code="url" var="url"/>
+    <spring:message code="category" var="category"/>
     <spring:url value="/bookmarks/bookmark/editor" var="editorBookmarkUrl"/>
 
     <div id="bookmarkInfo">
         <table border="1" width="90%">
             <tr>
-                <td></td>
                 <td colspan="2">
                     <h3>${bookmark.name}</h3>
                 </td>
-                <td>${description}</td>
                 <td></td>
                 <td>
                     <!--todo:image-->
@@ -29,13 +28,23 @@
                 </td>
                 <td></td>
                 <td>
+                    ${description}
                     <textarea id="description" cols="30" rows="5" readonly="true" wrap="soft" colspan="3">
                         ${bookmark.description}
                     </textarea>
                 </td>
             </tr>
             <tr>
+                <td>${category}</td>
+                <td>${bookmark.category.name}</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
                 <td>${url}</td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
             <tr>
                 <td>
@@ -43,6 +52,9 @@
                         ${bookmark.url}
                     </textarea>
                 </td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
         </table>
     </div>

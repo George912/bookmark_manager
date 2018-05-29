@@ -3,8 +3,6 @@ package ru.bellintegrator.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Arrays;
-import javax.persistence.SequenceGenerator;
 
 /**
  * Закладка.
@@ -51,6 +49,9 @@ public class Bookmark implements Serializable {
     @Version
     @Column(name = "VERSION")
     private int version;
+
+    @Transient
+    private Long categoryId;
 
     public Bookmark() {
         this.createDate = new Timestamp(System.currentTimeMillis());
@@ -131,48 +132,35 @@ public class Bookmark implements Serializable {
         this.version = version;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Bookmark bookmark = (Bookmark) o;
-
-        if (version != bookmark.version) return false;
-        if (!id.equals(bookmark.id)) return false;
-        if (!name.equals(bookmark.name)) return false;
-        if (!url.equals(bookmark.url)) return false;
-        if (description != null ? !description.equals(bookmark.description) : bookmark.description != null)
-            return false;
-        if (!Arrays.equals(icon, bookmark.icon)) return false;
-        if (!createDate.equals(bookmark.createDate)) return false;
-        return category.equals(bookmark.category);
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + name.hashCode();
-        result = 31 * result + url.hashCode();
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + Arrays.hashCode(icon);
-        result = 31 * result + createDate.hashCode();
-        result = (int) (31 * result + category.getId());
-        result = 31 * result + version;
-        return result;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
+    //todo: normal toString, equals and hashCode
     @Override
     public String toString() {
-        return "Bookmark{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", url='" + url + '\'' +
-                ", description='" + description + '\'' +
-                ", icon=" + Arrays.toString(icon) +
-                ", createDate=" + createDate +
-//                ", categoryId=" + category != null && category.getId() != null ? category.getId().toString() : "empty" +
-                ", version=" + version +
-                '}';
+        final StringBuffer sb = new StringBuffer("Bookmark{");
+        sb.append("id=").append(id);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", url='").append(url).append('\'');
+        sb.append(", description='").append(description).append('\'');
+        sb.append(", icon=");
+        if (icon == null) sb.append("null");
+        else {
+            sb.append('[');
+            for (int i = 0; i < icon.length; ++i)
+                sb.append(i == 0 ? "" : ", ").append(icon[i]);
+            sb.append(']');
+        }
+        sb.append(", createDate=").append(createDate);
+//        sb.append(", category=").append(category.getId());
+        sb.append(", version=").append(version);
+        sb.append(", categoryId=").append(categoryId);
+        sb.append('}');
+        return sb.toString();
     }
 }

@@ -163,38 +163,7 @@ public class Category implements Serializable, IHierarchyElement {
         this.parentId = parentId;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Category category = (Category) o;
-
-        if (version != category.version) return false;
-        if (!id.equals(category.id)) return false;
-        if (!name.equals(category.name)) return false;
-        if (description != null ? !description.equals(category.description) : category.description != null)
-            return false;
-        if (!createDate.equals(category.createDate)) return false;
-        if (!level.equals(category.level)) return false;
-        if (bookmarks != null ? !bookmarks.equals(category.bookmarks) : category.bookmarks != null) return false;
-        return parent != null ? parent.equals(category.parent) : category.parent == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + name.hashCode();
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + createDate.hashCode();
-        result = 31 * result + version;
-        result = 31 * result + level.hashCode();
-        result = 31 * result + (top != null ? top.hashCode() : 0);
-        result = 31 * result + (bookmarks != null ? bookmarks.hashCode() : 0);
-        result = 31 * result + (parent != null ? parent.hashCode() : 0);
-        return result;
-    }
-
+    //todo: normal toString, equals and hashCode
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("Category{");
@@ -204,9 +173,9 @@ public class Category implements Serializable, IHierarchyElement {
         sb.append(", createDate=").append(createDate);
         sb.append(", version=").append(version);
         sb.append(", level=").append(level);
-        sb.append(", top.id=").append(top != null ? top.id : null);
-        sb.append(", bookmarks.size=").append(bookmarks.size());
-        sb.append(", parent.id=").append(parent != null ? parent.id : null);
+        sb.append(", top=").append(top.getId());
+//        sb.append(", bookmarks=").append(bookmarks.size());
+//        sb.append(", parent=").append(parent.id);
         sb.append(", parentId=").append(parentId);
         sb.append('}');
         return sb.toString();

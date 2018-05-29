@@ -13,12 +13,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.bellintegrator.db.dao.impl.orm.hibernate.BookmarkDaoImpl;
 import ru.bellintegrator.db.exception.DAOException;
 import ru.bellintegrator.db.exception.ServiceException;
+import ru.bellintegrator.db.service.CategoryService;
 import ru.bellintegrator.model.Bookmark;
 import ru.bellintegrator.db.service.BookmarkService;
 import ru.bellintegrator.model.Category;
 import ru.bellintegrator.utils.UrlUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 @Controller
@@ -26,6 +29,7 @@ import java.util.Locale;
 public class BookmarkController {
     private static final Logger LOGGER = Logger.getLogger(BookmarkController.class);
     private BookmarkService bookmarkService;
+    private CategoryService categoryService;
 
     public BookmarkController() {
     }
@@ -33,6 +37,11 @@ public class BookmarkController {
     @Autowired
     public void setBookmarkService(BookmarkService bookmarkService) {
         this.bookmarkService = bookmarkService;
+    }
+
+    @Autowired
+    public void setCategoryService(CategoryService categoryService) {
+        this.categoryService = categoryService;
     }
 
     /**
@@ -61,6 +70,7 @@ public class BookmarkController {
     public String showEditor(@RequestParam(value = "bookmarkId") Long id, Model model) {
         LOGGER.debug("Call edit(id=" + id + ")");
         Bookmark bookmark;
+        List<Category> categoryList;
 
         //todo: ?spring exception resolver
         try {
@@ -69,7 +79,9 @@ public class BookmarkController {
             } else {
                 bookmark = new Bookmark("for test", "for test");
             }
+            categoryList = categoryService.list();
             model.addAttribute("bookmark", bookmark);
+            model.addAttribute("categoryList", categoryList != null ? categoryList : new ArrayList<Category>());
 
         } catch (ServiceException e) {
             LOGGER.error("Exception while retrieving bookmark: ", e.getCause());

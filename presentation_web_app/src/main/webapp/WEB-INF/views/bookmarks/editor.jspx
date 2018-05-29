@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <div xmlns:jsp="http://java.sun.com/JSP/Page"
      xmlns:spring="http://www.springframework.org/tags"
-     xmlns:form="http://www.springframework.org/tags/form"
+     xmlns:form="http://www.springframework.org/tags/form" xmlns:c="http://java.sun.com/jsp/jstl/core"
      version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:directive.page isELIgnored="false"/>
     <jsp:output omit-xml-declaration="yes"/>
     <spring:message code="description" var="description"/>
     <spring:message code="url" var="url"/>
+    <spring:message code="category" var="category"/>
     <spring:message code="name" var="name"/>
     <spring:message code="submit" var="submit"/>
     <spring:message code="cancel" var="cancel"/>
@@ -45,6 +46,34 @@
                     <td></td>
                     <td colspan="3">
                         <form:textarea path="description" cols="30" rows="5" id="bookmarkDescription"/>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <form:label path="category">
+                            ${parent}
+                        </form:label>
+                    </td>
+                    <td>
+                        <form:select path="categoryId">
+                            //fill component and set selected value
+                            <!--<form:option value="null" label="none"/>-->
+                            <c:if test="${not empty categoryList}">
+                                <c:forEach items="${categoryList}" var="cgy">
+                                    <c:choose>
+                                        <c:when test="${bookmark.category.id!=null and bookmark.category.id eq cgy.id}">
+                                            <form:option value="${cgy.id}" label="${cgy.name}" selected="selected"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <form:option value="${cgy.id}" label="${cgy.name}"/>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </c:if>
+                        </form:select>
                     </td>
                     <td></td>
                     <td></td>
