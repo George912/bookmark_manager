@@ -42,15 +42,12 @@ public class CategoryDaoImpl implements GenericDAO<Category> {
     }
 
     @Override
-    public void delete(Category category) throws DAOException {
-        LOGGER.debug("Call delete method: category = " + category);
-        Session session;
+    public void delete(Long id) throws DAOException {
+        LOGGER.debug("Call delete method: id = " + id);
 
         try {
-            session = sessionFactory.getCurrentSession();
-            Category persistCategory = (Category) session.get(Category.class, category.getId());
-            session.delete(persistCategory);
-
+            Session session = sessionFactory.getCurrentSession();
+            session.delete(session.get(Category.class, id));
         } catch (HibernateException e) {
             LOGGER.error("Exception while removing category: ", e);
             throw new DAOException("Exception while removing category: ", e);

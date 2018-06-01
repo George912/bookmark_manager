@@ -40,15 +40,12 @@ public class CategoryController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
-        List<Category> categories;
         LOGGER.debug("call list method");
 
         try {
-            if (categoryService != null) {
-                categories = categoryService.list();
-                LOGGER.debug("category list for presentation: " + categories);
-                model.addAttribute("categories", categories);
-            }
+            List<Category> categoryList = categoryService.list();
+            LOGGER.debug("category list for presentation: " + categoryList);
+            model.addAttribute("categoryList", categoryList);
         } catch (ServiceException e) {
             LOGGER.debug("Exception while receiving category list: ", e);
         }

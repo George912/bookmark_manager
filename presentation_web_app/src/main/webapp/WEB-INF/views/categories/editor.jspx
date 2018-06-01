@@ -15,12 +15,11 @@
     <spring:message code="bookmarkNameTH" var="bookmarkNameTH"/>
     <spring:message code="bookmarkUrlTH" var="bookmarkUrlTH"/>
     <spring:message code="bookmarkShowTH" var="bookmarkShowTH"/>
-    <spring:message code="bookmarkEditTH" var="bookmarkEditTH"/>
     <spring:message code="bookmarkDeleteTH" var="bookmarkDeleteTH"/>
     <spring:message code="submit" var="submit"/>
     <spring:message code="cancel" var="cancel"/>
-    <spring:url value="bookmarks/viewer?bookmarkId=" var="showBookmarkUrl"/>
-    <spring:url value="/bookmarks/editor?bookmarkId=-1" var="createBookmarkUrl"/>
+    <spring:url value="/bookmarks/viewer?bookmarkId=" var="showBookmarkUrl"/>
+    <spring:url value="/bookmarks/bookmark/editor?bookmarkId=-1" var="createBookmarkUrl"/>
     <spring:url value="/bookmarks/bookmark/delete" var="deleteBookmarkUrl"/>
     <spring:url value="/bookmarks/deleteAll" var="deleteAllBookmarksUrl"/>
 
@@ -98,7 +97,6 @@
                                     <th>${bookmarkNameTH}</th>
                                     <th>${bookmarkUrlTH}</th>
                                     <th>${bookmarkShowTH}</th>
-                                    <th>${bookmarkEditTH}</th>
                                     <th>${bookmarkDeleteTH}</th>
                                 </tr>
                                 </thead>

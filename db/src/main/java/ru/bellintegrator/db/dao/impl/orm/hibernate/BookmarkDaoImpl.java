@@ -43,14 +43,12 @@ public class BookmarkDaoImpl implements GenericDAO<Bookmark> {
     }
 
     @Override
-    public void delete(Bookmark bookmark) throws DAOException {
-        LOGGER.debug("Call delete method: bookmark = " + bookmark);
-        Session session;
+    public void delete(Long id) throws DAOException {
+        LOGGER.debug("Call delete method: id = " + id);
 
         try {
-            session = sessionFactory.getCurrentSession();
-            Bookmark persistBookmark = (Bookmark) session.get(Bookmark.class, bookmark.getId());
-            session.delete(persistBookmark);
+            Session session = sessionFactory.getCurrentSession();
+            session.delete(session.get(Bookmark.class, id));
         } catch (HibernateException e) {
             LOGGER.error("Exception while removing bookmark: ", e);
             throw new DAOException("Exception while removing bookmark: ", e);

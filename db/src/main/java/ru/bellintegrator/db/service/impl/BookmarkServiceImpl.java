@@ -64,10 +64,10 @@ public class BookmarkServiceImpl implements BookmarkService {
     }
 
     @Override
-    public void delete(Bookmark bookmark) throws ServiceException {
-        LOGGER.debug("Call delete method: bookmark = " + bookmark);
+    public void delete(Long id) throws ServiceException {
+        LOGGER.debug("Call delete method: id = " + id);
         try {
-            dao.delete(bookmark);
+            dao.delete(id);
 
         } catch (DAOException e) {
             LOGGER.error("Exception while removing bookmark: ", e);

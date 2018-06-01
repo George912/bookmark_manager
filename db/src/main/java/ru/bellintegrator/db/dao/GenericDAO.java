@@ -10,7 +10,7 @@ import java.util.List;
  * Методы класса:
  * <ol>
  * <li>create(T t)</li>
- * <li>delete(T t)</li>
+ * <li>delete(Long id)</li>
  * <li>update(T t)</li>
  * <li>getAll()</li>
  * <li>getById(Long id)</li>
@@ -31,11 +31,11 @@ public interface GenericDAO<T> {
     /**
      * Удаляет данные из хранилища об объекте, переданном в метод.
      *
-     * @param t объект, данные которого требуется удалить из хранилища.
+     * @param id объекта, данные которого требуется удалить из хранилища.
      * @throws DAOException исключение, описывающее возникшую
      *                      проблемную ситуацию в процессе взаимодействия с хранилищем данных.
      */
-    void delete(T t) throws DAOException;
+    void delete(Long id) throws DAOException;
 
     /**
      * Обновляет данные в хранилище об объекте, переданном в метод.

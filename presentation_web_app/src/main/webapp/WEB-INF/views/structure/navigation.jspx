@@ -6,8 +6,8 @@
     <spring:message code="home" var="home"/>
     <spring:message code="configuration" var="configuration"/>
     <spring:url value="/categories" var="categoriesUrl"/>
-    <spring:url value="/configuration" var="categoriesUrl"/>
+    <spring:url value="/configuration" var="configurationUrl"/>
 
     <a href="${categoriesUrl}">${home}</a>
-    <a href="${configurationHeader}">${configuration}</a>
+    <a href="${configurationUrl}">${configuration}</a>
 </div>

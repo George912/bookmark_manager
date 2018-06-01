@@ -56,11 +56,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void delete(Category category) throws ServiceException {
-        LOGGER.debug("Call delete method: category = " + category);
-        try {
-            dao.delete(category);
+    public void delete(Long id) throws ServiceException {
+        LOGGER.debug("Call delete method: id = " + id);
 
+        try {
+            dao.delete(id);
         } catch (DAOException e) {
             LOGGER.error("Exception while removing category: ", e);
             throw new ServiceException("Exception while removing category: ", e);

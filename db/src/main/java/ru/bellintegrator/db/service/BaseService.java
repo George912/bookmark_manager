@@ -29,12 +29,12 @@ public interface BaseService<T> {
     void update(T t) throws ServiceException;
 
     /**
-     * Удаляет сущность.
+     * /Удаляет сущность.
      *
-     * @param t
+     * @param id идентификатор удаляемой сущности
      * @throws ServiceException
      */
-    void delete(T t) throws ServiceException;
+    void delete(Long id) throws ServiceException;
 
     /**
      * Получает список сущностей, пользователя с идентификатором ownerId.
