@@ -20,7 +20,7 @@
     <spring:message code="cancel" var="cancel"/>
     <spring:url value="/bookmarks/viewer?bookmarkId=" var="showBookmarkUrl"/>
     <spring:url value="/bookmarks/bookmark/editor?bookmarkId=-1" var="createBookmarkUrl"/>
-    <spring:url value="/bookmarks/bookmark/delete" var="deleteBookmarkUrl"/>
+    <spring:url value="/bookmarks/bookmark/delete/" var="deleteBookmarkUrl"/>
     <spring:url value="/bookmarks/deleteAll" var="deleteAllBookmarksUrl"/>
 
     <div id="categoryInfo">
@@ -119,7 +119,7 @@
                                         </td>
                                         <td>
                                             <!--todo:image-->
-                                            <a href="${deleteBookmarkUrl}/${bookmark.id}">${deleteBookmarkUrl}/${bookmark.id}</a>
+                                            <a href="${deleteBookmarkUrl}${bookmark.id}">${deleteBookmarkUrl}${bookmark.id}</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

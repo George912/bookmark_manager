@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.bellintegrator.db.exception.ServiceException;
 import ru.bellintegrator.db.service.BookmarkService;
@@ -68,7 +65,6 @@ public class BookmarkController {
     public String showEditor(@RequestParam(value = "bookmarkId") Long id, Model model) {
         LOGGER.debug("Call edit(id=" + id + ")");
         Bookmark bookmark;
-        List<Category> categoryList;
 
         //todo: ?spring exception resolver
         try {
@@ -77,7 +73,7 @@ public class BookmarkController {
             } else {
                 bookmark = new Bookmark("for test", "for test");
             }
-            categoryList = categoryService.list();
+            List<Category> categoryList = categoryService.list();
             model.addAttribute("bookmark", bookmark);
             model.addAttribute("categoryList", categoryList != null ? categoryList : new ArrayList<Category>());
 
@@ -104,5 +100,16 @@ public class BookmarkController {
             LOGGER.error("Exception while updating bookmark: ", e);
         }
         return "redirect:viewer?bookmarkId=" + UrlUtil.encodeUrlPathSegment(bookmark.getId().toString(), httpServletRequest);
+    }
+
+    @DeleteMapping(value = "bookmark/delete")
+    public void delete(@PathVariable Long id){
+        LOGGER.debug("call delete(id=" + id + ")");
+        try {
+            bookmarkService.delete(id);
+        } catch (ServiceException e) {
+            LOGGER.error("Exception while bookmark removing: ", e);
+        }
+        return "redirect:viewer?categoryId=" + UrlUtil.encodeUrlPathSegment(category.getId().toString(), httpServletRequest);
     }
 }
