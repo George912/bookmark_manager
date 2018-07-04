@@ -102,14 +102,33 @@ public class BookmarkController {
         return "redirect:viewer?bookmarkId=" + UrlUtil.encodeUrlPathSegment(bookmark.getId().toString(), httpServletRequest);
     }
 
-    @DeleteMapping(value = "bookmark/delete")
-    public void delete(@PathVariable Long id){
+    @DeleteMapping(value = "bookmark/delete/{id}")
+    public String delete(@PathVariable Long id, Model model) {
         LOGGER.debug("call delete(id=" + id + ")");
+
         try {
+            Long categoryId = bookmarkService.findById(id).getCategory().getId();
             bookmarkService.delete(id);
+            model.addAttribute("category", categoryService.findById(categoryId));
+            return "categories/viewer";
         } catch (ServiceException e) {
             LOGGER.error("Exception while bookmark removing: ", e);
         }
-        return "redirect:viewer?categoryId=" + UrlUtil.encodeUrlPathSegment(category.getId().toString(), httpServletRequest);
+        return "redirect:error";
+    }
+
+    @GetMapping(value = "bookmark/delete/{id}")
+    public String showBookmarkDeleteConfirm(@PathVariable Long id, HttpServletRequest httpServletRequest, Model model) {
+        LOGGER.debug("call showBookmarkDeleteConfirm(id=" + id + ")");
+        Bookmark bookmark;
+
+        try {
+            bookmark = bookmarkService.findById(id);
+            model.addAttribute("bookmark", bookmark);
+            return "bookmarks/delete_confirm";
+        } catch (ServiceException e) {
+            LOGGER.error("Exception while bookmark retrieving from database: ", e);
+        }
+        return "redirect:error";
     }
 }

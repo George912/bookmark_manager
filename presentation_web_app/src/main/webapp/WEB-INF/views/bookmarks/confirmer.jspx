@@ -10,12 +10,14 @@
     <spring:message code="url" var="url"/>
     <spring:message code="category" var="category"/>
     <spring:message code="name" var="name"/>
+    <spring:message code="removalConfirm" var="removalConfirm"/>
     <spring:message code="submit" var="submit"/>
     <spring:message code="cancel" var="cancel"/>
     <spring:url value="/bookmarks/bookmark/editor" var="editorBookmarkUrl"/>
 
-    <div id="bookmarkEditor">
-        <form:form modelAttribute="bookmark" id="bookmarkUpdateForm" method="post">
+    <div id="bookmarkDeleteConfirmer">
+        <h3>${removalConfirm}</h3><br/>
+        <form:form modelAttribute="bookmark" id="bookmarkDeleteConfirmForm" method="delete">
             <table border="1" width="90%">
                 <tr>
                     <td>

@@ -32,7 +32,7 @@
                             ${name}
                         </form:label>
                         <td>
-                            <form:input path="name" />
+                            <form:input path="name"/>
                         </td>
                         <td></td>
                     </td>
@@ -63,13 +63,13 @@
                         <form:select path="parentId">
                             //fill component and set selected value
                             <c:if test="${not empty categoryList}">
-                                <c:forEach items="${categoryList}" var ="cgy">
+                                <c:forEach items="${categoryList}" var="cgy">
                                     <c:choose>
                                         <c:when test="${category.parent != null and category.parent.id eq cgy.id}">
                                             <form:option value="${cgy.id}" label="${cgy.name}" selected="selected"/>
                                         </c:when>
                                         <c:otherwise>
-                                            <form:option value="${cgy.id}" label="${cgy.name}" />
+                                            <form:option value="${cgy.id}" label="${cgy.name}"/>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:forEach>
@@ -90,68 +90,71 @@
                 <tr>
                     <td>
                         <c:if test="${not empty category.bookmarks}">
-                            <tаble border="1" width="90%">
-                                <thead>
-                                <tr>
-                                    <th>${bookmarkIconTH}</th>
-                                    <th>${bookmarkNameTH}</th>
-                                    <th>${bookmarkUrlTH}</th>
-                                    <th>${bookmarkShowTH}</th>
-                                    <th>${bookmarkDeleteTH}</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <c:forEach items="${category.bookmarks}" var="bookmark">
-                                    <tr>
-                                        <td>
-                                            <!--todo:output icon-->
-                                            ${bookmark.icon}
-                                        </td>
-                                        <td>
-                                            ${bookmark.name}
-                                        </td>
-                                        <td>
-                                            ${bookmark.url}
-                                        </td>
-                                        <td>
-                                            <!--todo:image-->
-                                            <a href="${showBookmarkUrl}${bookmark.id}">${showBookmarkUrl}${bookmark.id}</a>
-                                        </td>
-                                        <td>
-                                            <!--todo:image-->
-                                            <a href="${deleteBookmarkUrl}${bookmark.id}">${deleteBookmarkUrl}${bookmark.id}</a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </tаble>
-                        </c:if>
-                    </td>
-                    <td></td>
-                    <td>
-                        <!--todo:image-->
-                        <a href="${createBookmarkUrl}">${createBookmarkUrl}</a>
-                        <br />
-                        <!--todo:image-->
-                        <a href="${deleteAllBookmarksUrl}">${deleteAllBookmarksUrl}</a>
+                        <tаble border="1" width="90%">
+                        <thead>
+                        <tr>
+                            <th>${bookmarkIconTH}</th>
+                            <th>${bookmarkNameTH}</th>
+                            <th>${bookmarkUrlTH}</th>
+                            <th>${bookmarkShowTH}</th>
+                            <th>${bookmarkDeleteTH}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${category.bookmarks}" var="bookmark">
+                        <tr>
+                        <td>
+                            <!--todo:output icon-->
+                            ${bookmark.icon}
+                        </td>
+                        <td>
+                            ${bookmark.name}
+                        </td>
+                        <td>
+                            ${bookmark.url}
+                        </td>
+                        <td>
+                            <!--todo:image-->
+                            <a href="${showBookmarkUrl}${bookmark.id}">${showBookmarkUrl}${bookmark.id}</a>
+                        </td>
+                        <td>
+                            <!--todo:image-->
+                            <form id="deleteForm" action="http://${pageContext.request.remoteHost}:${pageContext.request.serverPort}${deleteBookmarkUrl}${bookmark.id}" method="delete">
+                                <input type="submit" />
+                            </form>
+                        <!--<a href="${deleteBookmarkUrl}${bookmark.id}">${deleteBookmarkUrl}${bookmark.id}</a>-->
                     </td>
                 </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <form:button type="submit">
-                            ${submit}
-                        </form:button>
-                        <form:button type="reset">
-                            ${cancel}
-                        </form:button>
-                    </td>
-                    <td>
-                        <form:hidden path="id"/>
-                        <form:hidden path="version"/>
-                    </td>
-                </tr>
-            </table>
+            </c:forEach>
+        </tbody>
+    </tаble>
+</c:if>
+        </td>
+<td></td>
+<td>
+<!--todo:image-->
+<a href="${createBookmarkUrl}">${createBookmarkUrl}</a>
+<br/>
+<!--todo:image-->
+<a href="${deleteAllBookmarksUrl}">${deleteAllBookmarksUrl}</a>
+</td>
+        </tr>
+<tr>
+<td></td>
+<td>
+    <form:button type="submit">
+        ${submit}
+    </form:button>
+    <form:button type="reset">
+        ${cancel}
+    </form:button>
+</td>
+<td>
+    <form:hidden path="id"/>
+    <form:hidden path="version"/>
+</td>
+</tr>
+        </table>
         </form:form>
-    </div>
-</div>
+        </div>
+        </div>

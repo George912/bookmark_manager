@@ -8,7 +8,7 @@
     <definition extends="default" name="bookmarks/editor">
         <put-attribute name="body" value="/WEB-INF/views/bookmarks/editor.jspx"/>
     </definition>
-    <definition extends="default" name="bookmarks/delete">
-        <put-attribute name="body" value="/WEB-INF/views/bookmarks/editor.jspx"/>
+    <definition extends="default" name="bookmarks/delete_confirm">
+        <put-attribute name="body" value="/WEB-INF/views/bookmarks/confirmer.jspx"/>
     </definition>
 </tiles-definitions>

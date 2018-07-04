@@ -17,8 +17,8 @@
 
     <spring:url value="/bookmarks/bookmark/viewer?bookmarkId=" var="showBookmarkUrl"/>
     <spring:url value="/bookmarks/create/" var="createBookmarkUrl"/>
-    <spring:url value="/bookmarks/delete/" var="deleteBookmarkUrl"/>
-    <spring:url value="/bookmarks/deleteAll" var="deleteAllBookmarksUrl"/>
+    <spring:url value="/bookmarks/bookmark/delete/" var="deleteBookmarkUrl"/>
+    <spring:url value="/bookmarks/bookmark/deleteAll" var="deleteAllBookmarksUrl"/>
     <spring:url value="/bookmarks/edit/" var="editBookmarkUrl"/>
     <spring:url value="/categories/category/editor?categoryId=" var="categoryEditorUrl"/>
 
@@ -105,6 +105,10 @@
                                             <!--todo:image-->
                                             <a href="${showBookmarkUrl}${bookmark.id}">${showBookmarkUrl}${bookmark.id}</a>
                                         </td>
+                                        <td>
+                                            <!--todo:image-->
+                                            <a href="${deleteBookmarkUrl}${bookmark.id}">${deleteBookmarkUrl}${bookmark.id}</a>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
@@ -112,7 +116,10 @@
                         </c:if>
                     </td>
                     <td></td>
-                    <td></td>
+                    <td>
+                        <!--todo:image-->
+                        <a href="${deleteAllBookmarksUrl}">${deleteAllBookmarksUrl}</a>
+                    </td>
                 </tr>
             </table>
         </form:form>

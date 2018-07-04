@@ -37,11 +37,11 @@
         <compiler.version>3.3</compiler.version>
         <war.version>2.1.1</war.version>
         <tomcat.version>2.2</tomcat.version>
-        <sql.version>3.0.0</sql.version>
+        <sql.version>3.0.0-SNAPSHOT</sql.version>
 
         <!--db module-->
         <jdbc.driver>org.h2.Driver</jdbc.driver>
-        <jdbc.url>jdbc:h2:file:C:\Users\YANesterov\.m2\repository\com\h2database\h2\1.4.196\h2-1.4.196.jar</jdbc.url>
+        <jdbc.url>jdbc:h2:file:C:\Users\neste_000.MYMACHINE\.m2\repository\com\h2database\h2\1.4.196\h2-1.4.196.jar</jdbc.url>
         <jdbc.username>YANESTEROV</jdbc.username>
         <jdbc.password>online</jdbc.password>
 
