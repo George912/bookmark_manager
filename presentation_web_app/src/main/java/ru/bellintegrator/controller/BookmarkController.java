@@ -105,7 +105,6 @@ public class BookmarkController {
     @DeleteMapping(value = "bookmark/delete/{id}")
     public String delete(@PathVariable Long id, Model model) {
         LOGGER.debug("call delete(id=" + id + ")");
-
         try {
             Long categoryId = bookmarkService.findById(id).getCategory().getId();
             bookmarkService.delete(id);
@@ -117,17 +116,42 @@ public class BookmarkController {
         return "redirect:error";
     }
 
+    @DeleteMapping(value = "deleteAll/{categoryId}")
+    public String deleteAll(@PathVariable Long categoryId, Model model) {
+        LOGGER.debug("call deleteAll(categoryId = " + categoryId);
+        try {
+            bookmarkService.deleteAll(categoryId);
+            model.addAttribute("category", categoryService.findById(categoryId));
+            return "categories/viewer";
+        } catch (ServiceException e) {
+            LOGGER.error("Exception while bookmarks removing: ", e);
+        }
+        return "redirect:error";
+    }
+
     @GetMapping(value = "bookmark/delete/{id}")
-    public String showBookmarkDeleteConfirm(@PathVariable Long id, HttpServletRequest httpServletRequest, Model model) {
-        LOGGER.debug("call showBookmarkDeleteConfirm(id=" + id + ")");
-        Bookmark bookmark;
+    public String showSingleBookmarkRemovalConfirmer(@PathVariable Long id, HttpServletRequest httpServletRequest, Model model) {
+        LOGGER.debug("call showSingleBookmarkRemovalConfirmer(id=" + id + ")");
 
         try {
-            bookmark = bookmarkService.findById(id);
-            model.addAttribute("bookmark", bookmark);
+            model.addAttribute("bookmark", bookmarkService.findById(id));
             return "bookmarks/delete_confirm";
         } catch (ServiceException e) {
             LOGGER.error("Exception while bookmark retrieving from database: ", e);
+        }
+        return "redirect:error";
+    }
+
+    @GetMapping(value = "deleteAll/{categoryId}")
+    public String showBatchBookmarkRemovalConfirmer(@PathVariable Long categoryId, Model model) {
+        LOGGER.debug("call showBatchBookmarkRemovalConfirmer(categoryId=" + categoryId + ")");
+        try {
+//            model.addAttribute("categoryId", categoryId);
+//            model.addAttribute("bookmarkList", bookmarkService.listByCategoryId(categoryId));
+                model.addAttribute("category", categoryService.findById(categoryId));
+            return "bookmarks/delete_all_confirm";
+        } catch (ServiceException e) {
+            LOGGER.error("Exception while bookmark list retrieving from database: ", e);
         }
         return "redirect:error";
     }

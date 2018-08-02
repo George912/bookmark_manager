@@ -20,10 +20,13 @@ import java.util.List;
  */
 @Transactional
 @Repository("bookmarkDao")
-public class BookmarkDaoImpl implements GenericDAO<Bookmark> {
+public class BookmarkDaoImpl implements GenericDAO<Bookmark>, BookmarkManager {
     private static final Logger LOGGER = Logger.getLogger(BookmarkDaoImpl.class);
     @Resource(name = "sessionFactory")
     private SessionFactory sessionFactory;
+    private static String BOOKMARKS_DELETE_QUERY = "DELETE Bookmark WHERE category.id = :categoryId";
+    private static String BOOKMARKS_SELECT_QUERY = "FROM Bookmark";
+    private static String BOOKMARKS_BY_CATEGORY_ID_SELECT_QUERY = "FROM Bookmark where category.id = :categoryId";
 
     @Override
     @AdviceRequired
@@ -55,6 +58,20 @@ public class BookmarkDaoImpl implements GenericDAO<Bookmark> {
         }
     }
 
+
+    public int deleteAll(Long categoryId) throws DAOException {
+        LOGGER.debug("deleteAll(categoryId = " + categoryId + ")");
+        try {
+            return sessionFactory.getCurrentSession()
+                    .createQuery(BOOKMARKS_DELETE_QUERY)
+                    .setLong("categoryId", categoryId)
+                    .executeUpdate();
+        } catch (HibernateException e) {
+            LOGGER.error("Exception while removing bookmarks: ", e);
+            throw new DAOException("Exception while removing bookmarks: ", e);
+        }
+    }
+
     @Override
     public void update(Bookmark bookmark) throws DAOException {
         LOGGER.debug("Call update method: bookmark = " + bookmark);
@@ -82,17 +99,30 @@ public class BookmarkDaoImpl implements GenericDAO<Bookmark> {
         LOGGER.debug("Call getAll method");
         List<Bookmark> bookmarks;
         Session session;
-
         try {
             session = sessionFactory.getCurrentSession();
-            bookmarks = session.createQuery("FROM Bookmark").list();
-
+            bookmarks = session.createQuery(BOOKMARKS_SELECT_QUERY).list();
         } catch (HibernateException e) {
             LOGGER.error("Exception while receiving bookmark list: ", e);
             throw new DAOException("Exception while receiving bookmark list: ", e);
         }
-
         return bookmarks;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Bookmark> getBookmarkListByCategoryId(Long categoryId) throws DAOException {
+        LOGGER.debug("Call getBookmarkListByCategoryId(categoryId=" + categoryId + ")");
+        Session session;
+        try {
+            return sessionFactory.getCurrentSession()
+                    .createQuery(BOOKMARKS_BY_CATEGORY_ID_SELECT_QUERY)
+                    .setParameter("categoryId", categoryId)
+                    .list();
+        } catch (HibernateException e) {
+            LOGGER.error("Exception while receiving bookmark list: ", e);
+            throw new DAOException("Exception while receiving bookmark list: ", e);
+        }
     }
 
     @Override

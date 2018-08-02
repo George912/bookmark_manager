@@ -9,6 +9,9 @@
         <put-attribute name="body" value="/WEB-INF/views/bookmarks/editor.jspx"/>
     </definition>
     <definition extends="default" name="bookmarks/delete_confirm">
-        <put-attribute name="body" value="/WEB-INF/views/bookmarks/confirmer.jspx"/>
+        <put-attribute name="body" value="/WEB-INF/views/bookmarks/removalConfirmer.jspx"/>
+    </definition>
+    <definition extends="default" name="bookmarks/delete_all_confirm">
+        <put-attribute name="body" value="/WEB-INF/views/bookmarks/removalBatchConfirmer.jspx"/>
     </definition>
 </tiles-definitions>

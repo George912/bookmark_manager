@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.bellintegrator.db.dao.GenericDAO;
+import ru.bellintegrator.db.dao.impl.orm.hibernate.BookmarkDaoImpl;
+import ru.bellintegrator.db.dao.impl.orm.hibernate.BookmarkManager;
 import ru.bellintegrator.db.exception.DAOException;
 import ru.bellintegrator.db.exception.ServiceException;
 import ru.bellintegrator.db.service.BookmarkService;
@@ -123,5 +125,25 @@ public class BookmarkServiceImpl implements BookmarkService {
         }
         bookmark.setCategory(category);
         return bookmark;
+    }
+
+    @Override
+    public List<Bookmark> listByCategoryId(Long categoryId) throws ServiceException {
+        try {
+            return ((BookmarkManager) dao).getBookmarkListByCategoryId(categoryId);
+        } catch (DAOException e) {
+            LOGGER.debug("exception while resolve bookmark list by category id");
+            throw new ServiceException("exception while resolve bookmark list by category id", e);
+        }
+    }
+
+    @Override
+    public int deleteAll(Long categoryId) throws ServiceException {
+        try {
+            return ((BookmarkManager) dao).deleteAll(categoryId);
+        } catch (DAOException e) {
+            LOGGER.error("Exception while removing bookmarks by category id: ", e);
+            throw new ServiceException("Exception while removing bookmarks by category id: ", e);
+        }
     }
 }
