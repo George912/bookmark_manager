@@ -1,6 +1,6 @@
 package ru.bellintegrator.db.dao;
 
-import ru.bellintegrator.db.exception.DAOException;
+import ru.bellintegrator.core.exception.DAOException;
 
 import java.util.List;
 

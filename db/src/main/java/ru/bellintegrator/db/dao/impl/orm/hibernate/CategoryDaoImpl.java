@@ -7,9 +7,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.bellintegrator.core.exception.DAOException;
 import ru.bellintegrator.db.dao.GenericDAO;
-import ru.bellintegrator.db.exception.DAOException;
-import ru.bellintegrator.model.Category;
+import ru.bellintegrator.core.model.Category;
 
 import javax.annotation.Resource;
 import java.util.List;

@@ -14,7 +14,7 @@
         <property name="hibernate.default_schema">BOOKMARK_MANAGER_SCHEMA</property>
 
         <!-- Mapping with model class containing annotations -->
-        <mapping class="ru.bellintegrator.model.Bookmark"/>
-        <mapping class="ru.bellintegrator.model.Category"/>
+        <mapping class="ru.bellintegrator.core.model.Bookmark"/>
+        <mapping class="ru.bellintegrator.core.model.Category"/>
     </session-factory>
 </hibernate-configuration>
