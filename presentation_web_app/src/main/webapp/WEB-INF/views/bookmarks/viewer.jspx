@@ -8,7 +8,7 @@
     <spring:message code="description" var="description"/>
     <spring:message code="url" var="url"/>
     <spring:message code="category" var="category"/>
-    <spring:url value="/bookmarks/bookmark/editor" var="editorBookmarkUrl"/>
+    <spring:url value="/bookmarks/bookmark/editor?bookmarkId=" var="editorBookmarkUrl"/>
 
     <div id="bookmarkInfo">
         <table border="1" width="90%">
@@ -19,7 +19,7 @@
                 <td></td>
                 <td>
                     <!--todo:image-->
-                    <a href="${editorBookmarkUrl}/${bookmark.id}">${editorBookmarkUrl}/${bookmark.id}</a>
+                    <a href="${editorBookmarkUrl}${bookmark.id}">${editorBookmarkUrl}${bookmark.id}</a>
                 </td>
             </tr>
             <tr>

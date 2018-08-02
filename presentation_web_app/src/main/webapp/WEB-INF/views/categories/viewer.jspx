@@ -118,7 +118,9 @@
                     <td></td>
                     <td>
                         <!--todo:image-->
-                        <a href="${deleteAllBookmarksUrl}${category.id}">${deleteAllBookmarksUrl}${category.id}</a>
+                        <c:if test="${not empty category.bookmarks}">
+                            <a href="${deleteAllBookmarksUrl}${category.id}">${deleteAllBookmarksUrl}${category.id}</a>
+                        </c:if>
                     </td>
                 </tr>
             </table>
