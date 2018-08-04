@@ -31,23 +31,26 @@
         <servlet.version>3.1.0</servlet.version>
         <jsoup.version>1.7.2</jsoup.version>
         <image4j.version>0.7</image4j.version>
+        <aspectj.version>1.7.4</aspectj.version>
 
         <!--plugins-->
         <compiler.source>1.8</compiler.source>
         <compiler.target>1.8</compiler.target>
         <compiler.version>3.3</compiler.version>
         <war.version>2.1.1</war.version>
-        <tomcat.version>2.2</tomcat.version>
+        <tomcat.version>2.1</tomcat.version>
         <sql.version>3.0.0-SNAPSHOT</sql.version>
+
+        <!--configuration parameters-->
+
+        <!--root-->
+        <tomcatContextXml>META-INF/context.xml</tomcatContextXml>
 
         <!--db module-->
         <jdbc.driver>org.h2.Driver</jdbc.driver>
         <jdbc.url>jdbc:h2:file:C:\Users\neste_000.MYMACHINE\.m2\repository\com\h2database\h2\1.4.196\h2-1.4.196.jar</jdbc.url>
         <jdbc.username>YANESTEROV</jdbc.username>
         <jdbc.password>online</jdbc.password>
-
-        <!-- AspectJ -->
-        <aspectj.version>1.7.4</aspectj.version>
     </properties>
 
     <dependencies>
@@ -109,14 +112,76 @@
                     <!--<failOnMissingWebXml>false</failOnMissingWebXml>-->
                 <!--</configuration>-->
             <!--</plugin>-->
-            <!--<plugin>-->
-                <!--<groupId>org.apache.tomcat.maven</groupId>-->
-                <!--<artifactId>tomcat7-maven-plugin</artifactId>-->
-                <!--<version>${tomcat.version}</version>-->
-                <!--<configuration>-->
-                    <!--<path>/bm</path>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>${tomcat.version}</version>
+                <configuration>
+                    <path>/</path>
+                    <enableNaming>true</enableNaming>
+                    <charset>utf-8</charset>
+                    <contextFile>${tomcatContextXml}</contextFile>
+                    <warRunDependencies>
+                        <warRunDependency>
+                            <dependency>
+                                <groupId>ru.bellintegrator</groupId>
+                                <artifactId>core</artifactId>
+                                <version>${project.version}</version>
+                                <type>jar</type>
+                            </dependency>
+                        </warRunDependency>
+                        <warRunDependency>
+                            <dependency>
+                                <groupId>ru.bellintegrator</groupId>
+                                <artifactId>db</artifactId>
+                                <version>${project.version}</version>
+                                <type>jar</type>
+                            </dependency>
+                        </warRunDependency>
+                        <warRunDependency>
+                            <dependency>
+                                <groupId>ru.bellintegrator</groupId>
+                                <artifactId>service</artifactId>
+                                <version>${project.version}</version>
+                                <type>jar</type>
+                            </dependency>
+                        </warRunDependency>
+                        <warRunDependency>
+                            <dependency>
+                                <groupId>ru.bellintegrator</groupId>
+                                <artifactId>dto</artifactId>
+                                <version>${project.version}</version>
+                                <type>jar</type>
+                            </dependency>
+                        </warRunDependency>
+                        <warRunDependency>
+                            <dependency>
+                                <groupId>ru.bellintegrator</groupId>
+                                <artifactId>recovery</artifactId>
+                                <version>${project.version}</version>
+                                <type>jar</type>
+                            </dependency>
+                        </warRunDependency>
+                        <warRunDependency>
+                            <dependency>
+                                <groupId>ru.bellintegrator</groupId>
+                                <artifactId>ui</artifactId>
+                                <version>${project.version}</version>
+                                <type>war</type>
+                            </dependency>
+                        </warRunDependency>
+                    </warRunDependencies>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>tomcat-run</id>
+                        <goals>
+                            <goal>exec-war-only</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>
