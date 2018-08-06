@@ -10,15 +10,19 @@
     </li>
     <li>
         <h2>Database</h2>
+        <h3>Data base location</h3>
+        Data base locate into db directory into working directory.
+        <br/>
         <h3>Credentials</h3>
         login: YANESTEROV <br>
-        password: online <br>
+        password: online 
+        <br/>
         <h3>Connection strings</h3>
         Modify META-INF/context.xml and pom.xml
         <ol>
-            <li><b>Job:</b>C:\Users\YANesterov\.m2\repository\com\h2database\h2\1.4.196\h2-1.4.196.jar</li>
-            <li><b>Home:</b>C:\Users\neste_000.MYMACHINE\.m2\repository\com\h2database\h2\1.4.196\h2-1.4.196.jar</li>
+            <li><b>Home:</b>jdbc:h2:file:.\db\h2-1.4.196.jar</li>
         </ol>
+        <br/ >
         <h3>sql-maven-plugin versions</h3>
         Modify bookmark_manager/pom.xml. Set sql.version property:
         <ol>

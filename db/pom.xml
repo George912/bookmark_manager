@@ -20,14 +20,6 @@
     </properties>
 
     <dependencies>
-        <!--database-->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>${h2.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-
         <!--spring-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -141,6 +133,7 @@
                             <url>${jdbc.url}</url>
                             <autocommit>true</autocommit>
                             <srcFiles>
+                                <srcFile>src/main/resources/sql/ddl/schemas.sql</srcFile>
                                 <srcFile>src/main/resources/sql/ddl/tables.sql</srcFile>
                                 <srcFile>src/main/resources/sql/ddl/constraints.sql</srcFile>
                                 <srcFile>src/main/resources/sql/ddl/sequences.sql</srcFile>

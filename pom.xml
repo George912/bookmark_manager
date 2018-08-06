@@ -48,7 +48,7 @@
 
         <!--db module-->
         <jdbc.driver>org.h2.Driver</jdbc.driver>
-        <jdbc.url>jdbc:h2:file:C:\Users\neste_000.MYMACHINE\.m2\repository\com\h2database\h2\1.4.196\h2-1.4.196.jar</jdbc.url>
+        <jdbc.url>jdbc:h2:file:.\db\h2-1.4.196.jar</jdbc.url>
         <jdbc.username>YANESTEROV</jdbc.username>
         <jdbc.password>online</jdbc.password>
     </properties>
