@@ -40,6 +40,7 @@
         <war.version>2.1.1</war.version>
         <tomcat.version>2.1</tomcat.version>
         <sql.version>3.0.0-SNAPSHOT</sql.version>
+        <resource.version>3.1.0</resource.version>
 
         <!--configuration parameters-->
 
@@ -48,7 +49,7 @@
 
         <!--db module-->
         <jdbc.driver>org.h2.Driver</jdbc.driver>
-        <jdbc.url>jdbc:h2:file:.\db\h2-1.4.196.jar</jdbc.url>
+        <jdbc.url>jdbc:h2:file:${project.basedir}\..\data\h2-${h2.version}.jar</jdbc.url>
         <jdbc.username>YANESTEROV</jdbc.username>
         <jdbc.password>online</jdbc.password>
     </properties>
