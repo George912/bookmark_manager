@@ -76,7 +76,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.4</version>
+                <version>${source.plugin.version}</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -107,22 +107,22 @@
                 </configuration>
 
                 <executions>
-                    <execution>
-                        <id>clear-schema</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>execute</goal>
-                        </goals>
-                        <configuration>
-                            <url>${jdbc.url}</url>
-                            <autocommit>true</autocommit>
-                            <srcFiles>
-                                <srcFile>src/main/resources/sql/ddl/_constraints.sql</srcFile>
-                                <srcFile>src/main/resources/sql/ddl/_tables.sql</srcFile>
-                                <srcFile>src/main/resources/sql/ddl/_sequences.sql</srcFile>
-                            </srcFiles>
-                        </configuration>
-                    </execution>
+                    <!--<execution>-->
+                        <!--<id>clear-schema</id>-->
+                        <!--<phase>process-resources</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>execute</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<url>${jdbc.url}</url>-->
+                            <!--<autocommit>true</autocommit>-->
+                            <!--<srcFiles>-->
+                                <!--<srcFile>src/main/resources/sql/ddl/_constraints.sql</srcFile>-->
+                                <!--<srcFile>src/main/resources/sql/ddl/_tables.sql</srcFile>-->
+                                <!--<srcFile>src/main/resources/sql/ddl/_sequences.sql</srcFile>-->
+                            <!--</srcFiles>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
                     <execution>
                         <id>init-schema</id>
                         <phase>process-resources</phase>
@@ -153,31 +153,6 @@
                                 <srcFile>src/main/resources/sql/dml/categories.sql</srcFile>
                                 <srcFile>src/main/resources/sql/dml/bookmarks.sql</srcFile>
                             </srcFiles>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>${resource.version}</version>
-                <executions>
-                    <execution>
-                        <id>copy-resources</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.basedir}/../data</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${settings.localRepository}\com\h2database\h2\${h2.version}</directory>
-                                    <includes>
-                                        <include>h2-${h2.version}.jar</include>
-                                        <include>h2-${h2.version}.jar.mv.db</include>
-                                    </includes>
-                                </resource>
-                            </resources>
                         </configuration>
                     </execution>
                 </executions>

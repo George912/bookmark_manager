@@ -1,7 +1,27 @@
 # bookmark_manager
 <ol>
     <li>
-        <h2>Application start</h2>
+        <h2>Application</h2>
+        <ol>
+            <li>
+                <h3>Start into Intellij Idea</h3>
+                <ul>
+                    <li>build project: mvn install</li>
+                    <li>start embedded tomcat and deploy application: tomcat plugin:run</li>
+                    <li>go to http://localhost:8080/categories</li>
+                </ul>
+            </li>
+            <li>
+                <h3>Start executable war</h3>
+                <ul>
+                    <li>build project: mvn install</li>
+                    <li>extract all from distribution/target/distributive.zip into any directory</li>
+                    <li>open command line and go to this directory</li>
+                    <li>execute java -jar bm.jar</li>
+                    <li>go to http://localhost:8080/categories</li>
+                </ul>
+            </li>
+        </ol>
         <ul>
             <li>build project: mvn install</li>
             <li>start embedded tomcat and deploy application: tomcat plugin:run</li>

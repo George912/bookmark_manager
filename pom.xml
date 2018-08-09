@@ -14,6 +14,7 @@
         <module>dto</module>
         <module>core</module>
         <module>service</module>
+        <module>distribution</module>
     </modules>
 
     <properties>
@@ -41,6 +42,8 @@
         <tomcat.version>2.1</tomcat.version>
         <sql.version>3.0.0-SNAPSHOT</sql.version>
         <resource.version>3.1.0</resource.version>
+        <assembly.plugin>3.1.0</assembly.plugin>
+        <source.plugin.version>2.4</source.plugin.version>
 
         <!--configuration parameters-->
 
