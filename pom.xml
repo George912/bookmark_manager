@@ -42,10 +42,9 @@
         <tomcat.version>2.1</tomcat.version>
         <sql.version>3.0.0-SNAPSHOT</sql.version>
         <resource.version>3.1.0</resource.version>
-        <assembly.plugin>3.1.0</assembly.plugin>
+        <assembly.plugin.version>3.1.0</assembly.plugin.version>
         <source.plugin.version>2.4</source.plugin.version>
-
-        <!--configuration parameters-->
+        <clean.plugin.version>3.1.0</clean.plugin.version>
 
         <!--root-->
         <tomcatContextXml>META-INF/context.xml</tomcatContextXml>
@@ -100,6 +99,18 @@
 
     <build>
         <plugins>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>${clean.plugin.version}</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${project.basedir}/data</directory>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
             <!--<plugin>-->
                 <!--<groupId>org.apache.maven.plugins</groupId>-->
                 <!--<artifactId>maven-compiler-plugin</artifactId>-->

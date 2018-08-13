@@ -21,12 +21,11 @@
                     <li>go to http://localhost:8080/categories</li>
                 </ul>
             </li>
+            <li>
+                <h3>Clean ${project.basedir}/data</h3>
+                For clean data directory and recreate database files execute mvn clean on root project.
+            </li>
         </ol>
-        <ul>
-            <li>build project: mvn install</li>
-            <li>start embedded tomcat and deploy application: tomcat plugin:run</li>
-            <li>go to http://localhost:8080/categories</li>
-        </ul>
     </li>
     <li>
         <h2>Database</h2>
