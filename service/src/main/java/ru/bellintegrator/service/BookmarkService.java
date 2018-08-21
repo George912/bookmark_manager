@@ -1,7 +1,7 @@
 package ru.bellintegrator.service;
 
 import ru.bellintegrator.core.exception.ServiceException;
-import ru.bellintegrator.core.model.Bookmark;
+import ru.bellintegrator.core.domain.Bookmark;
 
 import java.util.List;
 

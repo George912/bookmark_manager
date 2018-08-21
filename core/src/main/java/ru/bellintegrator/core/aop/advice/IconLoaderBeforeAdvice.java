@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.ResourceLoader;
 import ru.bellintegrator.core.parser.IconUrlParser;
-import ru.bellintegrator.core.model.Bookmark;
+import ru.bellintegrator.core.domain.Bookmark;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

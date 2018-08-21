@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.core.exception.DAOException;
 import ru.bellintegrator.db.dao.GenericDAO;
-import ru.bellintegrator.core.model.Category;
+import ru.bellintegrator.core.domain.Category;
 
 import javax.annotation.Resource;
 import java.util.List;

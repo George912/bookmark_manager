@@ -11,7 +11,7 @@ import ru.bellintegrator.core.aop.AdviceRequired;
 import ru.bellintegrator.core.exception.DAOException;
 import ru.bellintegrator.db.dao.BookmarkManager;
 import ru.bellintegrator.db.dao.GenericDAO;
-import ru.bellintegrator.core.model.Bookmark;
+import ru.bellintegrator.core.domain.Bookmark;
 
 import javax.annotation.Resource;
 import java.util.List;

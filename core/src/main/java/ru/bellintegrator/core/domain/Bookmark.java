@@ -1,4 +1,4 @@
-package ru.bellintegrator.core.model;
+package ru.bellintegrator.core.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
