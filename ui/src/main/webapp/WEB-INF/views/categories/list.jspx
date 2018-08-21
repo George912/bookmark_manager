@@ -2,35 +2,42 @@
 <div xmlns:jsp="http://java.sun.com/JSP/Page"
      xmlns:c="http://java.sun.com/jsp/jstl/core"
      xmlns:spring="http://www.springframework.org/tags"
-     version="2.0">
+     xmlns:sec="http://www.springframework.org/security/tags">
+
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
+
     <spring:url value="/categories/category/viewer?categoryId=" var="categoryViewerUrl"/>
+
     <spring:message code="categories" var="categories"/>
     <spring:message code="categoryNotFound" var="categoryNotFound"/>
     <spring:message code="name" var="name"/>
 
     <!--todo: use form tag-->
-    <hl>${categories}</hl>
-    <c:if test="${not empty categoryList}">
-        <tаble border="1">
-            <thead>
-            <tr>
-                <th>${name}</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${categoryList}" var="category">
+    <sec:authorize access="isAuthenticated()">
+        <hl>${categories}</hl>
+        <c:if test="${not empty categoryList}">
+            <tаble border="1">
+                <thead>
                 <tr>
-                    <td>
-                        ${category.name}
-                        <a href="${categoryViewerUrl}${category.id}">${categoryViewerUrl}${category.id}</a>
-                    </td>
+                    <th>${name}</th>
                 </tr>
-            </c:forEach>
-            </tbody>
-        </tаble>
-    </c:if>
-    <hl>${categoryNotFound}</hl>
-    <a href="${categoryViewerUrl.concat('-1')}">${categoryViewerUrl.concat('-1')}</a>
+                </thead>
+                <tbody>
+                <c:forEach items="${categoryList}" var="category">
+                    <tr>
+                        <td>
+                            ${category.name}
+                            <a href="${categoryViewerUrl}${category.id}">${categoryViewerUrl}${category.id}</a>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </tаble>
+
+        </c:if>
+        <hl>${categoryNotFound}</hl>
+        <a href="${categoryViewerUrl.concat('-1')}">${categoryViewerUrl.concat('-1')}</a>
+    </sec:authorize>
+
 </div>

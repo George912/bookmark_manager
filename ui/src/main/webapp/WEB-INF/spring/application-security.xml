@@ -5,17 +5,35 @@
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
            http://www.springframework.org/schema/security
            http://www.springframework.org/schema/security/spring-security.xsd">
-    <http auto-config="true">
-        <intercept-url pattern="/**" access="ROLE_USER" />
-        <form-login />
-        <logout />
+
+    <http auto-config="true" use-expressions="true">
+        <!--TODO: add intercept-url element for other system urls-->
+
+        <form-login
+                login-page="/login"
+                authentication-failure-url="/loginfail"
+                default-target-url="/categories"
+                password-parameter="pass"
+        />
+        <logout logout-success-url="/login"/>
     </http>
 
     <authentication-manager>
+        <!--in-memory-->
         <authentication-provider>
-            <user-service>
-                <user name="test" password="test" authorities="ROLE_USER" />
-            </user-service>
+            <password-encoder ref="bcrypt"/>
+
+            <!--in-memory-->
+            <!--<user-service>-->
+            <!--<user name="test" password="test" authorities="ROLE_USER" />-->
+            <!--</user-service>-->
+
+            <!--db-->
+            <jdbc-user-service data-source-ref="dataSource"/>
         </authentication-provider>
     </authentication-manager>
+
+    <beans:bean id="bcrypt" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <beans:constructor-arg name="strength" value="11"/>
+    </beans:bean>
 </beans:beans>
