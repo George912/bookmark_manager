@@ -137,6 +137,7 @@
                                 <srcFile>src/main/resources/sql/ddl/tables.sql</srcFile>
                                 <srcFile>src/main/resources/sql/ddl/constraints.sql</srcFile>
                                 <srcFile>src/main/resources/sql/ddl/sequences.sql</srcFile>
+                                <srcFile>src/main/resources/sql/ddl/indices.sql</srcFile>
                             </srcFiles>
                         </configuration>
                     </execution>

@@ -13,8 +13,8 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.default_schema">BOOKMARK_MANAGER_SCHEMA</property>
 
-        <!-- Mapping with model class containing annotations -->
-        <mapping class="ru.bellintegrator.core.model.Bookmark"/>
-        <mapping class="ru.bellintegrator.core.model.Category"/>
+        <!-- Mapping with domain class containing annotations -->
+        <mapping class="ru.bellintegrator.core.domain.Bookmark"/>
+        <mapping class="ru.bellintegrator.core.domain.Category"/>
     </session-factory>
 </hibernate-configuration>
