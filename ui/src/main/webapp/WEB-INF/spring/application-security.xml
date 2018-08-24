@@ -26,12 +26,12 @@
             <!--<password-encoder ref="bcrypt"/>-->
 
             <!--in-memory-->
-            <user-service>
-            <user name="test" password="test" authorities="ROLE_USER" />
-            </user-service>
+            <!--<user-service>-->
+            <!--<user name="test" password="test" authorities="ROLE_USER" />-->
+            <!--</user-service>-->
 
             <!--db-->
-            <!--<jdbc-user-service data-source-ref="dataSource"/>-->
+            <jdbc-user-service data-source-ref="dataSource"/>
         </authentication-provider>
     </authentication-manager>
 
