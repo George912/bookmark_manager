@@ -9,7 +9,8 @@
 
     <spring:message code="error" var="error"/>
     <spring:message code="password" var="password"/>
-    <spring:url var="j_spring_security_check" value="loginUrl"/>
+
+    <spring:url var="loginUrl" value="/j_spring_security_check" />
 
     <div id="login">
         <c:if test="${not empty error}">
@@ -20,10 +21,18 @@
             <table border="3">
                 <tr>
                     <td>
-                        ${password}:
+                        ${password}login:
                     </td>
                     <td>
-                        <input type="password" name="pass"/>
+                        <input type="text" name="user_login"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ${password}password:
+                    </td>
+                    <td>
+                        <input type="password" name="user_password"/>
                     </td>
                 </tr>
                 <tr>
