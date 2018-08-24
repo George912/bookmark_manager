@@ -21,7 +21,7 @@
             <table border="3">
                 <tr>
                     <td>
-                        ${password}login:
+                        ${password}:
                     </td>
                     <td>
                         <input type="text" name="j_username"/>
@@ -29,7 +29,7 @@
                 </tr>
                 <tr>
                     <td>
-                        ${password}password:
+                        ${password}:
                     </td>
                     <td>
                         <input type="password" name="j_password"/>

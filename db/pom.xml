@@ -153,6 +153,8 @@
                             <srcFiles>
                                 <srcFile>src/main/resources/sql/dml/categories.sql</srcFile>
                                 <srcFile>src/main/resources/sql/dml/bookmarks.sql</srcFile>
+                                <srcFile>src/main/resources/sql/dml/users.sql</srcFile>
+                                <srcFile>src/main/resources/sql/dml/authorities.sql</srcFile>
                             </srcFiles>
                         </configuration>
                     </execution>

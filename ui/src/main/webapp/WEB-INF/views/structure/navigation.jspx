@@ -23,7 +23,7 @@
 
     <sec:authorize access="isAuthenticated()">
         ${welcome}
-        <sec:authentication property="username"/>
+        <sec:authentication property="principal.username"/>
         <br/>
         <а href="${logoutUrl}">${logout}</а>
     </sec:authorize>
