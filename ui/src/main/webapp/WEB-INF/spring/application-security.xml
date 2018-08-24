@@ -6,14 +6,16 @@
            http://www.springframework.org/schema/security
            http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <http auto-config="true" use-expressions="true">
+    <http use-expressions="true">
         <!--TODO: add intercept-url element for other system urls-->
+        <!--<intercept-url pattern='/*' access='isAuthenticated()' />-->
+        <intercept-url pattern='/login' access='permitAll()' />
+        <intercept-url pattern='/security/loginfail' access='permitAll()' />
 
         <form-login
                 login-page="/login"
-                authentication-failure-url="/loginfail"
+                authentication-failure-url="/security/loginfail"
                 default-target-url="/categories"
-                password-parameter="pass"
         />
         <logout logout-success-url="/login"/>
     </http>
@@ -21,15 +23,15 @@
     <authentication-manager>
         <!--in-memory-->
         <authentication-provider>
-            <password-encoder ref="bcrypt"/>
+            <!--<password-encoder ref="bcrypt"/>-->
 
             <!--in-memory-->
-            <!--<user-service>-->
-            <!--<user name="test" password="test" authorities="ROLE_USER" />-->
-            <!--</user-service>-->
+            <user-service>
+            <user name="test" password="test" authorities="ROLE_USER" />
+            </user-service>
 
             <!--db-->
-            <jdbc-user-service data-source-ref="dataSource"/>
+            <!--<jdbc-user-service data-source-ref="dataSource"/>-->
         </authentication-provider>
     </authentication-manager>
 

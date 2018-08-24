@@ -1,28 +1,33 @@
 package ru.bellintegrator.controller;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Locale;
 
 @Controller
 @RequestMapping("/security")
 public class SecurityController {
-    private static final Logger LOGGER = Logger.getLogger(SecurityController.class);
+    private final Logger logger = LoggerFactory.getLogger(SecurityController.class);
 
-    public SecurityController() {
-    }
+//    private MessageSource messageSource;
 
-    @GetMapping("/loginfail")
-    public String loginFail(Model model, Locale locale){
-        LOGGER.info("Login failed detected");
-//        TODO: implement message source book 694
-        model.addAttribute("error", "error");
+    @RequestMapping("/loginfail")
+    public String loginFail(Model model, Locale locale) {
+        logger.info("Login failed detected");
+        model.addAttribute("message", "sdf");
+//        uiModel.addAttribute("message", new Message("error",
+//                messageSource.getMessage("message_login_fail", new Object[]{}, locale)));
         return "categories/list";
     }
+
+//    @Autowired
+//    public void setMessageSource(MessageSource messageSource) {
+//        this.messageSource = messageSource;
+//    }
 }
