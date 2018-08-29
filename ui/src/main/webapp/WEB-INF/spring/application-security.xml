@@ -23,9 +23,10 @@
     <authentication-manager>
         <!--in-memory-->
         <authentication-provider>
-            <!--<password-encoder ref="bcrypt"/>-->
+            <password-encoder ref="bcrypt"/>
 
             <!--in-memory-->
+            <!--робит-->
             <!--<user-service>-->
             <!--<user name="test" password="test" authorities="ROLE_USER" />-->
             <!--</user-service>-->
