@@ -45,31 +45,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>${resource.version}</version>
-                <executions>
-                    <execution>
-                        <id>copy-resources</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.basedir}/../data</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${settings.localRepository}\com\h2database\h2\${h2.version}</directory>
-                                    <includes>
-                                        <include>h2-${h2.version}.jar</include>
-                                        <include>h2-${h2.version}.jar.mv.db</include>
-                                    </includes>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>${assembly.plugin.version}</version>

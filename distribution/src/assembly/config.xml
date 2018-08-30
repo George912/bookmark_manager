@@ -11,9 +11,8 @@
             <directory>${project.basedir}/../data</directory>
             <outputDirectory>/data</outputDirectory>
             <includes>
-                <include>h2-${h2.version}.jar</include>
-                <include>h2-${h2.version}.jar.mv.db</include>
-                <include>h2-${h2.version}.jar.trace.db</include>
+                <include>${data.db.name}.jar</include>
+                <include>${data.db.name}.jar.mv.db</include>
             </includes>
         </fileSet>
     </fileSets>
