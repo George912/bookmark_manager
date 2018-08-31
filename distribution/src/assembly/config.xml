@@ -13,6 +13,8 @@
             <includes>
                 <include>${data.db.name}.jar</include>
                 <include>${data.db.name}.jar.mv.db</include>
+                <include>${security.db.name}.jar</include>
+                <include>${security.db.name}.jar.mv.db</include>
             </includes>
         </fileSet>
     </fileSets>
