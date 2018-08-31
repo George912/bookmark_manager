@@ -117,6 +117,25 @@
                 <version>${copy_rename.plugin.version}</version>
                 <executions>
                     <execution>
+                        <id>copy</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <fileSets>
+                                <fileSet>
+                                    <sourceFile>${project.basedir}/../data/h2-${h2.version}.jar</sourceFile>
+                                    <destinationFile>${project.basedir}/../data/${security.db.name}.jar</destinationFile>
+                                </fileSet>
+                                <fileSet>
+                                    <sourceFile>${project.basedir}/../data/h2-${h2.version}.jar.mv.db</sourceFile>
+                                    <destinationFile>${project.basedir}/../data/${security.db.name}.jar.mv.db</destinationFile>
+                                </fileSet>
+                            </fileSets>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>copy-and-rename-file</id>
                         <phase>generate-resources</phase>
                         <goals>
@@ -132,7 +151,6 @@
                                     <sourceFile>${project.basedir}/../data/h2-${h2.version}.jar.mv.db</sourceFile>
                                     <destinationFile>${project.basedir}/../data/${data.db.name}.jar.mv.db</destinationFile>
                                 </fileSet>
-                                <!--<fileSet></fileSet>-->
                             </fileSets>
                         </configuration>
                     </execution>
