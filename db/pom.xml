@@ -171,45 +171,26 @@
 
                 <configuration>
                     <driver>${jdbc.driver}</driver>
-                    <url>${data.db.url}</url>
-                    <!--<url></url>-->
                     <username>${jdbc.username}</username>
                     <password>${jdbc.password}</password>
                     <autocommit>true</autocommit>
                 </configuration>
 
                 <executions>
-                    <!--<execution>-->
-                        <!--<id>clear-schema</id>-->
-                        <!--<phase>process-resources</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>execute</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<url>${jdbc.url}</url>-->
-                            <!--<autocommit>true</autocommit>-->
-                            <!--<srcFiles>-->
-                                <!--<srcFile>src/main/resources/sql/ddl/_constraints.sql</srcFile>-->
-                                <!--<srcFile>src/main/resources/sql/ddl/_tables.sql</srcFile>-->
-                                <!--<srcFile>src/main/resources/sql/ddl/_sequences.sql</srcFile>-->
-                            <!--</srcFiles>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
                     <execution>
-                        <id>init-schema</id>
+                        <id>init-data-schema</id>
                         <phase>process-resources</phase>
                         <goals>
                             <goal>execute</goal>
                         </goals>
                         <configuration>
-                            <!--<url>${data.db.url}</url>-->
-                            <!--<autocommit>true</autocommit>-->
+                            <url>${data.db.url}</url>
                             <srcFiles>
-                                <srcFile>src/main/resources/sql/ddl/schemas.sql</srcFile>
-                                <srcFile>src/main/resources/sql/ddl/tables.sql</srcFile>
-                                <srcFile>src/main/resources/sql/ddl/constraints.sql</srcFile>
-                                <srcFile>src/main/resources/sql/ddl/sequences.sql</srcFile>
-                                <srcFile>src/main/resources/sql/ddl/indices.sql</srcFile>
+                                <srcFile>src/main/resources/sql/data/ddl/schemas.sql</srcFile>
+                                <srcFile>src/main/resources/sql/data/ddl/tables.sql</srcFile>
+                                <srcFile>src/main/resources/sql/data/ddl/constraints.sql</srcFile>
+                                <srcFile>src/main/resources/sql/data/ddl/sequences.sql</srcFile>
+                                <!--<srcFile>src/main/resources/sql/data/ddl/indices.sql</srcFile>-->
                             </srcFiles>
                         </configuration>
                     </execution>
@@ -220,13 +201,40 @@
                             <goal>execute</goal>
                         </goals>
                         <configuration>
-                            <!--<url>${data.db.url}</url>-->
-                            <!--<autocommit>true</autocommit>-->
+                            <url>${data.db.url}</url>
                             <srcFiles>
-                                <srcFile>src/main/resources/sql/dml/categories.sql</srcFile>
-                                <srcFile>src/main/resources/sql/dml/bookmarks.sql</srcFile>
-                                <srcFile>src/main/resources/sql/dml/users.sql</srcFile>
-                                <srcFile>src/main/resources/sql/dml/authorities.sql</srcFile>
+                                <srcFile>src/main/resources/sql/data/dml/categories.sql</srcFile>
+                                <srcFile>src/main/resources/sql/data/dml/bookmarks.sql</srcFile>
+                            </srcFiles>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>init-security-schema</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <url>${security.db.url}</url>
+                            <srcFiles>
+                                <srcFile>src/main/resources/sql/security/ddl/schemas.sql</srcFile>
+                                <srcFile>src/main/resources/sql/security/ddl/tables.sql</srcFile>
+                                <srcFile>src/main/resources/sql/security/ddl/constraints.sql</srcFile>
+                                <srcFile>src/main/resources/sql/security/ddl/indices.sql</srcFile>
+                            </srcFiles>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>init-security-data</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <url>${security.db.url}</url>
+                            <srcFiles>
+                                <srcFile>src/main/resources/sql/security/dml/users.sql</srcFile>
+                                <srcFile>src/main/resources/sql/security/dml/authorities.sql</srcFile>
                             </srcFiles>
                         </configuration>
                     </execution>
