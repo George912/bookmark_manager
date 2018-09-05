@@ -191,6 +191,10 @@
                                 <srcFile>src/main/resources/sql/data/ddl/constraints.sql</srcFile>
                                 <srcFile>src/main/resources/sql/data/ddl/sequences.sql</srcFile>
                                 <!--<srcFile>src/main/resources/sql/data/ddl/indices.sql</srcFile>-->
+                                <srcFile>src/main/resources/sql/security/ddl/schemas.sql</srcFile>
+                                <srcFile>src/main/resources/sql/security/ddl/tables.sql</srcFile>
+                                <srcFile>src/main/resources/sql/security/ddl/constraints.sql</srcFile>
+                                <srcFile>src/main/resources/sql/security/ddl/indices.sql</srcFile>
                             </srcFiles>
                         </configuration>
                     </execution>
@@ -205,6 +209,8 @@
                             <srcFiles>
                                 <srcFile>src/main/resources/sql/data/dml/categories.sql</srcFile>
                                 <srcFile>src/main/resources/sql/data/dml/bookmarks.sql</srcFile>
+                                <srcFile>src/main/resources/sql/security/dml/users.sql</srcFile>
+                                <srcFile>src/main/resources/sql/security/dml/authorities.sql</srcFile>
                             </srcFiles>
                         </configuration>
                     </execution>

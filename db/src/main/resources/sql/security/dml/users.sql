@@ -2,4 +2,4 @@ SET SCHEMA SECURITY;
 
 -- $2a$11$7A0A/ofYBfT7kmSSPH2Cj.BcNpR.ybjzgAY93wNqGKvs1r4xbBLhm = "test"
 INSERT INTO USERS (USERNAME, PASSWORD, ENABLED)
-VALUES('test', 'test', 1);
+VALUES('test', '$2a$11$7A0A/ofYBfT7kmSSPH2Cj.BcNpR.ybjzgAY93wNqGKvs1r4xbBLhm', 1);

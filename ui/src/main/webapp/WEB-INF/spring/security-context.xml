@@ -2,15 +2,15 @@
              xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-           http://www.springframework.org/schema/security
-           http://www.springframework.org/schema/security/spring-security.xsd">
+                                   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                                   http://www.springframework.org/schema/security
+                                   http://www.springframework.org/schema/security/spring-security.xsd">
 
     <http use-expressions="true">
         <!--TODO: add intercept-url element for other system urls-->
         <!--<intercept-url pattern='/*' access='isAuthenticated()' />-->
-        <intercept-url pattern='/login' access='permitAll()' />
-        <intercept-url pattern='/security/loginfail' access='permitAll()' />
+        <intercept-url pattern='/login' access='permitAll()'/>
+        <intercept-url pattern='/security/loginfail' access='permitAll()'/>
 
         <form-login
                 login-page="/login"
@@ -32,7 +32,9 @@
             <!--</user-service>-->
 
             <!--db-->
-            <jdbc-user-service data-source-ref="dataSource"/>
+            <jdbc-user-service data-source-ref="securityDataSource"
+                               authorities-by-username-query="SELECT username,authority FROM security.authorities WHERE username = ?"
+                               users-by-username-query="SELECT username,password,enabled FROM security.users WHERE username = ?"/>
         </authentication-provider>
     </authentication-manager>
 
