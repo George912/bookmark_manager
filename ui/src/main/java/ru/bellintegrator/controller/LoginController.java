@@ -16,7 +16,7 @@ public class LoginController {
     @PreAuthorize("permitAll()")
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) throws SQLException {
-        LOGGER.debug("login get: use database file mode with password encryption - final release");
+        LOGGER.debug("login get: use database file mode with password encryption - final release for ss");
 
         Connection conn1 = null;
         Connection conn2 = null;

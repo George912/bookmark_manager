@@ -18,10 +18,4 @@
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager"
           p:sessionFactory-ref="sessionFactory"/>
-
-    <bean id="securityDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-          p:driverClassName="org.h2.Driver"
-          p:url="jdbc:h2:file:.\data\data.jar"
-          p:username="YANESTEROV"
-          p:password="online"/>
 </beans>

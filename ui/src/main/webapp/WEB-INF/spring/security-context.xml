@@ -32,7 +32,7 @@
             <!--</user-service>-->
 
             <!--db-->
-            <jdbc-user-service data-source-ref="securityDataSource"
+            <jdbc-user-service data-source-ref="dataSource"
                                authorities-by-username-query="SELECT username,authority FROM security.authorities WHERE username = ?"
                                users-by-username-query="SELECT username,password,enabled FROM security.users WHERE username = ?"/>
         </authentication-provider>
