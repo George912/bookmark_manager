@@ -40,7 +40,7 @@
             maxIdle="30"
             maxWait="10000"
             driverClassName="org.h2.Driver"
-            url="jdbc:h2:file:.\data\data.jar"
+            url="jdbc:h2:file:.\data\data"
             username="yanesterov"
             password="online"
     />

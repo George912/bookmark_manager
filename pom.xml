@@ -53,12 +53,10 @@
 
         <!--distribution-->
         <data.db.name>data</data.db.name>
-        <security.db.name>security</security.db.name>
 
         <!--db-->
         <jdbc.driver>org.h2.Driver</jdbc.driver>
-        <data.db.url>jdbc:h2:file:${project.basedir}\..\data\${data.db.name}.jar</data.db.url>
-        <security.db.url>jdbc:h2:file:${project.basedir}\..\data\${security.db.name}.jar</security.db.url>
+        <data.db.url>jdbc:h2:file:${project.basedir}\..\data\${data.db.name}</data.db.url>
         <jdbc.username>YANESTEROV</jdbc.username>
         <jdbc.password>online</jdbc.password>
     </properties>

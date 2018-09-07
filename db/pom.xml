@@ -87,76 +87,6 @@
                 </executions>
             </plugin>
             <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>${resource.version}</version>
-                <executions>
-                    <execution>
-                        <id>copy-resources</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.basedir}/../data</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${settings.localRepository}\com\h2database\h2\${h2.version}</directory>
-                                    <includes>
-                                        <include>h2-${h2.version}.jar</include>
-                                        <exclude>h2-${h2.version}.jar.mv.db</exclude>
-                                    </includes>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.coderplus.maven.plugins</groupId>
-                <artifactId>copy-rename-maven-plugin</artifactId>
-                <version>${copy_rename.plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>copy</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <fileSets>
-                                <fileSet>
-                                    <sourceFile>${project.basedir}/../data/h2-${h2.version}.jar</sourceFile>
-                                    <destinationFile>${project.basedir}/../data/${security.db.name}.jar</destinationFile>
-                                </fileSet>
-                                <fileSet>
-                                    <sourceFile>${project.basedir}/../data/h2-${h2.version}.jar.mv.db</sourceFile>
-                                    <destinationFile>${project.basedir}/../data/${security.db.name}.jar.mv.db</destinationFile>
-                                </fileSet>
-                            </fileSets>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>copy-and-rename-file</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>rename</goal>
-                        </goals>
-                        <configuration>
-                            <fileSets>
-                                <fileSet>
-                                    <sourceFile>${project.basedir}/../data/h2-${h2.version}.jar</sourceFile>
-                                    <destinationFile>${project.basedir}/../data/${data.db.name}.jar</destinationFile>
-                                </fileSet>
-                                <fileSet>
-                                    <sourceFile>${project.basedir}/../data/h2-${h2.version}.jar.mv.db</sourceFile>
-                                    <destinationFile>${project.basedir}/../data/${data.db.name}.jar.mv.db</destinationFile>
-                                </fileSet>
-                            </fileSets>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>sql-maven-plugin</artifactId>
                 <version>${sql.version}</version>
@@ -209,36 +139,6 @@
                             <srcFiles>
                                 <srcFile>src/main/resources/sql/data/dml/categories.sql</srcFile>
                                 <srcFile>src/main/resources/sql/data/dml/bookmarks.sql</srcFile>
-                                <srcFile>src/main/resources/sql/security/dml/users.sql</srcFile>
-                                <srcFile>src/main/resources/sql/security/dml/authorities.sql</srcFile>
-                            </srcFiles>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>init-security-schema</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>execute</goal>
-                        </goals>
-                        <configuration>
-                            <url>${security.db.url}</url>
-                            <srcFiles>
-                                <srcFile>src/main/resources/sql/security/ddl/schemas.sql</srcFile>
-                                <srcFile>src/main/resources/sql/security/ddl/tables.sql</srcFile>
-                                <srcFile>src/main/resources/sql/security/ddl/constraints.sql</srcFile>
-                                <srcFile>src/main/resources/sql/security/ddl/indices.sql</srcFile>
-                            </srcFiles>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>init-security-data</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>execute</goal>
-                        </goals>
-                        <configuration>
-                            <url>${security.db.url}</url>
-                            <srcFiles>
                                 <srcFile>src/main/resources/sql/security/dml/users.sql</srcFile>
                                 <srcFile>src/main/resources/sql/security/dml/authorities.sql</srcFile>
                             </srcFiles>
