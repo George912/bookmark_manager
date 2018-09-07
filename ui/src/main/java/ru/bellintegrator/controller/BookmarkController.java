@@ -2,15 +2,14 @@ package ru.bellintegrator.controller;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import ru.bellintegrator.core.exception.ServiceException;
 import ru.bellintegrator.core.domain.Bookmark;
 import ru.bellintegrator.core.domain.Category;
+import ru.bellintegrator.core.exception.ServiceException;
 import ru.bellintegrator.service.BookmarkService;
 import ru.bellintegrator.service.CategoryService;
 import ru.bellintegrator.utils.UrlUtil;
@@ -48,7 +47,6 @@ public class BookmarkController {
      * @param model
      * @return
      */
-    @PreAuthorize("isAuthenticated()")
     @GetMapping("bookmark/viewer")
     public String info(@RequestParam(value = "bookmarkId") Long id, Model model) {
         LOGGER.debug("Call info(id=" + id + ")");
@@ -63,7 +61,6 @@ public class BookmarkController {
         return "bookmarks/viewer";
     }
 
-    @PreAuthorize("isAuthenticated()")
     @GetMapping("bookmark/editor")
     public String showEditor(@RequestParam(value = "bookmarkId") Long id, Model model) {
         LOGGER.debug("Call edit(id=" + id + ")");
@@ -87,7 +84,6 @@ public class BookmarkController {
         return "bookmarks/editor";
     }
 
-    @PreAuthorize("isAuthenticated()")
     @PostMapping(value = "bookmark/editor")
     public String update(Bookmark bookmark, BindingResult bindingResult, Model model,
                          HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
@@ -106,7 +102,6 @@ public class BookmarkController {
         return "redirect:viewer?bookmarkId=" + UrlUtil.encodeUrlPathSegment(bookmark.getId().toString(), httpServletRequest);
     }
 
-    @PreAuthorize("isAuthenticated()")
     @DeleteMapping(value = "bookmark/delete/{id}")
     public String delete(@PathVariable Long id, Model model) {
         LOGGER.debug("call delete(id=" + id + ")");
@@ -121,7 +116,6 @@ public class BookmarkController {
         return "redirect:error";
     }
 
-    @PreAuthorize("isAuthenticated()")
     @DeleteMapping(value = "deleteAll/{categoryId}")
     public String deleteAll(@PathVariable Long categoryId, Model model) {
         LOGGER.debug("call deleteAll(categoryId = " + categoryId);
@@ -135,7 +129,6 @@ public class BookmarkController {
         return "redirect:error";
     }
 
-    @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "bookmark/delete/{id}")
     public String showSingleBookmarkRemovalConfirmer(@PathVariable Long id, HttpServletRequest httpServletRequest, Model model) {
         LOGGER.debug("call showSingleBookmarkRemovalConfirmer(id=" + id + ")");
@@ -149,14 +142,13 @@ public class BookmarkController {
         return "redirect:error";
     }
 
-    @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "deleteAll/{categoryId}")
     public String showBatchBookmarkRemovalConfirmer(@PathVariable Long categoryId, Model model) {
         LOGGER.debug("call showBatchBookmarkRemovalConfirmer(categoryId=" + categoryId + ")");
         try {
 //            model.addAttribute("categoryId", categoryId);
 //            model.addAttribute("bookmarkList", bookmarkService.listByCategoryId(categoryId));
-                model.addAttribute("category", categoryService.findById(categoryId));
+            model.addAttribute("category", categoryService.findById(categoryId));
             return "bookmarks/delete_all_confirm";
         } catch (ServiceException e) {
             LOGGER.error("Exception while bookmark list retrieving from database: ", e);

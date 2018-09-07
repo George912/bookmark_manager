@@ -2,14 +2,13 @@ package ru.bellintegrator.controller;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import ru.bellintegrator.core.exception.ServiceException;
 import ru.bellintegrator.core.domain.Category;
+import ru.bellintegrator.core.exception.ServiceException;
 import ru.bellintegrator.service.CategoryService;
 import ru.bellintegrator.utils.UrlUtil;
 
@@ -39,7 +38,6 @@ public class CategoryController {
      * @param model
      * @return
      */
-    @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
         LOGGER.debug("call list method");
@@ -62,7 +60,6 @@ public class CategoryController {
      * @param model
      * @return
      */
-    @PreAuthorize("isAuthenticated()")
     @GetMapping("category/viewer")
     public String info(@RequestParam(value = "categoryId") Long id, Model model) {
         Category category;
@@ -80,7 +77,6 @@ public class CategoryController {
     }
 
     @GetMapping("category/editor")
-    @PreAuthorize("isAuthenticated()")
     public String showEditor(@RequestParam(value = "categoryId") Long id, Model model) {
         LOGGER.debug("Call edit(id=" + id + ")");
         Category category;
@@ -106,7 +102,6 @@ public class CategoryController {
     }
 
     @PostMapping(value = "category/editor")
-    @PreAuthorize("isAuthenticated()")
     public String update(Category category, BindingResult bindingResult, Model model,
                          HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
         LOGGER.debug("Call update(category=" + category + ")");

@@ -8,9 +8,14 @@
 
     <http use-expressions="true">
         <!--TODO: add intercept-url element for other system urls-->
-        <!--<intercept-url pattern='/*' access='isAuthenticated()' />-->
         <intercept-url pattern='/login' access='permitAll()'/>
         <intercept-url pattern='/security/loginfail' access='permitAll()'/>
+
+        <intercept-url pattern='/categories' access='isAuthenticated()'/>
+        <intercept-url pattern='/categories/**' access='isAuthenticated()'/>
+
+        <intercept-url pattern='/bookmarks' access='isAuthenticated()'/>
+        <intercept-url pattern='/bookmarks/**' access='isAuthenticated()'/>
 
         <form-login
                 login-page="/login"
@@ -21,17 +26,8 @@
     </http>
 
     <authentication-manager>
-        <!--in-memory-->
         <authentication-provider>
             <password-encoder ref="bcrypt"/>
-
-            <!--in-memory-->
-            <!--робит-->
-            <!--<user-service>-->
-            <!--<user name="test" password="test" authorities="ROLE_USER" />-->
-            <!--</user-service>-->
-
-            <!--db-->
             <jdbc-user-service data-source-ref="dataSource"
                                authorities-by-username-query="SELECT username,authority FROM security.authorities WHERE username = ?"
                                users-by-username-query="SELECT username,password,enabled FROM security.users WHERE username = ?"/>
