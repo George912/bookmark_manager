@@ -8,4 +8,8 @@
         <put-attribute name="navigation" value="/WEB-INF/views/structure/navigation.jspx" />
         <put-attribute name="footer" value="/WEB-INF/views/structure/footer.jspx" />
     </definition>
+    <definition name="loginPageLayout" template="/WEB-INF/views/layouts/loginPageLayout.jspx">
+        <put-attribute name="header" value="/WEB-INF/views/structure/header.jspx" />
+        <put-attribute name="footer" value="/WEB-INF/views/structure/footer.jspx" />
+    </definition>
 </tiles-definitions>
