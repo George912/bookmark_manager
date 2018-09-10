@@ -9,22 +9,22 @@
     <jsp:output omit-xml-declaration="yes"/>
 
     <spring:message code="home" var="home"/>
-    <spring:message code="configuration" var="configuration"/>
-    <spring:message code="welcome" var="welcome"/>
     <spring:message code="logout" var="logout"/>
 
     <spring:url var="loginUrl" value="/j_spring_security_check"/>
     <spring:url var="logoutUrl" value="/j_spring_security_logout"/>
     <spring:url value="/categories" var="categoriesUrl"/>
-    <spring:url value="/configuration" var="configurationUrl"/>
 
-    <a href="${categoriesUrl}">${home}</a>
-    <a href="${configurationUrl}">${configuration}</a>
+    <div id="home">
+        <a href="${categoriesUrl}">${home}</a>
+    </div>
 
-    <sec:authorize access="isAuthenticated()">
-        ${welcome}
-        <sec:authentication property="principal.username"/>
-        <br/>
-        <а href="${logoutUrl}">${logout}</а>
-    </sec:authorize>
+    <div id="userInfo" align="right">
+        <sec:authorize access="isAuthenticated()">
+            <sec:authentication property="principal.username"/>
+            <form name="logoutForm" action="${logoutUrl}" method="POST">
+                <input name="submit" type="submit"/>
+            </form>
+        </sec:authorize>
+    </div>
 </div>
