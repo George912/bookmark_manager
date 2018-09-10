@@ -6,34 +6,43 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
 
+    <spring:url value="/categories/category/editor?categoryId=" var="categoryEditorUrl"/>
     <spring:url value="/categories/category/viewer?categoryId=" var="categoryViewerUrl"/>
 
     <spring:message code="categories" var="categories"/>
     <spring:message code="categoryNotFound" var="categoryNotFound"/>
-    <spring:message code="name" var="name"/>
+    <spring:message code="createCategory" var="createCategory"/>
 
-    <!--todo: use form tag-->
-        <hl>${categories}</hl>
-        <c:if test="${not empty categoryList}">
-            <tаble border="1">
-                <thead>
-                <tr>
-                    <th>${name}</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${categoryList}" var="category">
-                    <tr>
-                        <td>
-                            ${category.name}
-                            <a href="${categoryViewerUrl}${category.id}">${categoryViewerUrl}${category.id}</a>
-                        </td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </tаble>
-
-        </c:if>
-        <hl>${categoryNotFound}</hl>
-        <a href="${categoryViewerUrl.concat('-1')}">${categoryViewerUrl.concat('-1')}</a>
+    <table border="3">
+        <tr>
+            <td width="30%"></td>
+            <td width="30%">
+                <hl>${categories}</hl>
+            </td>
+            <td width="30%"></td>
+        </tr>
+        <tr>
+            <td colspan="3" hight="20%"></td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <div id="categories">
+                    <c:choose>
+                        <c:when test="${not empty categoryList}">
+                            <c:forEach items="${categoryList}" var="category">
+                                <div id="${category.name.concat('_').concat(category.id)}">
+                                    ${category.name}
+                                    <a href="${categoryViewerUrl}${category.id}">${categoryViewerUrl}${category.id}</a>
+                                </div>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <hl>${categoryNotFound}</hl>
+                            <a href="${categoryEditorUrl.concat('-1')}">${createCategory}</a>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </td>
+        </tr>
+    </table>
 </div>
