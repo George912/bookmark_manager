@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <div id="header" xmlns:jsp="http://java.sun.com/JSP/Page"
      xmlns:spring="http://www.springframework.org/tags"
      version="2.0">
@@ -6,7 +7,5 @@
     <jsp:output omit-xml-declaration="yes"/>
     <spring:message code="header" var="header"/>
 
-    <div id="appname">
-        <hl>${header}</hl>
-    </div>
+    <hl>${header}</hl>
 </div>

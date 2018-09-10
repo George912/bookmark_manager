@@ -6,7 +6,5 @@
     <jsp:output omit-xml-declaration="yes"/>
     <spring:message code="footer" var="footer"/>
 
-    <div id="appname">
-        <hl>${footer}</hl>
-    </div>
+    <hl>${footer}</hl>
 </div>

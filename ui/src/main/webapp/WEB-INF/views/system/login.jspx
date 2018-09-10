@@ -7,10 +7,11 @@
     <jsp:directive.page isELIgnored="false"/>
     <jsp:output omit-xml-declaration="yes"/>
 
-    <spring:message code="error" var="error"/>
+    <spring:message code="login" var="login"/>
     <spring:message code="password" var="password"/>
+    <spring:message code="error" var="error"/>
 
-    <spring:url var="loginUrl" value="/j_spring_security_check" />
+    <spring:url var="loginUrl" value="/j_spring_security_check"/>
 
     <div id="login">
         <c:if test="${not empty error}">
@@ -20,28 +21,16 @@
         <form name="loginForm" action="${loginUrl}" method="post">
             <table border="3">
                 <tr>
-                    <td>
-                        ${password}:
-                    </td>
-                    <td>
-                        <input type="text" name="j_username"/>
-                    </td>
+                    <td>${login}</td>
+                    <td><input type="text" name="j_username"/></td>
                 </tr>
                 <tr>
-                    <td>
-                        ${password}:
-                    </td>
-                    <td>
-                        <input type="password" name="j_password"/>
-                    </td>
+                    <td>${password}</td>
+                    <td><input type="password" name="j_password"/></td>
                 </tr>
                 <tr>
-                    <td colspan="2">
+                    <td align="center" colspan='2'>
                         <input name="submit" type="submit"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
                         <input name="reset" type="reset"/>
                     </td>
                 </tr>

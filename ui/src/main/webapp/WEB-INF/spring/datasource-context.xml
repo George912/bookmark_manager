@@ -8,9 +8,16 @@
                             http://www.springframework.org/schema/jee
                             http://www.springframework.org/schema/jee/spring-jee.xsd">
 
-    <jee:jndi-lookup id="dataSource"
-                     expected-type="javax.sql.DataSource"
-                     jndi-name="java:comp/env/jdbc/datasource"/>
+    <!--<jee:jndi-lookup id="dataSource"-->
+                     <!--expected-type="javax.sql.DataSource"-->
+                     <!--jndi-name="java:comp/env/jdbc/datasource"/>-->
+
+    <bean  id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+        p:driverClassName="org.h2.Driver"
+           p:username="yanesterov"
+           p:password="online"
+           p:url="jdbc:h2:file:F:\Git\Data\github\bookmark_manager\data\data"
+    />
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
           p:dataSource-ref="dataSource"
