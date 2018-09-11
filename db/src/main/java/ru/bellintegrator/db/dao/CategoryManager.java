@@ -1,16 +1,17 @@
-package ru.bellintegrator.service;
+package ru.bellintegrator.db.dao;
 
-import ru.bellintegrator.core.domain.Category;
 import ru.bellintegrator.core.domain.wrappers.CategoryWrapper;
-import ru.bellintegrator.core.exception.ServiceException;
+import ru.bellintegrator.core.exception.DAOException;
 
 import java.util.List;
 
 /**
- * Created by YANesterov on 24.01.2018.
- * Сервис для работы с моделью Category.
+ * Включает дополнительные методы для работы с категориями.
+ * <ol>
+ * <li>retrieveSubCategories</li>
+ * </ol>
  */
-public interface CategoryService extends BaseService<Category> {
+public interface CategoryManager {
     /**
      * Получает подкатегории текущей категории.
      *
@@ -18,5 +19,5 @@ public interface CategoryService extends BaseService<Category> {
      * @param topId ид категории верхнего уровня текущей категории
      * @return коллекция подкатегорий
      */
-    List<CategoryWrapper> retrieveSubCategories(Long id, Long topId) throws ServiceException;
+    List<CategoryWrapper> retrieveSubCategories(Long id, Long topId) throws DAOException;
 }

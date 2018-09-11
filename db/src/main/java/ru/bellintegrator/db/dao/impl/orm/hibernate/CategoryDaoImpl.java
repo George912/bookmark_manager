@@ -5,13 +5,17 @@ import org.hibernate.HibernateException;
 import org.hibernate.IdentifierLoadAccess;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.bellintegrator.core.exception.DAOException;
-import ru.bellintegrator.db.dao.GenericDAO;
 import ru.bellintegrator.core.domain.Category;
+import ru.bellintegrator.core.domain.wrappers.CategoryWrapper;
+import ru.bellintegrator.core.exception.DAOException;
+import ru.bellintegrator.db.dao.CategoryManager;
+import ru.bellintegrator.db.dao.GenericDAO;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,8 +23,12 @@ import java.util.List;
  */
 @Transactional
 @Repository("categoryDao")
-public class CategoryDaoImpl implements GenericDAO<Category> {
+public class CategoryDaoImpl implements GenericDAO<Category>, CategoryManager {
     private static final Logger LOGGER = Logger.getLogger(CategoryDaoImpl.class);
+    private static final String ID_CATEGORY_PROPERTY = "id";
+    private static final String TOP_ID_CATEGORY_PROPERTY = "top.id";
+    private static final String CATEGORY_FROM_CLAUSE = "FROM Category";
+
     @Resource(name = "sessionFactory")
     private SessionFactory sessionFactory;
 
@@ -86,7 +94,7 @@ public class CategoryDaoImpl implements GenericDAO<Category> {
 
         try {
             session = sessionFactory.getCurrentSession();
-            categories = session.createQuery("from Category").list();
+            categories = session.createQuery(CATEGORY_FROM_CLAUSE).list();
 
         } catch (HibernateException e) {
             LOGGER.error("Exception while receiving category list: ", e);
@@ -109,5 +117,21 @@ public class CategoryDaoImpl implements GenericDAO<Category> {
             LOGGER.error("Exception while receiving category by id: ", e);
             throw new DAOException("Exception while receiving category by id: ", e);
         }
+    }
+
+    @Override
+    public List<CategoryWrapper> retrieveSubCategories(Long id, Long topId) throws DAOException {
+        LOGGER.debug("call retrieveSubCategories(id=" + id + ", topId=" + topId + ")");
+        List<CategoryWrapper> subCategories = new ArrayList<>();
+        List persistentCategories = sessionFactory.getCurrentSession()
+                .createCriteria(Category.class)
+                .add(Restrictions.eq(TOP_ID_CATEGORY_PROPERTY, topId))
+                .add(Restrictions.and(Restrictions.gt(ID_CATEGORY_PROPERTY, id)))
+                .list();
+        for (Object persistentCategory : persistentCategories) {
+            Category category = (Category) persistentCategory;
+            subCategories.add(new CategoryWrapper(category.getId(), category.getName()));
+        }
+        return subCategories;
     }
 }

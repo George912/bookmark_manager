@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.bellintegrator.core.domain.Category;
+import ru.bellintegrator.core.domain.wrappers.CategoryWrapper;
 import ru.bellintegrator.core.exception.ServiceException;
 import ru.bellintegrator.service.CategoryService;
 import ru.bellintegrator.utils.UrlUtil;
@@ -86,6 +87,7 @@ public class CategoryController {
         try {
             if (id != -1) {
                 category = categoryService.findById(id);
+                category = fillSubcategories(category);
             } else {
                 category = new Category("for test");
             }
@@ -99,6 +101,21 @@ public class CategoryController {
         }
 
         return "categories/editor";
+    }
+
+    /**
+     * Заполняет список подкатегорий категории.
+     *
+     * @param category категория, список подкатегорий которой требуется заполнить
+     * @return категория, с заполненным списком подкатегорий
+     * @throws ServiceException
+     */
+    private Category fillSubcategories(Category category) throws ServiceException {
+        List<CategoryWrapper> subCategories = categoryService.retrieveSubCategories(category.getId(), category.getTop().getId());
+        for (CategoryWrapper subCategory : subCategories) {
+            category.addSubcategory(subCategory);
+        }
+        return category;
     }
 
     @PostMapping(value = "category/editor")

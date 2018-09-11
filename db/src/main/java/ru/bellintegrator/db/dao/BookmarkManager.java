@@ -8,9 +8,7 @@ import java.util.List;
  * Включает дополнительные методы для работы с закладками.
  * <ol>
  * <li>getBookmarkListByCategoryId</li>
- * <li></li>
- * <li></li>
- * <li></li>
+ * <li>deleteAll</li>
  * </ol>
  */
 public interface BookmarkManager {

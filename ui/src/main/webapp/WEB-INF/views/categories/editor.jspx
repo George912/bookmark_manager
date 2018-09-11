@@ -7,10 +7,12 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:directive.page isELIgnored="false"/>
     <jsp:output omit-xml-declaration="yes"/>
+
     <spring:message code="name" var="name"/>
     <spring:message code="description" var="description"/>
     <spring:message code="parent" var="parent"/>
     <spring:message code="bookmarkList" var="bookmarkList"/>
+    <spring:message code="subCategories" var="subCategories"/>
     <spring:message code="bookmarkIconTH" var="bookmarkIconTH"/>
     <spring:message code="bookmarkNameTH" var="bookmarkNameTH"/>
     <spring:message code="bookmarkUrlTH" var="bookmarkUrlTH"/>
@@ -18,47 +20,39 @@
     <spring:message code="bookmarkDeleteTH" var="bookmarkDeleteTH"/>
     <spring:message code="submit" var="submit"/>
     <spring:message code="cancel" var="cancel"/>
-    <spring:url value="/bookmarks/viewer?bookmarkId=" var="showBookmarkUrl"/>
+    <spring:message code="createBookmark" var="createBookmark"/>
+    <spring:message code="bookmarkNotFound" var="bookmarkNotFound"/>
+    <spring:message code="createCategory" var="createCategory"/>
+    <spring:message code="categoryNotFound" var="categoryNotFound"/>
+
+    <spring:url value="/bookmarks/bookmark/viewer?bookmarkId=" var="showBookmarkUrl"/>
     <spring:url value="/bookmarks/bookmark/editor?bookmarkId=-1" var="createBookmarkUrl"/>
     <spring:url value="/bookmarks/bookmark/delete/" var="deleteBookmarkUrl"/>
-    <spring:url value="/bookmarks/deleteAll" var="deleteAllBookmarksUrl"/>
+    <spring:url value="/bookmarks/deleteAll/" var="deleteAllBookmarksUrl"/>
+    <spring:url value="/categories/deleteAll/" var="deleteAllCategoriesUrl"/>
+    <spring:url value="/categories/category/viewer?categoryId=" var="categoryViewerUrl"/>
+    <spring:url value="/categories/category/editor?categoryId=" var="categoryEditorUrl"/>
+    <spring:url value="/categories/category/delete/" var="deleteCategoryUrl"/>
 
     <div id="categoryInfo">
         <form:form modelAttribute="category" id="categoryInfoForm" method="post">
             <table border="1" width="90%">
+                <!--row1-->
                 <tr>
-                    <td>
-                        <form:label path="name">
-                            ${name}
-                        </form:label>
-                        <td>
-                            <form:input path="name"/>
-                        </td>
-                        <td></td>
-                    </td>
-                </tr>
-                <tr>
+                    <td><form:label path="name">${name}</form:label></td>
                     <td></td>
-                    <td>
-                        <form:label path="description">
-                            ${description}
-                        </form:label>
-                    </td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>
-                        <form:textarea path="description" cols="30" rows="5" id="bookmarkDescription"/>
-                    </td>
+                    <td><form:input path="name"/></td>
                     <td></td>
                     <td></td>
                 </tr>
+                <!--row2-->
                 <tr>
-                    <td>
-                        <form:label path="parent">
-                            ${parent}
-                        </form:label>
-                    </td>
+                    <td colspan="5"/>
+                </tr>
+                <!--row3-->
+                <tr>
+                    <td><form:label path="parent">${parent}</form:label></td>
+                    <td></td>
                     <td>
                         <form:select path="parentId">
                             //fill component and set selected value
@@ -77,84 +71,135 @@
                         </form:select>
                     </td>
                     <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <form:label path="bookmarks">
-                            ${bookmarkList}
-                        </form:label>
-                    </td>
                     <td></td>
                 </tr>
+                <!--row4-->
                 <tr>
-                    <td>
-                        <c:if test="${not empty category.bookmarks}">
-                        <tаble border="1" width="90%">
-                        <thead>
-                        <tr>
-                            <th>${bookmarkIconTH}</th>
-                            <th>${bookmarkNameTH}</th>
-                            <th>${bookmarkUrlTH}</th>
-                            <th>${bookmarkShowTH}</th>
-                            <th>${bookmarkDeleteTH}</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach items="${category.bookmarks}" var="bookmark">
-                        <tr>
-                        <td>
-                            <!--todo:output icon-->
-                            ${bookmark.icon}
-                        </td>
-                        <td>
-                            ${bookmark.name}
-                        </td>
-                        <td>
-                            ${bookmark.url}
-                        </td>
-                        <td>
+                    <td colspan="5"/>
+                </tr>
+                <!--row5-->
+                <tr>
+                    <td><form:label path="description">${description}</form:label></td>
+                    <td></td>
+                    <td><form:textarea path="description" cols="30" rows="5" id="bookmarkDescription"/></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <!--row6-->
+                <tr>
+                    <td colspan="5"/>
+                </tr>
+                <!--row7-->
+                <tr>
+                    <td align="center" colspan="5">${subCategories}</td>
+                </tr>
+                <!--row8-->
+                <!--todo: deleteAll - impl functional, create category if not exist, url, controller methods-->
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td align="center">
+                        <c:choose>
+                            <c:when test="${not empty category.subCategories}">
+                                <table border="1">
+                                    <thead>
+                                    <th>${name}</th>
+                                    <th>${bookmarkShowTH}</th>
+                                    <th>${bookmarkDeleteTH}</th>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach items="${category.subCategories}" var="subCategory">
+                                        <tr>
+                                            <td>${subCategory.name}</td>
+                                            <!--todo:image-->
+                                            <td><a href="${categoryViewerUrl.concat(subCategory.id)}">${categoryViewerUrl.concat(subCategory.id)}</a></td>
+                                            <!--todo: delete-->
+                                            <td><a href="${deleteCategoryUrl.concat(subCategory.id)}">${deleteCategoryUrl.concat(subCategory.id)}</a></td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </c:when>
                             <!--todo:image-->
-                            <a href="${showBookmarkUrl}${bookmark.id}">${showBookmarkUrl}${bookmark.id}</a>
-                        </td>
-                        <td>
-                            <!--todo:image-->
-                            <form id="deleteForm" action="http://${pageContext.request.remoteHost}:${pageContext.request.serverPort}${deleteBookmarkUrl}${bookmark.id}" method="delete">
-                                <input type="submit" />
-                            </form>
-                        <!--<a href="${deleteBookmarkUrl}${bookmark.id}">${deleteBookmarkUrl}${bookmark.id}</a>-->
+                            <c:otherwise>
+                                ${categoryNotFound}
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+                    <td rowspan="2"></td>
+                    <td valign="top">
+                        <a href="${categoryEditorUrl.concat('-1')}">${createCategory}</a>
+                        <br/>
+                        <a href="${deleteAllCategoriesUrl.concat(category.id)}">${deleteAllCategoriesUrl.concat(category.id)}</a>
                     </td>
                 </tr>
-            </c:forEach>
-        </tbody>
-    </tаble>
-</c:if>
-        </td>
-<td></td>
-<td>
-<!--todo:image-->
-<a href="${createBookmarkUrl}">${createBookmarkUrl}</a>
-<br/>
-<!--todo:image-->
-<a href="${deleteAllBookmarksUrl}">${deleteAllBookmarksUrl}</a>
-</td>
-        </tr>
-<tr>
-<td></td>
-<td>
-    <form:button type="submit">
-        ${submit}
-    </form:button>
-    <form:button type="reset">
-        ${cancel}
-    </form:button>
-</td>
-<td>
-    <form:hidden path="id"/>
-    <form:hidden path="version"/>
-</td>
-</tr>
-        </table>
+                <!--row9-->
+                <tr>
+                    <td colspan="5"/>
+                </tr>
+                <!--row10-->
+                <tr>
+                    <td align="center" colspan="5">${bookmarkList}</td>
+                </tr>
+                <!--row11-->
+                <tr>
+                    <td colspan="5"/>
+                </tr>
+                <!--row12-->
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td align="center">
+                        <c:choose>
+                            <c:when test="${not empty category.bookmarks}">
+                                <table border="1">
+                                    <thead>
+                                    <th>${name}</th>
+                                    <th>${bookmarkUrlTH}</th>
+                                    <th>${bookmarkShowTH}</th>
+                                    <th>${bookmarkDeleteTH}</th>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach items="${category.bookmarks}" var="bookmark">
+                                        <tr>
+                                            <td>${bookmark.name}</td>
+                                            <td>${bookmark.url}</td>
+                                            <!--todo:image-->
+                                            <td><a href="${showBookmarkUrl.concat(bookmark.id)}">${showBookmarkUrl.concat(bookmark.id)}</a></td>
+                                            <!--todo: delete-->
+                                            <td><a href="${deleteBookmarkUrl.concat(bookmark.id)}">${deleteBookmarkUrl.concat(bookmark.id)}</a> </td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </c:when>
+                            <!--todo:image-->
+                            <c:otherwise>
+                                ${bookmarkNotFound}
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+                    <td rowspan="2"></td>
+                    <td valign="top">
+                        <a href="${createBookmarkUrl}">${createBookmark}</a>
+                        <br/>
+                        <a href="${deleteAllBookmarksUrl.concat(category.id)}">${deleteAllBookmarksUrl.concat(category.id)}</a>
+                    </td>
+                </tr>
+                <!--row13-->
+                <tr>
+                    <td colspan="5"/>
+                </tr>
+                <!--row14-->
+                <tr>
+                    <td align="center" colspan="5">
+                        <form:button type="submit">${submit}</form:button>
+                        <form:button type="reset">${cancel}</form:button>
+                        <form:hidden path="id"/>
+                        <form:hidden path="version"/>
+                    </td>
+                </tr>
+            </table>
         </form:form>
-        </div>
-        </div>
+    </div>
+</div>

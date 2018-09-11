@@ -1,12 +1,12 @@
 package ru.bellintegrator.core.domain;
 
+import ru.bellintegrator.core.domain.wrappers.CategoryWrapper;
 import ru.bellintegrator.core.hierarchy.IHierarchyElement;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Категория закладки.
@@ -59,10 +59,14 @@ public class Category implements Serializable, IHierarchyElement {
     @Transient
     private Long parentId;
 
+    @Transient
+    private List<CategoryWrapper> subCategories;
+
     public Category() {
         this.createDate = new Timestamp(System.currentTimeMillis());
         this.bookmarks = new HashSet<>();
         this.level = 0;
+        this.subCategories = new ArrayList<>();
     }
 
     public Category(String name) {
@@ -161,6 +165,20 @@ public class Category implements Serializable, IHierarchyElement {
     @Override
     public void setParentId(Long parentId) {
         this.parentId = parentId;
+    }
+
+    public List<CategoryWrapper> getSubCategories() {
+        return subCategories;
+    }
+
+    public void addSubcategory(CategoryWrapper subCategory){
+        if(!subCategories.contains(subCategory)){
+            subCategories.add(subCategory);
+        }
+    }
+
+    public void removeSubCategory(CategoryWrapper subCategory){
+        subCategories.remove(subCategory);
     }
 
     //todo: normal toString, equals and hashCode

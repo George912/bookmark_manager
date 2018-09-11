@@ -4,11 +4,13 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import ru.bellintegrator.core.domain.wrappers.CategoryWrapper;
 import ru.bellintegrator.core.exception.DAOException;
 import ru.bellintegrator.core.exception.ServiceException;
 import ru.bellintegrator.db.dao.GenericDAO;
 import ru.bellintegrator.core.domain.Category;
 import ru.bellintegrator.service.CategoryService;
+import ru.bellintegrator.db.dao.CategoryManager;
 
 import java.util.List;
 
@@ -124,5 +126,16 @@ public class CategoryServiceImpl implements CategoryService {
             }
         }
         return category;
+    }
+
+    @Override
+    public List<CategoryWrapper> retrieveSubCategories(Long id, Long topId) throws ServiceException{
+        LOGGER.debug("call retrieveSubCategories(id=" + id + ", topId=" + topId + ")");
+        try {
+            return ((CategoryManager)dao).retrieveSubCategories(id, topId);
+        } catch (DAOException e) {
+            LOGGER.error("Exception while retrieving subcategories: ", e);
+            throw new ServiceException("Exception while retrieving subcategories: ", e);
+        }
     }
 }
