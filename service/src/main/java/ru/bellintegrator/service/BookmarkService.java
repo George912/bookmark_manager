@@ -1,7 +1,7 @@
 package ru.bellintegrator.service;
 
-import ru.bellintegrator.core.exception.ServiceException;
 import ru.bellintegrator.core.domain.Bookmark;
+import ru.bellintegrator.core.exception.ServiceException;
 
 import java.util.List;
 
@@ -17,14 +17,4 @@ public interface BookmarkService extends BaseService<Bookmark> {
      * @return список закладок
      */
     List<Bookmark> listByCategoryId(Long categoryId) throws ServiceException;
-
-    /**
-     * Удаляет все закладки категории с идентификатором categoryId
-     *
-     * @param categoryId иденткатор категории
-     * @return количество удалённых закладок
-     * @throws ServiceException
-     */
-    int deleteAll(Long categoryId) throws ServiceException;
-
 }

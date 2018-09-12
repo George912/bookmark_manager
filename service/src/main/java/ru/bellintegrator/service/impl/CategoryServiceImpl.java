@@ -4,10 +4,11 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import ru.bellintegrator.core.domain.Category;
 import ru.bellintegrator.core.exception.DAOException;
 import ru.bellintegrator.core.exception.ServiceException;
+import ru.bellintegrator.db.dao.CategoryManager;
 import ru.bellintegrator.db.dao.GenericDAO;
-import ru.bellintegrator.core.domain.Category;
 import ru.bellintegrator.service.CategoryService;
 
 import java.util.List;
@@ -89,6 +90,16 @@ public class CategoryServiceImpl implements CategoryService {
         } catch (DAOException e) {
             LOGGER.error("Exception while retrieving category by id: ", e);
             throw new ServiceException("Exception while retrieving category by id: ", e);
+        }
+    }
+
+    @Override
+    public int deleteAll(Long categoryId) throws ServiceException {
+        try {
+            return ((CategoryManager) dao).deleteAll(categoryId);
+        } catch (DAOException e) {
+            LOGGER.error("Exception while removing subcategories by category id: ", e);
+            throw new ServiceException("Exception while removing subcategories by category id: ", e);
         }
     }
 

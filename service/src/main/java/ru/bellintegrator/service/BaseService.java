@@ -53,4 +53,17 @@ public interface BaseService<T> {
      * @throws ServiceException
      */
     T findById(Long id) throws ServiceException;
+
+    /**
+     * BookmarkService: удаляет все закладки
+     * категории с идентификатором categoryId
+     * <p>
+     * CategoryService: удаляет все подкатегории
+     * категории с идентификатором categoryId
+     *
+     * @param categoryId иденткатор категории
+     * @return количество удалённых записей
+     * @throws ServiceException
+     */
+    int deleteAll(Long categoryId) throws ServiceException;
 }

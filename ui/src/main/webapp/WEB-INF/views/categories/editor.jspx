@@ -94,7 +94,6 @@
                     <td align="center" colspan="5">${subCategories}</td>
                 </tr>
                 <!--row8-->
-                <!--todo: deleteAll - impl functional, url, controller methods-->
                 <tr>
                     <td></td>
                     <td></td>
