@@ -8,10 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.bellintegrator.core.domain.Category;
-import ru.bellintegrator.core.domain.wrappers.CategoryWrapper;
 import ru.bellintegrator.core.exception.ServiceException;
 import ru.bellintegrator.service.CategoryService;
-import ru.bellintegrator.utils.UrlUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -67,7 +65,6 @@ public class CategoryController {
         Category category;
         try {
             category = categoryService.findById(id);
-            category = fillSubcategories(category);
             model.addAttribute("category", category);
         } catch (ServiceException e) {
             LOGGER.debug("Exception while receiving category: ", e.getCause());
@@ -85,7 +82,6 @@ public class CategoryController {
         try {
             if (id != -1) {
                 category = categoryService.findById(id);
-                category = fillSubcategories(category);
             } else {
                 category = new Category("for test");
             }
@@ -117,14 +113,12 @@ public class CategoryController {
     public String delete(@PathVariable Long id, Model model) {
         LOGGER.debug("call delete(id=" + id + ")");
         try {
-            Long categoryTopId = categoryService.findById(id).getTop().getId();
             categoryService.delete(id);
-            model.addAttribute("category", categoryService.findById(categoryTopId));
-            return "categories/viewer";
+            model.addAttribute("categoryList", categoryService.list());
         } catch (ServiceException e) {
             LOGGER.error("Exception while category removing: ", e);
         }
-        return "redirect:error";
+        return "categories/list";
     }
 
     @PostMapping(value = "category/editor")
@@ -139,24 +133,10 @@ public class CategoryController {
             } else {
                 categoryService.add(category);
             }
+            model.addAttribute("categoryList", categoryService.list());
         } catch (ServiceException e) {
             LOGGER.error("Exception while updating category: ", e);
         }
-        return "redirect:viewer?categoryId=" + UrlUtil.encodeUrlPathSegment(category.getId().toString(), httpServletRequest);
-    }
-
-    /**
-     * Заполняет список подкатегорий категории.
-     *
-     * @param category категория, список подкатегорий которой требуется заполнить
-     * @return категория, с заполненным списком подкатегорий
-     * @throws ServiceException
-     */
-    private Category fillSubcategories(Category category) throws ServiceException {
-        List<CategoryWrapper> subCategories = categoryService.retrieveSubCategories(category.getId(), category.getTop().getId());
-        for (CategoryWrapper subCategory : subCategories) {
-            category.addSubcategory(subCategory);
-        }
-        return category;
+        return "categories/list";
     }
 }

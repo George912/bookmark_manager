@@ -34,16 +34,16 @@
     <spring:url value="/categories/category/editor?categoryId=" var="categoryEditorUrl"/>
     <spring:url value="/categories/category/delete/" var="deleteCategoryUrl"/>
 
-    <div id="categoryEditor">
-        <form:form modelAttribute="category" id="categoryEditorForm" method="post">
+    <div id="removalCategoryConfirmer">
+        <form:form modelAttribute="category" id="removalCategoryConfirmerForm" method="delete">
             <table border="1" width="90%">
                 <!--row1-->
                 <tr>
                     <td><form:label path="name">${name}</form:label></td>
                     <td></td>
-                    <td><form:input path="name"/></td>
+                    <td><form:label path="name"/>${category.name}</td>
                     <td></td>
-                    <td valign="top"><a href="${deleteCategoryUrl.concat(category.id)}">${deleteCategoryUrl.concat(category.id)}</a></td>
+                    <td></td>
                 </tr>
                 <!--row2-->
                 <tr>
@@ -53,23 +53,7 @@
                 <tr>
                     <td><form:label path="parent">${parent}</form:label></td>
                     <td></td>
-                    <td>
-                        <form:select path="parentId">
-                            //fill component and set selected value
-                            <c:if test="${not empty categoryList}">
-                                <c:forEach items="${categoryList}" var="cgy">
-                                    <c:choose>
-                                        <c:when test="${category.parent != null and category.parent.id eq cgy.id}">
-                                            <form:option value="${cgy.id}" label="${cgy.name}" selected="selected"/>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <form:option value="${cgy.id}" label="${cgy.name}"/>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                            </c:if>
-                        </form:select>
-                    </td>
+                    <td><form:label path="parentId">${category.parent.name}</form:label></td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -81,7 +65,7 @@
                 <tr>
                     <td><form:label path="description">${description}</form:label></td>
                     <td></td>
-                    <td><form:textarea path="description" cols="30" rows="5" id="bookmarkDescription"/></td>
+                    <td><form:textarea path="description" cols="30" rows="5" id="categoryDescription" readonly="true"/></td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -94,7 +78,6 @@
                     <td align="center" colspan="5">${subCategories}</td>
                 </tr>
                 <!--row8-->
-                <!--todo: deleteAll - impl functional, url, controller methods-->
                 <tr>
                     <td></td>
                     <td></td>
@@ -104,34 +87,25 @@
                                 <table border="1">
                                     <thead>
                                     <th>${name}</th>
-                                    <th>${bookmarkShowTH}</th>
-                                    <th>${bookmarkDeleteTH}</th>
+                                    <th>${description}</th>
                                     </thead>
                                     <tbody>
                                     <c:forEach items="${category.subCategories}" var="subCategory">
                                         <tr>
                                             <td>${subCategory.name}</td>
-                                            <!--todo:image-->
-                                            <td><a href="${categoryViewerUrl.concat(subCategory.id)}">${categoryViewerUrl.concat(subCategory.id)}</a></td>
-                                            <!--todo: delete-->
-                                            <td><a href="${deleteCategoryUrl.concat(subCategory.id)}">${deleteCategoryUrl.concat(subCategory.id)}</a></td>
+                                            <td>${subCategory.description}</td>
                                         </tr>
                                     </c:forEach>
                                     </tbody>
                                 </table>
                             </c:when>
-                            <!--todo:image-->
                             <c:otherwise>
                                 ${categoryNotFound}
                             </c:otherwise>
                         </c:choose>
                     </td>
                     <td rowspan="2"></td>
-                    <td valign="top">
-                        <a href="${categoryEditorUrl.concat('-1')}">${createCategory}</a>
-                        <br/>
-                        <a href="${deleteAllCategoriesUrl.concat(category.id)}">${deleteAllCategoriesUrl.concat(category.id)}</a>
-                    </td>
+                    <td></td>
                 </tr>
                 <!--row9-->
                 <tr>
@@ -156,35 +130,26 @@
                                     <thead>
                                     <th>${name}</th>
                                     <th>${bookmarkUrlTH}</th>
-                                    <th>${bookmarkShowTH}</th>
-                                    <th>${bookmarkDeleteTH}</th>
+                                    <th>${description}</th>
                                     </thead>
                                     <tbody>
                                     <c:forEach items="${category.bookmarks}" var="bookmark">
                                         <tr>
                                             <td>${bookmark.name}</td>
                                             <td>${bookmark.url}</td>
-                                            <!--todo:image-->
-                                            <td><a href="${showBookmarkUrl.concat(bookmark.id)}">${showBookmarkUrl.concat(bookmark.id)}</a></td>
-                                            <!--todo: delete-->
-                                            <td><a href="${deleteBookmarkUrl.concat(bookmark.id)}">${deleteBookmarkUrl.concat(bookmark.id)}</a> </td>
+                                            <td>${bookmark.description}</td>
                                         </tr>
                                     </c:forEach>
                                     </tbody>
                                 </table>
                             </c:when>
-                            <!--todo:image-->
                             <c:otherwise>
                                 ${bookmarkNotFound}
                             </c:otherwise>
                         </c:choose>
                     </td>
                     <td rowspan="2"></td>
-                    <td valign="top">
-                        <a href="${createBookmarkUrl}">${createBookmark}</a>
-                        <br/>
-                        <a href="${deleteAllBookmarksUrl.concat(category.id)}">${deleteAllBookmarksUrl.concat(category.id)}</a>
-                    </td>
+                    <td></td>
                 </tr>
                 <!--row13-->
                 <tr>

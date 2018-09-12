@@ -1,6 +1,5 @@
 package ru.bellintegrator.core.domain;
 
-import ru.bellintegrator.core.domain.wrappers.CategoryWrapper;
 import ru.bellintegrator.core.hierarchy.IHierarchyElement;
 
 import javax.persistence.*;
@@ -49,24 +48,24 @@ public class Category implements Serializable, IHierarchyElement {
     @JoinColumn(name = "TOP_ID")
     private Category top;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
     private Set<Bookmark> bookmarks;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")
     private Category parent;
 
     @Transient
     private Long parentId;
 
-    @Transient
-    private List<CategoryWrapper> subCategories;
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE)
+    private Set<Category> subCategories;
 
     public Category() {
         this.createDate = new Timestamp(System.currentTimeMillis());
         this.bookmarks = new HashSet<>();
         this.level = 0;
-        this.subCategories = new ArrayList<>();
+        this.subCategories = new HashSet<>();
     }
 
     public Category(String name) {
@@ -167,18 +166,22 @@ public class Category implements Serializable, IHierarchyElement {
         this.parentId = parentId;
     }
 
-    public List<CategoryWrapper> getSubCategories() {
+    public Set<Category> getSubCategories() {
         return subCategories;
     }
 
-    public void addSubcategory(CategoryWrapper subCategory){
+    public void addSubcategory(Category subCategory){
         if(!subCategories.contains(subCategory)){
             subCategories.add(subCategory);
         }
     }
 
-    public void removeSubCategory(CategoryWrapper subCategory){
+    public void removeSubCategory(Category subCategory){
         subCategories.remove(subCategory);
+    }
+
+    public void setSubCategories(Set<Category> subCategories) {
+        this.subCategories = subCategories;
     }
 
     //todo: normal toString, equals and hashCode
