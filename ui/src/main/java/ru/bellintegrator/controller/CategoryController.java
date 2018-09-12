@@ -39,7 +39,7 @@ public class CategoryController {
      * @param model
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String list(Model model) {
         LOGGER.debug("call list method");
 
@@ -63,14 +63,12 @@ public class CategoryController {
      */
     @GetMapping("category/viewer")
     public String info(@RequestParam(value = "categoryId") Long id, Model model) {
-        Category category;
         LOGGER.debug("call info method");
-
+        Category category;
         try {
-            if (categoryService != null) {
-                category = categoryService.findById(id);
-                model.addAttribute("category", category);
-            }
+            category = categoryService.findById(id);
+            category = fillSubcategories(category);
+            model.addAttribute("category", category);
         } catch (ServiceException e) {
             LOGGER.debug("Exception while receiving category: ", e.getCause());
         }
@@ -103,19 +101,30 @@ public class CategoryController {
         return "categories/editor";
     }
 
-    /**
-     * Заполняет список подкатегорий категории.
-     *
-     * @param category категория, список подкатегорий которой требуется заполнить
-     * @return категория, с заполненным списком подкатегорий
-     * @throws ServiceException
-     */
-    private Category fillSubcategories(Category category) throws ServiceException {
-        List<CategoryWrapper> subCategories = categoryService.retrieveSubCategories(category.getId(), category.getTop().getId());
-        for (CategoryWrapper subCategory : subCategories) {
-            category.addSubcategory(subCategory);
+    @GetMapping(value = "category/delete/{id}")
+    public String showSingleCategoryRemovalConfirmer(@PathVariable Long id, HttpServletRequest httpServletRequest, Model model) {
+        LOGGER.debug("call showSingleCategoryRemovalConfirmer(id=" + id + ")");
+        try {
+            model.addAttribute("category", categoryService.findById(id));
+            return "categories/delete_confirm";
+        } catch (ServiceException e) {
+            LOGGER.error("Exception while category retrieving from database: ", e);
         }
-        return category;
+        return "redirect:error";
+    }
+
+    @DeleteMapping(value = "category/delete/{id}")
+    public String delete(@PathVariable Long id, Model model) {
+        LOGGER.debug("call delete(id=" + id + ")");
+        try {
+            Long categoryTopId = categoryService.findById(id).getTop().getId();
+            categoryService.delete(id);
+            model.addAttribute("category", categoryService.findById(categoryTopId));
+            return "categories/viewer";
+        } catch (ServiceException e) {
+            LOGGER.error("Exception while category removing: ", e);
+        }
+        return "redirect:error";
     }
 
     @PostMapping(value = "category/editor")
@@ -134,5 +143,20 @@ public class CategoryController {
             LOGGER.error("Exception while updating category: ", e);
         }
         return "redirect:viewer?categoryId=" + UrlUtil.encodeUrlPathSegment(category.getId().toString(), httpServletRequest);
+    }
+
+    /**
+     * Заполняет список подкатегорий категории.
+     *
+     * @param category категория, список подкатегорий которой требуется заполнить
+     * @return категория, с заполненным списком подкатегорий
+     * @throws ServiceException
+     */
+    private Category fillSubcategories(Category category) throws ServiceException {
+        List<CategoryWrapper> subCategories = categoryService.retrieveSubCategories(category.getId(), category.getTop().getId());
+        for (CategoryWrapper subCategory : subCategories) {
+            category.addSubcategory(subCategory);
+        }
+        return category;
     }
 }

@@ -11,4 +11,10 @@
     <definition extends="default" name="categories/viewer">
         <put-attribute name="body" value="/WEB-INF/views/categories/viewer.jspx"/>
     </definition>
+    <definition extends="default" name="categories/delete_confirm">
+        <put-attribute name="body" value="/WEB-INF/views/categories/removalConfirmer.jspx"/>
+    </definition>
+    <definition extends="default" name="categories/delete_all_confirm">
+        <put-attribute name="body" value="/WEB-INF/views/categories/removalBatchConfirmer.jspx"/>
+    </definition>
 </tiles-definitions>

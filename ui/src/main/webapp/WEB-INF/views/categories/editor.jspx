@@ -34,8 +34,8 @@
     <spring:url value="/categories/category/editor?categoryId=" var="categoryEditorUrl"/>
     <spring:url value="/categories/category/delete/" var="deleteCategoryUrl"/>
 
-    <div id="categoryInfo">
-        <form:form modelAttribute="category" id="categoryInfoForm" method="post">
+    <div id="categoryEditor">
+        <form:form modelAttribute="category" id="categoryEditorForm" method="post">
             <table border="1" width="90%">
                 <!--row1-->
                 <tr>
