@@ -84,22 +84,29 @@ public class BookmarkController {
         return "bookmarks/editor";
     }
 
-    @PostMapping(value = "bookmark/editor")
-    public String update(Bookmark bookmark, BindingResult bindingResult, Model model,
-                         HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
-        LOGGER.debug("Call update(bookmark=" + bookmark + ")");
+    @GetMapping(value = "bookmark/delete/{id}")
+    public String showSingleBookmarkRemovalConfirmer(@PathVariable Long id, HttpServletRequest httpServletRequest, Model model) {
+        LOGGER.debug("call showSingleBookmarkRemovalConfirmer(id=" + id + ")");
 
-        //todo: check bindingResult
         try {
-            if (bookmark.getId() != null) {
-                bookmarkService.update(bookmark);
-            } else {
-                bookmarkService.add(bookmark);
-            }
+            model.addAttribute("bookmark", bookmarkService.findById(id));
+            return "bookmarks/delete_confirm";
         } catch (ServiceException e) {
-            LOGGER.error("Exception while updating bookmark: ", e);
+            LOGGER.error("Exception while bookmark retrieving from database: ", e);
         }
-        return "redirect:viewer?bookmarkId=" + UrlUtil.encodeUrlPathSegment(bookmark.getId().toString(), httpServletRequest);
+        return "redirect:error";
+    }
+
+    @GetMapping(value = "deleteAll/{categoryId}")
+    public String showBatchBookmarkRemovalConfirmer(@PathVariable Long categoryId, Model model) {
+        LOGGER.debug("call showBatchBookmarkRemovalConfirmer(categoryId=" + categoryId + ")");
+        try {
+            model.addAttribute("category", categoryService.findById(categoryId));
+            return "bookmarks/delete_all_confirm";
+        } catch (ServiceException e) {
+            LOGGER.error("Exception while bookmark list retrieving from database: ", e);
+        }
+        return "redirect:error";
     }
 
     @DeleteMapping(value = "bookmark/delete/{id}")
@@ -129,30 +136,21 @@ public class BookmarkController {
         return "redirect:error";
     }
 
-    @GetMapping(value = "bookmark/delete/{id}")
-    public String showSingleBookmarkRemovalConfirmer(@PathVariable Long id, HttpServletRequest httpServletRequest, Model model) {
-        LOGGER.debug("call showSingleBookmarkRemovalConfirmer(id=" + id + ")");
+    @PostMapping(value = "bookmark/editor")
+    public String update(Bookmark bookmark, BindingResult bindingResult, Model model,
+                         HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
+        LOGGER.debug("Call update(bookmark=" + bookmark + ")");
 
+        //todo: check bindingResult
         try {
-            model.addAttribute("bookmark", bookmarkService.findById(id));
-            return "bookmarks/delete_confirm";
+            if (bookmark.getId() != null) {
+                bookmarkService.update(bookmark);
+            } else {
+                bookmarkService.add(bookmark);
+            }
         } catch (ServiceException e) {
-            LOGGER.error("Exception while bookmark retrieving from database: ", e);
+            LOGGER.error("Exception while updating bookmark: ", e);
         }
-        return "redirect:error";
-    }
-
-    @GetMapping(value = "deleteAll/{categoryId}")
-    public String showBatchBookmarkRemovalConfirmer(@PathVariable Long categoryId, Model model) {
-        LOGGER.debug("call showBatchBookmarkRemovalConfirmer(categoryId=" + categoryId + ")");
-        try {
-//            model.addAttribute("categoryId", categoryId);
-//            model.addAttribute("bookmarkList", bookmarkService.listByCategoryId(categoryId));
-            model.addAttribute("category", categoryService.findById(categoryId));
-            return "bookmarks/delete_all_confirm";
-        } catch (ServiceException e) {
-            LOGGER.error("Exception while bookmark list retrieving from database: ", e);
-        }
-        return "redirect:error";
+        return "redirect:viewer?bookmarkId=" + UrlUtil.encodeUrlPathSegment(bookmark.getId().toString(), httpServletRequest);
     }
 }
