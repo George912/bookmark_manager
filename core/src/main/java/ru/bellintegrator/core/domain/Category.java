@@ -58,7 +58,7 @@ public class Category implements Serializable, IHierarchyElement {
     @Transient
     private Long parentId;
 
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Category> subCategories;
 
     public Category() {
@@ -182,6 +182,10 @@ public class Category implements Serializable, IHierarchyElement {
 
     public void setSubCategories(Set<Category> subCategories) {
         this.subCategories = subCategories;
+    }
+
+    public void clearSubCategories(){
+        this.subCategories.clear();
     }
 
     //todo: normal toString, equals and hashCode

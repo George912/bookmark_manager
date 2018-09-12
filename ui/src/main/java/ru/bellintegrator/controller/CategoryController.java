@@ -109,6 +109,18 @@ public class CategoryController {
         return "redirect:error";
     }
 
+    @GetMapping(value = "deleteAll/{categoryId}")
+    public String showBatchCategoryRemovalConfirmer(@PathVariable Long categoryId, Model model) {
+        LOGGER.debug("call showBatchCategoryRemovalConfirmer(categoryId=" + categoryId + ")");
+        try {
+            model.addAttribute("category", categoryService.findById(categoryId));
+            return "categories/delete_all_confirm";
+        } catch (ServiceException e) {
+            LOGGER.error("Exception while category retrieving from database: ", e);
+        }
+        return "redirect:error";
+    }
+
     @DeleteMapping(value = "category/delete/{id}")
     public String delete(@PathVariable Long id, Model model) {
         LOGGER.debug("call delete(id=" + id + ")");
@@ -119,6 +131,19 @@ public class CategoryController {
             LOGGER.error("Exception while category removing: ", e);
         }
         return "categories/list";
+    }
+
+    @DeleteMapping(value = "deleteAll/{categoryId}")
+    public String deleteAll(@PathVariable Long categoryId, Model model) {
+        LOGGER.debug("call deleteAll(categoryId = " + categoryId);
+        try {
+            categoryService.deleteAll(categoryId);
+            model.addAttribute("category", categoryService.findById(categoryId));
+            return "categories/viewer";
+        } catch (ServiceException e) {
+            LOGGER.error("Exception while subcategories removing: ", e);
+        }
+        return "redirect:error";
     }
 
     @PostMapping(value = "category/editor")

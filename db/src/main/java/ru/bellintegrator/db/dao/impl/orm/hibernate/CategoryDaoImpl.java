@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.core.domain.Category;
 import ru.bellintegrator.core.exception.DAOException;
+import ru.bellintegrator.db.dao.CategoryManager;
 import ru.bellintegrator.db.dao.GenericDAO;
 
 import javax.annotation.Resource;
@@ -19,10 +20,8 @@ import java.util.List;
  */
 @Transactional
 @Repository("categoryDao")
-public class CategoryDaoImpl implements GenericDAO<Category> {
+public class CategoryDaoImpl implements GenericDAO<Category>, CategoryManager {
     private static final Logger LOGGER = Logger.getLogger(CategoryDaoImpl.class);
-    private static final String ID_CATEGORY_PROPERTY = "id";
-    private static final String TOP_ID_CATEGORY_PROPERTY = "top.id";
     private static final String CATEGORY_FROM_CLAUSE = "FROM Category";
 
     @Resource(name = "sessionFactory")
@@ -74,6 +73,7 @@ public class CategoryDaoImpl implements GenericDAO<Category> {
             persistCategory.setParent(category.getParent());
             persistCategory.setTop(category.getTop());
             persistCategory.setLevel(category.getLevel());
+            persistCategory.setSubCategories(category.getSubCategories());
             session.update(persistCategory);
         } catch (HibernateException e) {
             LOGGER.error("Exception while updating category: ", e);
@@ -113,5 +113,23 @@ public class CategoryDaoImpl implements GenericDAO<Category> {
             LOGGER.error("Exception while receiving category by id: ", e);
             throw new DAOException("Exception while receiving category by id: ", e);
         }
+    }
+
+    @Override
+    public int deleteAll(Long categoryId) throws DAOException {
+        LOGGER.debug("call deleteAll method: categoryId = " + categoryId);
+        Session session;
+        int subCategoriesCount = 0;
+        try {
+            session = sessionFactory.getCurrentSession();
+            Category category = (Category) session.get(Category.class, categoryId);
+            subCategoriesCount = category.getSubCategories().size();
+            category.clearSubCategories();
+            update(category);
+        } catch (HibernateException e) {
+            LOGGER.error("Exception while delete subcategories: ", e);
+            throw new DAOException("Exception while delete subcategories: ", e);
+        }
+        return subCategoriesCount;
     }
 }

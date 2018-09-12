@@ -19,6 +19,7 @@
     <spring:message code="removalConfirm" var="removalConfirm"/>
     <spring:message code="submit" var="submit"/>
     <spring:message code="cancel" var="cancel"/>
+    <spring:message code="categoryNotFound" var="categoryNotFound"/>
 
     <div id="removalBatchConfirmer">
         <form:form modelAttribute="category" id="removalBatchConfirmerForm" method="delete">
@@ -39,24 +40,24 @@
                     <td></td>
                     <td align="center">
                         <c:choose>
-                            <c:when test="${not empty category.bookmarks}">
+                            <c:when test="${not empty category.subCategories}">
                                 <table border="1">
                                     <thead>
                                     <th>${name}</th>
-                                    <th>${bookmarkUrlTH}</th>
+                                    <th>${description}</th>
                                     </thead>
                                     <tbody>
-                                    <c:forEach items="${category.bookmarks}" var="bookmark">
+                                    <c:forEach items="${category.subCategories}" var="subCategory">
                                         <tr>
-                                            <td>${bookmark.name}</td>
-                                            <td>${bookmark.url}</td>
+                                            <td>${subCategory.name}</td>
+                                            <td>${subCategory.description}</td>
                                         </tr>
                                     </c:forEach>
                                     </tbody>
                                 </table>
                             </c:when>
                             <c:otherwise>
-                                ${bookmarkNotFound}
+                                ${categoryNotFound}
                             </c:otherwise>
                         </c:choose>
                     </td>
