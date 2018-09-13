@@ -2,57 +2,63 @@
 <div xmlns:jsp="http://java.sun.com/JSP/Page"
      xmlns:spring="http://www.springframework.org/tags"
      version="2.0">
+
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:directive.page isELIgnored="false"/>
     <jsp:output omit-xml-declaration="yes"/>
+
+    <spring:message code="name" var="name"/>
     <spring:message code="description" var="description"/>
     <spring:message code="url" var="url"/>
     <spring:message code="category" var="category"/>
+
     <spring:url value="/bookmarks/bookmark/editor?bookmarkId=" var="editorBookmarkUrl"/>
 
-    <div id="bookmarkInfo">
+    <div id="bookmarkViewer">
         <table border="1" width="90%">
+            <!--row#1-->
             <tr>
-                <td colspan="2">
-                    <h3>${bookmark.name}</h3>
-                </td>
+                <td>${name}</td>
                 <td></td>
-                <td>
-                    <!--todo:image-->
-                    <a href="${editorBookmarkUrl}${bookmark.id}">${editorBookmarkUrl}${bookmark.id}</a>
-                </td>
+                <td>${bookmark.name}</td>
+                <td></td>
+                <td><a href="${editorBookmarkUrl.concat(bookmark.id)}">${editorBookmarkUrl.concat(bookmark.id)}</a></td>
             </tr>
+            <!--row#2-->
             <tr>
-                <td>
-                    <img src="http://bipbap.ru/wp-content/uploads/2017/10/0_8eb56_842bba74_XL-220x220.jpg" alt="фото"/>
-                </td>
-                <td></td>
-                <td>
-                    ${description}
-                    <textarea id="description" cols="30" rows="5" readonly="true" wrap="soft" colspan="3">
-                        ${bookmark.description}
-                    </textarea>
-                </td>
+                <td colspan="5"/>
             </tr>
+            <!--row#3-->
             <tr>
                 <td>${category}</td>
+                <td></td>
                 <td>${bookmark.category.name}</td>
                 <td></td>
                 <td></td>
             </tr>
+            <!--row#4-->
+            <tr>
+                <td colspan="5"/>
+            </tr>
+            <!--row#5-->
             <tr>
                 <td>${url}</td>
                 <td></td>
+                <td>${bookmark.url}</td>
                 <td></td>
                 <td></td>
             </tr>
+            <!--row#6-->
             <tr>
-                <td>
-                    <textarea id="url" cols="30" rows="1" readonly="true" colspan="5">
-                        ${bookmark.url}
-                    </textarea>
-                </td>
+                <td colspan="5"/>
+            </tr>
+            <!--row#7-->
+            <tr>
+                <td>${description}</td>
                 <td></td>
+                <td><textarea id="description" cols="20" rows="2" readonly="true" wrap="soft">
+                        ${bookmark.description}
+                    </textarea></td>
                 <td></td>
                 <td></td>
             </tr>
