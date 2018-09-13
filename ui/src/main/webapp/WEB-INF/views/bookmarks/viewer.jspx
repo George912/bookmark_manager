@@ -56,9 +56,11 @@
             <tr>
                 <td>${description}</td>
                 <td></td>
-                <td><textarea id="description" cols="20" rows="2" readonly="true" wrap="soft">
+                <td>
+                    <textarea id="description" cols="20" rows="2" readonly="true" wrap="soft">
                         ${bookmark.description}
-                    </textarea></td>
+                    </textarea>
+                </td>
                 <td></td>
                 <td></td>
             </tr>

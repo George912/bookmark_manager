@@ -3,60 +3,37 @@
      xmlns:spring="http://www.springframework.org/tags"
      xmlns:form="http://www.springframework.org/tags/form" xmlns:c="http://java.sun.com/jsp/jstl/core"
      version="2.0">
+
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:directive.page isELIgnored="false"/>
     <jsp:output omit-xml-declaration="yes"/>
+
     <spring:message code="description" var="description"/>
     <spring:message code="url" var="url"/>
     <spring:message code="category" var="category"/>
     <spring:message code="name" var="name"/>
     <spring:message code="submit" var="submit"/>
     <spring:message code="cancel" var="cancel"/>
+
     <spring:url value="/bookmarks/bookmark/editor" var="editorBookmarkUrl"/>
 
     <div id="bookmarkEditor">
-        <form:form modelAttribute="bookmark" id="bookmarkUpdateForm" method="post">
+        <form:form modelAttribute="bookmark" id="bookmarkEditorForm" method="post">
             <table border="1" width="90%">
+                <!--row#1-->
                 <tr>
-                    <td>
-                        <form:label path="name">
-                            ${name}
-                        </form:label>
-                    </td>
-                    <td colspan="2">
-                        <form:input path="name"/>
-                    </td>
+                    <td>${name}</td>
                     <td></td>
-                    <td></td>
-                    <td></td>
+                    <td><form:input path="name"/></td>
                 </tr>
+                <!--row#2-->
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <form:label path="description">
-                            ${description}
-                        </form:label>
-                    </td>
-                    <td></td>
-                    <td></td>
+                    <td colspan="3"/>
                 </tr>
+                <!--row#3-->
                 <tr>
+                    <td>${category}</td>
                     <td></td>
-                    <td></td>
-                    <td colspan="3">
-                        <form:textarea path="description" cols="30" rows="5" id="bookmarkDescription"/>
-                    </td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <form:label path="category">
-                            ${parent}
-                        </form:label>
-                    </td>
                     <td>
                         <form:select path="categoryId">
                             //fill component and set selected value
@@ -74,35 +51,40 @@
                             </c:if>
                         </form:select>
                     </td>
-                    <td></td>
-                    <td></td>
                 </tr>
+                <!--row#4-->
                 <tr>
-                    <td>
-                        <form:label path="url">
-                            ${url}
-                        </form:label>
-                    </td>
-                    <td colspan="5">
-                        <form:input path="url"/>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td colspan="3"/>
                 </tr>
+                <!--row#5-->
                 <tr>
+                    <td>${url}</td>
                     <td></td>
+                    <td> <form:input path="url"/></td>
+                </tr>
+                <!--row#6-->
+                <tr>
+                    <td colspan="3"/>
+                </tr>
+                <!--row#7-->
+                <tr>
+                    <td>${description}</td>
                     <td></td>
-                    <td>
+                    <td><form:textarea path="description" cols="25" rows="2" id="bookmarkDescription"/></td>
+                </tr>
+                <!--row#8-->
+                <tr>
+                    <td colspan="3"/>
+                </tr>
+                <!--row#9-->
+                <tr>
+                    <td align="center" colspan="3">
                         <form:button type="submit">
                             ${submit}
                         </form:button>
                         <form:button type="reset">
                             ${cancel}
                         </form:button>
-                    </td>
-                    <td></td>
-                    <td>
                         <form:hidden path="id"/>
                         <form:hidden path="version"/>
                     </td>
