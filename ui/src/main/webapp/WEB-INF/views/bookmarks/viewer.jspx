@@ -12,6 +12,7 @@
     <spring:message code="url" var="url"/>
     <spring:message code="category" var="category"/>
 
+    <spring:url value="/bookmarks/bookmark/delete/" var="deleteBookmarkUrl"/>
     <spring:url value="/bookmarks/bookmark/editor?bookmarkId=" var="editorBookmarkUrl"/>
 
     <div id="bookmarkViewer">
@@ -22,7 +23,11 @@
                 <td></td>
                 <td>${bookmark.name}</td>
                 <td></td>
-                <td><a href="${editorBookmarkUrl.concat(bookmark.id)}">${editorBookmarkUrl.concat(bookmark.id)}</a></td>
+                <td>
+                    <a href="${deleteBookmarkUrl.concat(bookmark.id)}">${deleteBookmarkUrl.concat(bookmark.id)}</a>
+                    <br/>
+                    <a href="${editorBookmarkUrl.concat(bookmark.id)}">${editorBookmarkUrl.concat(bookmark.id)}</a>
+                </td>
             </tr>
             <!--row#2-->
             <tr>

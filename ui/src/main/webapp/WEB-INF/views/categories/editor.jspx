@@ -13,8 +13,6 @@
     <spring:message code="parent" var="parent"/>
     <spring:message code="bookmarkList" var="bookmarkList"/>
     <spring:message code="subCategories" var="subCategories"/>
-    <spring:message code="bookmarkIconTH" var="bookmarkIconTH"/>
-    <spring:message code="bookmarkNameTH" var="bookmarkNameTH"/>
     <spring:message code="bookmarkUrlTH" var="bookmarkUrlTH"/>
     <spring:message code="bookmarkShowTH" var="bookmarkShowTH"/>
     <spring:message code="bookmarkDeleteTH" var="bookmarkDeleteTH"/>
@@ -43,7 +41,7 @@
                     <td></td>
                     <td><form:input path="name"/></td>
                     <td></td>
-                    <td valign="top"><a href="${deleteCategoryUrl.concat(category.id)}">${deleteCategoryUrl.concat(category.id)}</a></td>
+                    <td></td>
                 </tr>
                 <!--row2-->
                 <tr>
@@ -166,7 +164,7 @@
                                             <!--todo:image-->
                                             <td><a href="${showBookmarkUrl.concat(bookmark.id)}">${showBookmarkUrl.concat(bookmark.id)}</a></td>
                                             <!--todo: delete-->
-                                            <td><a href="${deleteBookmarkUrl.concat(bookmark.id)}">${deleteBookmarkUrl.concat(bookmark.id)}</a> </td>
+                                            <td><a href="${deleteBookmarkUrl.concat(bookmark.id)}">${deleteBookmarkUrl.concat(bookmark.id)}</a></td>
                                         </tr>
                                     </c:forEach>
                                     </tbody>

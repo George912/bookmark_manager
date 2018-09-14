@@ -1,110 +1,94 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <div xmlns:jsp="http://java.sun.com/JSP/Page"
      xmlns:spring="http://www.springframework.org/tags"
-     xmlns:form="http://www.springframework.org/tags/form" xmlns:c="http://java.sun.com/jsp/jstl/core"
+     xmlns:form="http://www.springframework.org/tags/form"
      version="2.0">
+
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:directive.page isELIgnored="false"/>
     <jsp:output omit-xml-declaration="yes"/>
+
+    <spring:message code="name" var="name"/>
     <spring:message code="description" var="description"/>
     <spring:message code="url" var="url"/>
     <spring:message code="category" var="category"/>
-    <spring:message code="name" var="name"/>
     <spring:message code="removalConfirm" var="removalConfirm"/>
     <spring:message code="submit" var="submit"/>
     <spring:message code="cancel" var="cancel"/>
-    <spring:url value="/bookmarks/bookmark/editor" var="editorBookmarkUrl"/>
 
     <div id="bookmarkDeleteConfirmer">
-        <h3>${removalConfirm}</h3><br/>
+
         <form:form modelAttribute="bookmark" id="bookmarkDeleteConfirmForm" method="delete">
             <table border="1" width="90%">
+                <!--row#1-->
                 <tr>
-                    <td>
-                        <form:label path="name">
-                            ${name}
-                        </form:label>
-                    </td>
-                    <td colspan="2">
-                        <form:input path="name"/>
-                    </td>
+                    <td align="center" colspan="5"><h3>${removalConfirm}</h3></td>
+                </tr>
+                <!--row#2-->
+                <tr>
+                    <td colspan="5"/>
+                </tr>
+                <!--row#3-->
+                <tr>
+                    <td>${name}</td>
                     <td></td>
+                    <td>${bookmark.name}</td>
+                    <td></td>
+                    <td>
+                        <a href="${deleteBookmarkUrl.concat(bookmark.id)}">${deleteBookmarkUrl.concat(bookmark.id)}</a>
+                        <br/>
+                        <a href="${editorBookmarkUrl.concat(bookmark.id)}">${editorBookmarkUrl.concat(bookmark.id)}</a>
+                    </td>
+                </tr>
+                <!--row#4-->
+                <tr>
+                    <td colspan="5"/>
+                </tr>
+                <!--row#5-->
+                <tr>
+                    <td>${category}</td>
+                    <td></td>
+                    <td>${bookmark.category.name}</td>
                     <td></td>
                     <td></td>
                 </tr>
+                <!--row#6-->
                 <tr>
+                    <td colspan="5"/>
+                </tr>
+                <!--row#7-->
+                <tr>
+                    <td>${url}</td>
                     <td></td>
+                    <td>${bookmark.url}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <!--row#8-->
+                <tr>
+                    <td colspan="5"/>
+                </tr>
+                <!--row#9-->
+                <tr>
+                    <td>${description}</td>
                     <td></td>
                     <td>
-                        <form:label path="description">
-                            ${description}
-                        </form:label>
+                    <textarea id="description" cols="20" rows="2" readonly="true" wrap="soft">
+                        ${bookmark.description}
+                    </textarea>
                     </td>
                     <td></td>
                     <td></td>
                 </tr>
+                <!--row#10-->
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td colspan="3">
-                        <form:textarea path="description" cols="30" rows="5" id="bookmarkDescription"/>
-                    </td>
-                    <td></td>
-                    <td></td>
+                    <td colspan="5"/>
                 </tr>
+                <!--row#11-->
                 <tr>
-                    <td></td>
-                    <td>
-                        <form:label path="category">
-                            ${parent}
-                        </form:label>
-                    </td>
-                    <td>
-                        <form:select path="categoryId">
-                            //fill component and set selected value
-                            <c:if test="${not empty categoryList}">
-                                <c:forEach items="${categoryList}" var="cgy">
-                                    <c:choose>
-                                        <c:when test="${bookmark.category.id!=null and bookmark.category.id eq cgy.id}">
-                                            <form:option value="${cgy.id}" label="${cgy.name}" selected="selected"/>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <form:option value="${cgy.id}" label="${cgy.name}"/>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                            </c:if>
-                        </form:select>
-                    </td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>
-                        <form:label path="url">
-                            ${url}
-                        </form:label>
-                    </td>
-                    <td colspan="5">
-                        <form:input path="url"/>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <form:button type="submit">
-                            ${submit}
-                        </form:button>
-                        <form:button type="reset">
-                            ${cancel}
-                        </form:button>
-                    </td>
-                    <td></td>
-                    <td>
+                    <td align="center" colspan="5">
+                        <form:button type="submit">${submit}</form:button>
+                        <form:button type="reset">${cancel}</form:button>
                         <form:hidden path="id"/>
                         <form:hidden path="version"/>
                     </td>

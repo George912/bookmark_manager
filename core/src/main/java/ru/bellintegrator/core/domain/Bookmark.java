@@ -42,7 +42,7 @@ public class Bookmark implements Serializable {
     @Column(name = "CREATE_DATE")
     private Timestamp createDate;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CATEGORY_ID")
     private Category category;
 

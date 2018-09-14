@@ -13,23 +13,12 @@
     <spring:message code="parent" var="parent"/>
     <spring:message code="bookmarkList" var="bookmarkList"/>
     <spring:message code="subCategories" var="subCategories"/>
-    <spring:message code="bookmarkIconTH" var="bookmarkIconTH"/>
-    <spring:message code="bookmarkNameTH" var="bookmarkNameTH"/>
     <spring:message code="bookmarkUrlTH" var="bookmarkUrlTH"/>
     <spring:message code="bookmarkShowTH" var="bookmarkShowTH"/>
-    <spring:message code="bookmarkDeleteTH" var="bookmarkDeleteTH"/>
-    <spring:message code="submit" var="submit"/>
-    <spring:message code="cancel" var="cancel"/>
-    <spring:message code="createBookmark" var="createBookmark"/>
     <spring:message code="bookmarkNotFound" var="bookmarkNotFound"/>
-    <spring:message code="createCategory" var="createCategory"/>
     <spring:message code="categoryNotFound" var="categoryNotFound"/>
 
     <spring:url value="/bookmarks/bookmark/viewer?bookmarkId=" var="showBookmarkUrl"/>
-    <spring:url value="/bookmarks/bookmark/editor?bookmarkId=-1" var="createBookmarkUrl"/>
-    <spring:url value="/bookmarks/bookmark/delete/" var="deleteBookmarkUrl"/>
-    <spring:url value="/bookmarks/deleteAll/" var="deleteAllBookmarksUrl"/>
-    <spring:url value="/categories/deleteAll/" var="deleteAllCategoriesUrl"/>
     <spring:url value="/categories/category/viewer?categoryId=" var="categoryViewerUrl"/>
     <spring:url value="/categories/category/editor?categoryId=" var="categoryEditorUrl"/>
     <spring:url value="/categories/category/delete/" var="deleteCategoryUrl"/>
@@ -43,7 +32,11 @@
                     <td></td>
                     <td><form:label path="name"/>${category.name}</td>
                     <td></td>
-                    <td><a href="${categoryEditorUrl.concat(category.id)}">${categoryEditorUrl.concat(category.id)}</a></td>
+                    <td>
+                        <a href="${deleteCategoryUrl.concat(category.id)}">${deleteCategoryUrl.concat(category.id)}</a>
+                        <br/>
+                        <a href="${categoryEditorUrl.concat(category.id)}">${categoryEditorUrl.concat(category.id)}</a>
+                    </td>
                 </tr>
                 <!--row2-->
                 <tr>
