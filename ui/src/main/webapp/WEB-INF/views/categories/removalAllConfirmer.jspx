@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page"
+     xmlns:spring="http://www.springframework.org/tags"
+     xmlns:form="http://www.springframework.org/tags/form"
+     version="2.0">
+
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:directive.page isELIgnored="false"/>
+    <jsp:output omit-xml-declaration="yes"/>
+
+    <spring:message code="removalConfirm" var="removalConfirm"/>
+    <spring:message code="deletableCategoryCount" var="deletableCategoryCount"/>
+    <spring:message code="submit" var="submit"/>
+    <spring:message code="cancel" var="cancel"/>
+
+    <div id="removalAllConfirmer">
+        <form:form modelAttribute="categoryCount" id="removalAllConfirmerForm" method="delete">
+            <table border="1" width="90%">
+                <!--row#1-->
+                <tr>
+                    <td></td>
+                    <td align="center" colspan="3">
+                        <h3>${removalConfirm}</h3>
+                        <h4>
+                            ${deletableCategoryCount.concat(categoryCount)}
+                        </h4>
+                    </td>
+                    <td></td>
+                </tr>
+                <!--row#2-->
+                <tr>
+                    <td colspan="5"/>
+                </tr>
+                <!--row#3-->
+                <tr>
+                    <td align="center" colspan="5">
+                        <form:button type="submit">${submit}</form:button>
+                        <form:button type="reset">${cancel}</form:button>
+                    </td>
+                </tr>
+            </table>
+        </form:form>
+    </div>
+</div>

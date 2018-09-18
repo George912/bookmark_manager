@@ -17,4 +17,7 @@
     <definition extends="default" name="categories/delete_all_confirm">
         <put-attribute name="body" value="/WEB-INF/views/categories/removalBatchConfirmer.jspx"/>
     </definition>
+    <definition extends="default" name="categories/delete_all">
+        <put-attribute name="body" value="/WEB-INF/views/categories/removalAllConfirmer.jspx"/>
+    </definition>
 </tiles-definitions>

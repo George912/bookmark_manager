@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.bellintegrator.core.domain.Category;
 import ru.bellintegrator.core.exception.ServiceException;
+import ru.bellintegrator.service.BookmarkService;
 import ru.bellintegrator.service.CategoryService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,8 @@ import java.util.Locale;
 public class CategoryController {
     private static final Logger LOGGER = Logger.getLogger(CategoryController.class);
     private CategoryService categoryService;
+    private BookmarkService bookmarkService;
+    private static final long DELETE_ALL_CATEGORIES = -1;
 
     public CategoryController() {
     }
@@ -28,6 +31,11 @@ public class CategoryController {
     @Autowired
     public void setCategoryService(CategoryService categoryService) {
         this.categoryService = categoryService;
+    }
+
+    @Autowired
+    public void setBookmarkService(BookmarkService bookmarkService) {
+        this.bookmarkService = bookmarkService;
     }
 
     /**
@@ -40,11 +48,8 @@ public class CategoryController {
     @GetMapping
     public String list(Model model) {
         LOGGER.debug("call list method");
-
         try {
-            List<Category> categoryList = categoryService.list();
-            LOGGER.debug("category list for presentation: " + categoryList);
-            model.addAttribute("categoryList", categoryList);
+            model.addAttribute("categoryList", categoryService.list());
         } catch (ServiceException e) {
             LOGGER.debug("Exception while receiving category list: ", e);
         }
@@ -121,6 +126,18 @@ public class CategoryController {
         return "redirect:error";
     }
 
+    @GetMapping(value = "deleteAll")
+    public String showAllCategoryRemovalConfirmer(Model model) {
+        LOGGER.debug("call showAllCategoryRemovalConfirmer()");
+        try {
+            model.addAttribute("categoryCount", categoryService.list().size());
+            return "categories/delete_all";
+        } catch (ServiceException e) {
+            LOGGER.error("Exception while category list retrieving from database: ", e);
+        }
+        return "redirect:error";
+    }
+
     @DeleteMapping(value = "category/delete/{id}")
     public String delete(@PathVariable Long id, Model model) {
         LOGGER.debug("call delete(id=" + id + ")");
@@ -133,9 +150,23 @@ public class CategoryController {
         return "categories/list";
     }
 
+    @DeleteMapping(value = "deleteAll")
+    public String deleteAll(Model model) {
+        LOGGER.debug("call deleteAll");
+        try {
+            bookmarkService.deleteAll(DELETE_ALL_CATEGORIES);
+            categoryService.deleteAll(DELETE_ALL_CATEGORIES);
+            model.addAttribute("categoryList", categoryService.list());
+            return "categories/list";
+        } catch (ServiceException e) {
+            LOGGER.error("Exception while ategories removing: ", e);
+        }
+        return "redirect:error";
+    }
+
     @DeleteMapping(value = "deleteAll/{categoryId}")
-    public String deleteAll(@PathVariable Long categoryId, Model model) {
-        LOGGER.debug("call deleteAll(categoryId = " + categoryId);
+    public String deleteAllSubcategories(@PathVariable Long categoryId, Model model) {
+        LOGGER.debug("call deleteAllSubcategories(categoryId = " + categoryId + ")");
         try {
             categoryService.deleteAll(categoryId);
             model.addAttribute("category", categoryService.findById(categoryId));

@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <div xmlns:jsp="http://java.sun.com/JSP/Page"
      xmlns:c="http://java.sun.com/jsp/jstl/core"
-     xmlns:spring="http://www.springframework.org/tags">
+     xmlns:spring="http://www.springframework.org/tags"
+>
 
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
 
     <spring:url value="/categories/category/editor?categoryId=" var="categoryEditorUrl"/>
     <spring:url value="/categories/category/viewer?categoryId=" var="categoryViewerUrl"/>
+    <spring:url value="/categories/deleteAll/" var="deleteAllCategoriesUrl"/>
 
     <spring:message code="categories" var="categories"/>
     <spring:message code="categoryNotFound" var="categoryNotFound"/>
     <spring:message code="createCategory" var="createCategory"/>
 
     <table border="3">
+        <!--row#1-->
         <tr>
-            <td width="30%"></td>
-            <td width="30%">
+            <td align="center" colspan="5">
                 <hl>${categories}</hl>
             </td>
-            <td width="30%"></td>
         </tr>
+        <!--row#2-->
         <tr>
-            <td colspan="3" hight="20%"></td>
+            <td colspan="5"/>
         </tr>
+        <!--row#3-->
         <tr>
             <td colspan="3">
                 <div id="categories">
@@ -38,10 +41,18 @@
                         </c:when>
                         <c:otherwise>
                             <hl>${categoryNotFound}</hl>
-                            <a href="${categoryEditorUrl.concat('-1')}">${createCategory}</a>
+                            <!--<a href="${categoryEditorUrl.concat('-1')}">${createCategory}</a>-->
                         </c:otherwise>
                     </c:choose>
                 </div>
+            </td>
+            <td/>
+            <td valign="top">
+                <a href="${categoryEditorUrl.concat('-1')}">${categoryEditorUrl.concat('-1')}</a>
+                <br/>
+                <c:if test="${not empty categoryList}">
+                    <a href="${deleteAllCategoriesUrl}">${deleteAllCategoriesUrl}</a>
+                </c:if>
             </td>
         </tr>
     </table>

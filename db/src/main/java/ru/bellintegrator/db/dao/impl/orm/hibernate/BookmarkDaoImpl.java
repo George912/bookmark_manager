@@ -8,10 +8,11 @@ import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.core.aop.AdviceRequired;
+import ru.bellintegrator.core.domain.Bookmark;
 import ru.bellintegrator.core.exception.DAOException;
 import ru.bellintegrator.db.dao.BookmarkManager;
+import ru.bellintegrator.db.dao.Cleaner;
 import ru.bellintegrator.db.dao.GenericDAO;
-import ru.bellintegrator.core.domain.Bookmark;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 @Transactional
 @Repository("bookmarkDao")
-public class BookmarkDaoImpl implements GenericDAO<Bookmark>, BookmarkManager {
+public class BookmarkDaoImpl extends Cleaner implements GenericDAO<Bookmark>, BookmarkManager {
     private static final Logger LOGGER = Logger.getLogger(BookmarkDaoImpl.class);
     @Resource(name = "sessionFactory")
     private SessionFactory sessionFactory;
@@ -62,15 +63,21 @@ public class BookmarkDaoImpl implements GenericDAO<Bookmark>, BookmarkManager {
 
     public int deleteAll(Long categoryId) throws DAOException {
         LOGGER.debug("deleteAll(categoryId = " + categoryId + ")");
+        int rowsAffected = 0;
         try {
-            return sessionFactory.getCurrentSession()
-                    .createQuery(BOOKMARKS_DELETE_QUERY)
-                    .setLong("categoryId", categoryId)
-                    .executeUpdate();
+            if (categoryId == DELETE_ALL_CATEGORIES) {
+                rowsAffected = truncate(Bookmark.class);
+            } else {
+                rowsAffected = sessionFactory.getCurrentSession()
+                        .createQuery(BOOKMARKS_DELETE_QUERY)
+                        .setLong("categoryId", categoryId)
+                        .executeUpdate();
+            }
         } catch (HibernateException e) {
             LOGGER.error("Exception while removing bookmarks: ", e);
             throw new DAOException("Exception while removing bookmarks: ", e);
         }
+        return rowsAffected;
     }
 
     @Override
