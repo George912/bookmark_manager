@@ -24,8 +24,6 @@ import java.util.List;
 public class CategoryDaoImpl extends Cleaner implements GenericDAO<Category>, CategoryManager {
     private static final Logger LOGGER = Logger.getLogger(CategoryDaoImpl.class);
     private static final String CATEGORY_FROM_CLAUSE = "FROM Category";
-    //other value - delete all subcategories
-//    private static final long DELETE_ALL_CATEGORIES = -1;
 
     @Resource(name = "sessionFactory")
     private SessionFactory sessionFactory;
