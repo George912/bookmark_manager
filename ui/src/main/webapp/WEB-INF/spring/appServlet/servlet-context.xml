@@ -27,4 +27,9 @@
             </list>
         </property>
     </bean>
+
+    <!--Theme support-->
+    <bean id="themeSource" class="org.springframework.ui.context.support.ResourceBundleThemeSource"/>
+    <bean id="themeResolver" class="org.springframework.web.servlet.theme.CookieThemeResolver"
+          p:cookieName="theme" p:defaultThemeName="standard"/>
 </beans>
